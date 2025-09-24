@@ -108,11 +108,30 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Analysis error:', error);
 
-    const errorMessage = error instanceof Error ? error.message : 'Failed to analyze contract. Please try again.';
+    // Provide more specific error messages for debugging
+    let errorMessage = 'Failed to analyze contract. Please try again.';
+    let statusCode = 500;
+
+    if (error instanceof Error) {
+      // Check for specific error types
+      if (error.message.includes('OpenAI')) {
+        errorMessage = 'AI service temporarily unavailable. Please try again in a moment.';
+      } else if (error.message.includes('PDF') || error.message.includes('Word')) {
+        errorMessage = error.message; // Use the specific file processing error
+        statusCode = 400;
+      } else if (error.message.includes('JSON')) {
+        errorMessage = 'AI response format error. Please try again.';
+      } else if (error.message.includes('rate limit')) {
+        errorMessage = 'Service is busy. Please try again in a few minutes.';
+        statusCode = 429;
+      } else {
+        errorMessage = error.message;
+      }
+    }
 
     return NextResponse.json(
       { error: errorMessage },
-      { status: 500 }
+      { status: statusCode }
     );
   }
 }

@@ -78,8 +78,16 @@ Return only valid JSON, no additional text or formatting.
       throw new Error('No response from AI service');
     }
 
+    // Clean the response (remove markdown formatting if present)
+    let cleanResponse = response.trim();
+    if (cleanResponse.startsWith('```json')) {
+      cleanResponse = cleanResponse.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    } else if (cleanResponse.startsWith('```')) {
+      cleanResponse = cleanResponse.replace(/^```\s*/, '').replace(/\s*```$/, '');
+    }
+
     // Parse the JSON response
-    const analysisResult = JSON.parse(response.trim()) as AnalysisResult;
+    const analysisResult = JSON.parse(cleanResponse) as AnalysisResult;
 
     // Validate the response structure
     if (!analysisResult.summary || !Array.isArray(analysisResult.keyClauses) || !Array.isArray(analysisResult.recommendations)) {
@@ -90,6 +98,22 @@ Return only valid JSON, no additional text or formatting.
 
   } catch (error) {
     console.error('Error analyzing contract:', error);
+
+    // Provide more specific error messages
+    if (error instanceof Error) {
+      if (error.message.includes('rate limit') || error.message.includes('429')) {
+        throw new Error('OpenAI rate limit exceeded. Service is busy, please try again in a few minutes.');
+      } else if (error.message.includes('401') || error.message.includes('unauthorized')) {
+        throw new Error('OpenAI API key is invalid or expired.');
+      } else if (error.message.includes('network') || error.message.includes('fetch')) {
+        throw new Error('Network error connecting to AI service. Please try again.');
+      } else if (error.message.includes('timeout')) {
+        throw new Error('AI service request timed out. Please try again.');
+      } else {
+        throw new Error(`OpenAI API Error: ${error.message}`);
+      }
+    }
+
     throw new Error('Failed to analyze contract. Please try again.');
   }
 }
