@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { DocumentIcon, CloudArrowUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 interface ContractUploadProps {
-  onFileSelect: (file: File) => void;
+  onFileSelect: (file: File | null) => void;
   selectedFile: File | null;
   onAnalyze: () => void;
   isAnalyzing: boolean;
@@ -69,7 +69,7 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
   };
 
   const removeFile = useCallback(() => {
-    onFileSelect(null as any);
+    onFileSelect(null);
   }, [onFileSelect]);
 
   const formatFileSize = (bytes: number) => {

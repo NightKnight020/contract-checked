@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { analyzeContract, type AnalysisResult } from '@/lib/ai-service';
-import { supabase } from '@/lib/supabase';
+import { analyzeContract } from '@/lib/ai-service';
 import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 
@@ -15,9 +14,10 @@ async function extractTextFromFile(file: File): Promise<string> {
   if (fileType === 'application/pdf') {
     try {
       const arrayBuffer = await file.arrayBuffer();
-      const data = await pdfParse(new Uint8Array(arrayBuffer));
+      const buffer = Buffer.from(arrayBuffer);
+      const data = await pdfParse(buffer);
       return data.text;
-    } catch (error) {
+    } catch {
       throw new Error('Failed to extract text from PDF. Please ensure the PDF contains selectable text.');
     }
   }
@@ -28,7 +28,7 @@ async function extractTextFromFile(file: File): Promise<string> {
       const arrayBuffer = await file.arrayBuffer();
       const result = await mammoth.extractRawText({ arrayBuffer });
       return result.value;
-    } catch (error) {
+    } catch {
       throw new Error('Failed to extract text from Word document. Please try converting to PDF or text format.');
     }
   }
@@ -77,22 +77,30 @@ export async function POST(request: NextRequest) {
     // Analyze the contract using AI
     const analysisResult = await analyzeContract(contractText, file.name);
 
-    // Store the analysis in Supabase
-    const { error: dbError } = await supabase
-      .from('contract_analyses')
-      .insert({
-        file_name: file.name,
-        file_size: file.size,
-        file_type: file.type,
-        summary: analysisResult.summary,
-        key_clauses: analysisResult.keyClauses,
-        recommendations: analysisResult.recommendations,
-        overall_risk: analysisResult.overallRisk
-      });
+    // Store the analysis in Supabase (if available)
+    try {
+      const { supabase } = await import('@/lib/supabase');
+      if (supabase) {
+        const { error: dbError } = await supabase
+          .from('contract_analyses')
+          .insert({
+            file_name: file.name,
+            file_size: file.size,
+            file_type: file.type,
+            summary: analysisResult.summary,
+            key_clauses: analysisResult.keyClauses,
+            recommendations: analysisResult.recommendations,
+            overall_risk: analysisResult.overallRisk
+          });
 
-    if (dbError) {
-      console.error('Error storing analysis:', dbError);
-      // Don't fail the analysis if DB storage fails
+        if (dbError) {
+          console.error('Error storing analysis:', dbError);
+          // Don't fail the analysis if DB storage fails
+        }
+      }
+    } catch (dbError) {
+      console.error('Error initializing database:', dbError);
+      // Continue without database storage
     }
 
     return NextResponse.json(analysisResult);
