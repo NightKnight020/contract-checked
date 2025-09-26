@@ -78,10 +78,28 @@ export async function POST(request: NextRequest) {
     const analysisResult = await analyzeContract(contractText, file.name);
 
     // Store the analysis in Supabase (if available)
+    let analysisId: string | null = null;
     try {
       const { supabase } = await import('@/lib/supabase');
       if (supabase) {
-        const { error: dbError } = await supabase
+        // Store the contract file in Supabase storage
+        const fileExt = file.name.split('.').pop() || 'txt';
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+        const filePath = `contracts/${fileName}`;
+
+        const { error: storageError } = await supabase.storage
+          .from('contract-files')
+          .upload(filePath, file, {
+            contentType: file.type,
+            duplex: 'half'
+          });
+
+        if (storageError) {
+          console.error('Error storing file:', storageError);
+        }
+
+        // Store the analysis
+        const { data: analysisData, error: dbError } = await supabase
           .from('contract_analyses')
           .insert({
             file_name: file.name,
@@ -90,12 +108,64 @@ export async function POST(request: NextRequest) {
             summary: analysisResult.summary,
             key_clauses: analysisResult.keyClauses,
             recommendations: analysisResult.recommendations,
-            overall_risk: analysisResult.overallRisk
-          });
+            overall_risk: analysisResult.overallRisk,
+            file_path: filePath // Store the storage path
+          })
+          .select('id')
+          .single();
 
         if (dbError) {
           console.error('Error storing analysis:', dbError);
-          // Don't fail the analysis if DB storage fails
+        } else {
+          analysisId = analysisData?.id;
+
+          // Store contract categories
+          if (analysisResult.categories && analysisResult.categories.length > 0) {
+            for (const category of analysisResult.categories) {
+              // Get or create category
+              const { data: categoryData } = await supabase
+                .from('contract_categories')
+                .select('id')
+                .eq('name', category.name)
+                .single();
+
+              let categoryId = categoryData?.id;
+
+              if (!categoryId) {
+                // Category doesn't exist, create it
+                const { data: newCategory } = await supabase
+                  .from('contract_categories')
+                  .insert({ name: category.name })
+                  .select('id')
+                  .single();
+                categoryId = newCategory?.id;
+              }
+
+              if (categoryId) {
+                // Link analysis to category
+                await supabase
+                  .from('contract_analysis_categories')
+                  .insert({
+                    analysis_id: analysisId,
+                    category_id: categoryId,
+                    confidence_score: category.confidence
+                  });
+              }
+            }
+          }
+
+          // Store learning patterns for AI improvement
+          if (analysisResult.learningInsights) {
+            await supabase
+              .from('contract_learning_patterns')
+              .insert({
+                contract_text_sample: contractText.substring(0, 2000), // Store first 2000 chars for pattern analysis
+                categories: analysisResult.categories?.map(c => c.name) || [],
+                risk_patterns: analysisResult.learningInsights.patterns,
+                common_clauses: analysisResult.keyClauses?.map(c => ({ title: c.title, risk: c.risk })),
+                analysis_confidence: analysisResult.learningInsights.confidence
+              });
+          }
         }
       }
     } catch (dbError) {

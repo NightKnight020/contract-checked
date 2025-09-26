@@ -14,12 +14,27 @@ export interface AnalysisResult {
   }>;
   recommendations: string[];
   overallRisk: 'high' | 'medium' | 'low';
+  categories: Array<{
+    name: string;
+    confidence: number;
+  }>;
+  resourceRecommendations: Array<{
+    type: 'template' | 'expert' | 'guide' | 'service';
+    title: string;
+    description: string;
+    priority: number;
+    reason: string;
+  }>;
+  learningInsights?: {
+    patterns: Record<string, unknown>;
+    confidence: number;
+  };
 }
 
 export async function analyzeContract(text: string, fileName: string): Promise<AnalysisResult> {
   try {
     const prompt = `
-You are a legal contract analysis AI. Analyze the following contract text and provide a comprehensive analysis.
+You are an advanced legal contract analysis AI with the ability to classify contracts and recommend resources. Analyze the following contract text and provide a comprehensive analysis including categorization and resource recommendations.
 
 CONTRACT FILE: ${fileName}
 
@@ -41,7 +56,30 @@ Please provide your analysis in the following JSON format:
     "Specific recommendation 1",
     "Specific recommendation 2"
   ],
-  "overallRisk": "high|medium|low"
+  "overallRisk": "high|medium|low",
+  "categories": [
+    {
+      "name": "Category Name (e.g., Real Estate, Employment, Business Services, Legal, etc.)",
+      "confidence": 0.95
+    }
+  ],
+  "resourceRecommendations": [
+    {
+      "type": "template|expert|guide|service",
+      "title": "Resource Title",
+      "description": "Brief description of the resource",
+      "priority": 1-5,
+      "reason": "Why this resource is recommended based on the contract analysis"
+    }
+  ],
+  "learningInsights": {
+    "patterns": {
+      "risk_indicators": ["list of patterns that indicate risk"],
+      "common_clauses": ["frequently found clause types"],
+      "industry_context": "inferred industry or context"
+    },
+    "confidence": 0.85
+  }
 }
 
 Guidelines for analysis:
@@ -53,6 +91,31 @@ Guidelines for analysis:
 - Provide 3-8 key clauses maximum
 - Be specific and actionable in recommendations
 - Overall risk should reflect the contract's potential impact on the uploader
+
+Contract Categories (classify into 1-3 most relevant):
+- Real Estate (leases, rentals, mortgages, property)
+- Employment (job contracts, employment agreements, HR documents)
+- Business Services (consulting, contractor, professional services)
+- Legal (NDAs, partnerships, corporate agreements)
+- Sales & Commerce (purchase agreements, vendor contracts)
+- Media & Content (releases, IP agreements, content creation)
+- Financial (loans, investments, banking documents)
+
+Resource Recommendations Guidelines:
+- Templates: Contract templates for similar agreements
+- Experts: Legal specialists or consultants who could help
+- Guides: Educational resources or checklists
+- Services: Professional services or tools
+- Priority 5 = highest priority (essential), 1 = lowest priority (optional)
+- Base recommendations on contract type, risk level, and complexity
+- Always recommend expert consultation for high-risk contracts
+- Suggest relevant templates for medium-risk contracts
+- Include educational resources for learning purposes
+
+Learning Insights:
+- Extract patterns that could help improve future analyses
+- Identify risk indicators and common clause patterns
+- Note industry context for better categorization
 
 Return only valid JSON, no additional text or formatting.
 `;
@@ -90,9 +153,25 @@ Return only valid JSON, no additional text or formatting.
     const analysisResult = JSON.parse(cleanResponse) as AnalysisResult;
 
     // Validate the response structure
-    if (!analysisResult.summary || !Array.isArray(analysisResult.keyClauses) || !Array.isArray(analysisResult.recommendations)) {
+    if (!analysisResult.summary ||
+        !Array.isArray(analysisResult.keyClauses) ||
+        !Array.isArray(analysisResult.recommendations) ||
+        !Array.isArray(analysisResult.categories) ||
+        !Array.isArray(analysisResult.resourceRecommendations)) {
       throw new Error('Invalid response structure from AI service');
     }
+
+    // Ensure categories have valid structure
+    analysisResult.categories = analysisResult.categories.filter(cat =>
+      cat.name && typeof cat.confidence === 'number' && cat.confidence >= 0 && cat.confidence <= 1
+    );
+
+    // Ensure resource recommendations have valid structure
+    analysisResult.resourceRecommendations = analysisResult.resourceRecommendations.filter(rec =>
+      ['template', 'expert', 'guide', 'service'].includes(rec.type) &&
+      rec.title && rec.description && rec.reason &&
+      typeof rec.priority === 'number' && rec.priority >= 1 && rec.priority <= 5
+    );
 
     return analysisResult;
 

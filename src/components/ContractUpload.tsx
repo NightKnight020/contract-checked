@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { DocumentIcon, CloudArrowUpIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { DocumentIcon, CloudArrowUpIcon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
 interface ContractUploadProps {
   onFileSelect: (file: File | null) => void;
@@ -81,14 +81,14 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Upload Area */}
       {!selectedFile ? (
         <div
-          className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+          className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 ${
             isDragOver
-              ? 'border-indigo-400 bg-indigo-50'
-              : 'border-gray-300 hover:border-gray-400'
+              ? 'border-indigo-400 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg'
+              : 'border-slate-300 hover:border-indigo-300 hover:bg-slate-50/50'
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -101,55 +101,62 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
             className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           />
 
-          <div className="space-y-4">
-            <div className="mx-auto w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center">
-              <CloudArrowUpIcon className="w-8 h-8 text-indigo-600" />
+          <div className="space-y-6">
+            <div className="relative mx-auto w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <CloudArrowUpIcon className="w-10 h-10 text-white" />
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center">
+                <SparklesIcon className="w-4 h-4 text-white" />
+              </div>
             </div>
 
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Drop your contract here, or{' '}
-                <span className="text-indigo-600 hover:text-indigo-500 cursor-pointer">
-                  browse
-                </span>
+              <h3 className="text-2xl font-semibold text-slate-900 mb-3">
+                Upload Your Contract
               </h3>
-              <p className="text-gray-500">
-                Support for PDF, Word (.doc, .docx), and text files up to 10MB
+              <p className="text-slate-600 mb-6 text-lg">
+                Drag and drop your contract file here, or{' '}
+                <span className="text-indigo-600 hover:text-indigo-700 font-medium cursor-pointer underline underline-offset-2">
+                  browse your files
+                </span>
               </p>
             </div>
 
-            <div className="flex justify-center space-x-4 text-sm text-gray-500">
-              <div className="flex items-center">
-                <DocumentIcon className="w-4 h-4 mr-1" />
-                PDF
+            <div className="flex justify-center space-x-6 text-sm text-slate-500">
+              <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
+                <DocumentIcon className="w-4 h-4" />
+                <span>PDF</span>
               </div>
-              <div className="flex items-center">
-                <DocumentIcon className="w-4 h-4 mr-1" />
-                Word
+              <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
+                <DocumentIcon className="w-4 h-4" />
+                <span>Word</span>
               </div>
-              <div className="flex items-center">
-                <DocumentIcon className="w-4 h-4 mr-1" />
-                Text
+              <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
+                <DocumentIcon className="w-4 h-4" />
+                <span>Text</span>
               </div>
             </div>
+
+            <p className="text-sm text-slate-500">
+              Maximum file size: 10MB
+            </p>
           </div>
         </div>
       ) : (
         /* Selected File Display */
-        <div className="bg-gray-50 rounded-lg p-6">
+        <div className="bg-gradient-to-r from-slate-50 to-indigo-50 rounded-2xl p-8 border border-slate-200">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
-                <DocumentIcon className="w-6 h-6 text-indigo-600" />
+            <div className="flex items-center space-x-4">
+              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <DocumentIcon className="w-7 h-7 text-white" />
               </div>
               <div>
-                <p className="font-medium text-gray-900">{selectedFile.name}</p>
-                <p className="text-sm text-gray-500">{formatFileSize(selectedFile.size)}</p>
+                <p className="font-semibold text-slate-900 text-lg">{selectedFile.name}</p>
+                <p className="text-sm text-slate-600">{formatFileSize(selectedFile.size)} • Ready for analysis</p>
               </div>
             </div>
             <button
               onClick={removeFile}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+              className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-lg transition-colors"
               title="Remove file"
             >
               <XMarkIcon className="w-5 h-5" />
@@ -163,22 +170,40 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
         <button
           onClick={onAnalyze}
           disabled={!selectedFile || isAnalyzing}
-          className={`px-8 py-3 rounded-lg font-medium transition-all ${
+          className={`px-12 py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
             !selectedFile || isAnalyzing
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-xl'
+              ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
+              : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
           }`}
         >
           {isAnalyzing ? (
-            <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-              <span>Analyzing Contract...</span>
+            <div className="flex items-center space-x-3">
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Analyzing Your Contract...</span>
             </div>
           ) : (
-            'Analyze Contract'
+            <div className="flex items-center space-x-3">
+              <SparklesIcon className="w-5 h-5" />
+              <span>Analyze Contract</span>
+            </div>
           )}
         </button>
       </div>
+
+      {!selectedFile && (
+        <div className="text-center">
+          <p className="text-slate-500 text-sm">
+            By uploading, you agree to our{' '}
+            <a href="#" className="text-indigo-600 hover:text-indigo-700 underline underline-offset-2">
+              Terms of Service
+            </a>{' '}
+            and{' '}
+            <a href="#" className="text-indigo-600 hover:text-indigo-700 underline underline-offset-2">
+              Privacy Policy
+            </a>
+          </p>
+        </div>
+      )}
     </div>
   );
 }

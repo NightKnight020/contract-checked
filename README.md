@@ -1,17 +1,23 @@
-# Contract Checked 🚀
+# Contract Checked MVP v1.0 🚀
 
-AI-powered contract analysis made simple. Upload any contract and get instant insights into key clauses, potential risks, and recommendations.
+AI-powered contract analysis made simple. Upload any contract and get instant insights into key clauses, potential risks, and recommendations. Plus, free downloadable contract templates for common legal agreements.
 
-![Contract Checked](https://via.placeholder.com/800x400/4F46E5/FFFFFF?text=Contract+Checked)
+![Contract Checked](https://via.placeholder.com/800x400/4F46E5/FFFFFF?text=Contract+Checked+MVP+v1.0)
 
 ## 🌟 Features
 
 - **Drag & Drop Upload**: Support for PDF, Word (.docx), and text files
 - **AI-Powered Analysis**: Advanced contract analysis using OpenAI GPT-4
 - **Risk Assessment**: Identify high-impact clauses and potential advantages/disadvantages
-- **Clean UI/UX**: Modern, user-friendly interface built with Next.js and Tailwind CSS
-- **Database Storage**: Secure storage of analyses using Supabase
-- **Real-time Processing**: Instant analysis results
+- **Smart Resource Funneling**: AI-driven recommendations based on contract type and risk level
+- **Expert Network**: Connect with verified legal professionals based on geolocation and specialization
+- **Contract Classification**: Automatic categorization (Real Estate, Employment, Business Services, etc.)
+- **Self-Learning AI**: System improves recommendations based on analysis patterns
+- **Free Contract Templates**: Download professional templates for common legal agreements
+- **Modern UI/UX**: Clean, beautiful interface with gradient designs and smooth animations
+- **Database Storage**: Secure storage of analyses and learning data using Supabase
+- **Real-time Processing**: Instant analysis results with personalized recommendations
+- **Navigation**: Easy switching between analysis and resources
 
 ## 🛠️ Tech Stack
 
@@ -20,6 +26,7 @@ AI-powered contract analysis made simple. Upload any contract and get instant in
 - **Database**: Supabase (PostgreSQL)
 - **Icons**: Heroicons, Lucide React
 - **Deployment**: Vercel
+- **Bundler**: Webpack (default Next.js bundler)
 
 ## 🚀 Quick Start
 
@@ -85,8 +92,17 @@ Open [http://localhost:3000](http://localhost:3000) to see your app!
 5. Go to Settings → API
 6. Copy URL and anon key to `.env.local`
 7. Go to SQL Editor
-8. Copy and paste the contents of `supabase-schema.sql`
-9. Click "Run" to create the database tables
+8. **For the enhanced learning system**: Copy and paste the contents of `apply-schema.sql`
+9. **For basic version**: Copy and paste the contents of `supabase-schema.sql`
+10. Click "Run" to create the database tables and populate sample data
+
+#### Enhanced Schema Features
+The `apply-schema.sql` includes:
+- **Contract Categories**: Automatic classification system
+- **Resource Recommendations**: Smart funneling based on contract type
+- **Expert Partners**: Geolocation-based legal professional network
+- **Learning Patterns**: AI self-improvement data storage
+- **Sample Experts**: Pre-populated verified attorneys and consultants
 
 ## 🚀 Deployment to Vercel
 
@@ -127,14 +143,18 @@ In your Vercel project settings, add these environment variables:
 contract-checked/
 ├── src/
 │   ├── app/
-│   │   ├── layout.tsx          # Root layout
-│   │   └── page.tsx            # Main landing page
+│   │   ├── layout.tsx          # Root layout with metadata
+│   │   ├── page.tsx            # Main landing page with contract analysis
+│   │   └── resources/
+│   │       └── page.tsx        # Free contract templates page
 │   ├── components/
-│   │   ├── ContractUpload.tsx  # File upload component
+│   │   ├── ContractUpload.tsx  # Modern file upload component
 │   │   └── AnalysisResults.tsx # Results display component
 │   └── lib/
 │       ├── supabase.ts         # Database client & types
 │       └── ai-service.ts       # AI analysis logic
+├── public/
+│   └── templates/              # Contract template files
 ├── supabase-schema.sql         # Database schema
 ├── package.json
 └── README.md
@@ -159,11 +179,59 @@ npm run lint     # Run ESLint
 
 ## 📊 How It Works
 
+### Basic Analysis Flow
 1. **Upload**: User drags and drops or selects a contract file
 2. **Extract**: Text is extracted from PDF/Word/text files
 3. **Analyze**: OpenAI GPT-4 analyzes the contract content
-4. **Store**: Results are saved to Supabase database
-5. **Display**: Clean, organized results shown to user
+4. **Classify**: AI categorizes contract type and assesses risk
+5. **Recommend**: System suggests relevant resources and experts
+6. **Store**: Results and learning data saved to Supabase database
+7. **Display**: Clean, organized results with personalized recommendations
+
+### Resource Funneling System
+
+The AI analyzes each contract and provides tailored recommendations:
+
+#### 🎯 **High-Risk Contracts**
+- **Priority**: Expert consultation recommendations
+- **Example**: Complex commercial leases or employment agreements
+- **Result**: Direct connection to specialized attorneys
+
+#### 🏠 **Real Estate Contracts**
+- **Templates**: Rental agreements, lease templates
+- **Experts**: Real estate attorneys in user's area
+- **Examples**: Residential leases, property purchase agreements
+
+#### 💼 **Employment Contracts**
+- **Templates**: Employment agreements, contractor agreements
+- **Experts**: Employment law specialists
+- **Focus**: Compensation, termination, compliance clauses
+
+#### 🤝 **Business Services**
+- **Templates**: Service contracts, consulting agreements
+- **Experts**: Business law consultants
+- **Focus**: Intellectual property, liability, payment terms
+
+#### ⚖️ **Legal Documents**
+- **Templates**: NDAs, partnership agreements
+- **Experts**: Commercial lawyers, corporate attorneys
+- **Focus**: Confidentiality, dispute resolution
+
+### AI Learning System
+
+The platform continuously improves by:
+- **Pattern Recognition**: Learning common risk indicators
+- **Category Accuracy**: Refining contract classifications
+- **Recommendation Success**: Tracking which suggestions help users
+- **Expert Matching**: Improving geolocation and specialization matching
+
+### Expert Network Features
+
+- **Geolocation Matching**: Find attorneys near you
+- **Specialization Filtering**: Match by contract type
+- **Verified Professionals**: Only licensed, rated experts
+- **Multi-Language Support**: Experts speaking various languages
+- **Rating System**: User reviews and ratings
 
 ## 🤝 Contributing
 
@@ -186,6 +254,13 @@ If you encounter any issues:
 3. Verify your API keys are valid and have sufficient credits
 4. Check that Supabase database is properly configured
 
+## ✅ Recent Updates (MVP v1.0)
+
+- ✅ **Resources Page**: Free contract templates for popular agreements
+- ✅ **Modern UI Redesign**: Clean, gradient-based design with improved UX
+- ✅ **Navigation System**: Easy switching between analysis and resources
+- ✅ **Enhanced Upload Component**: More visually appealing file upload interface
+
 ## 🎯 Future Enhancements
 
 - User authentication and account management
@@ -194,6 +269,8 @@ If you encounter any issues:
 - Integration with legal research databases
 - Multi-language support
 - Advanced risk scoring algorithms
+- Template customization tools
+- Contract version tracking
 
 ---
 

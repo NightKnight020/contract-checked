@@ -1,38 +1,5 @@
--- Create contract_analyses table
-CREATE TABLE IF NOT EXISTS contract_analyses (
-    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
-    file_name TEXT NOT NULL,
-    file_size BIGINT NOT NULL,
-    file_type TEXT NOT NULL,
-    file_path TEXT, -- Path to stored file in Supabase storage
-    summary TEXT NOT NULL,
-    key_clauses JSONB NOT NULL,
-    recommendations JSONB NOT NULL,
-    overall_risk TEXT NOT NULL CHECK (overall_risk IN ('high', 'medium', 'low')),
-    user_id UUID, -- Optional: for future user authentication
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW())
-);
-
--- Create index on created_at for faster queries
-CREATE INDEX IF NOT EXISTS idx_contract_analyses_created_at ON contract_analyses(created_at DESC);
-
--- Create index on user_id for future user-specific queries
-CREATE INDEX IF NOT EXISTS idx_contract_analyses_user_id ON contract_analyses(user_id);
-
--- Enable Row Level Security (RLS)
-ALTER TABLE contract_analyses ENABLE ROW LEVEL SECURITY;
-
--- Create policy to allow anonymous inserts (for now)
--- In production, you might want to restrict this or add user authentication
-CREATE POLICY "Allow anonymous analysis inserts" ON contract_analyses
-    FOR INSERT
-    WITH CHECK (true);
-
--- Allow reading analyses (for future features)
-CREATE POLICY "Allow anonymous analysis reads" ON contract_analyses
-    FOR SELECT
-    USING (true);
+-- Apply this schema to your Supabase project
+-- You can run this in the Supabase SQL Editor or use the Supabase CLI
 
 -- Contract categories for classification
 CREATE TABLE IF NOT EXISTS contract_categories (
@@ -154,51 +121,47 @@ INSERT INTO expert_partners (
   contact_email, website_url, rating, review_count, hourly_rate, bio, certifications,
   languages, is_verified, is_featured
 ) VALUES
--- Real Estate Attorneys
-('Sarah Johnson', 'Real Estate Attorney', 'Real Estate Law', -118.2437, 34.0522, 'Los Angeles', 'CA',
+('Sarah Johnson', 'Real Estate Attorney', 'Real Estate Law', 34.0522, -118.2437, 'Los Angeles', 'CA',
   'sarah.johnson@lawfirm.com', 'https://johnsonlaw.com', 4.8, 127, 350,
   'Sarah Johnson is a licensed real estate attorney with over 10 years of experience in residential and commercial property transactions.',
   ARRAY['California Bar License', 'Real Estate Law Certification'], ARRAY['English', 'Spanish'], true, true),
 
-('Michael Davis', 'Real Estate Attorney', 'Real Estate Law', -87.6298, 41.8781, 'Chicago', 'IL',
+('Michael Davis', 'Real Estate Attorney', 'Real Estate Law', 41.8781, -87.6298, 'Chicago', 'IL',
   'michael.davis@chicagolaw.com', 'https://chicagopropertylaw.com', 4.9, 89, 425,
   'Michael Davis specializes in real estate law, including lease agreements, property disputes, and commercial transactions.',
   ARRAY['Illinois Bar License', 'Real Estate Law Specialist'], ARRAY['English'], true, false),
 
-('Emily Chen', 'Real Estate Attorney', 'Real Estate Law', -74.0060, 40.7128, 'New York', 'NY',
+('Emily Chen', 'Real Estate Attorney', 'Real Estate Law', 40.7128, -74.0060, 'New York', 'NY',
   'emily.chen@nylawpartners.com', 'https://nylawpartners.com', 4.7, 156, 500,
   'Emily Chen focuses on real estate transactions, landlord-tenant law, and property development agreements.',
   ARRAY['New York Bar License', 'Commercial Real Estate Certification'], ARRAY['English', 'Mandarin'], true, true),
 
--- Employment Law Specialists
-('David Wilson', 'Employment Law Attorney', 'Employment Law', -122.4194, 37.7749, 'San Francisco', 'CA',
+('David Wilson', 'Employment Law Attorney', 'Employment Law', 37.7749, -122.4194, 'San Francisco', 'CA',
   'david.wilson@employmentlaw.com', 'https://sfemploymentlaw.com', 4.9, 98, 375,
   'David Wilson is an employment law expert specializing in contract negotiations, workplace policies, and dispute resolution.',
   ARRAY['California Bar License', 'Employment Law Certification'], ARRAY['English'], true, true),
 
-('Lisa Rodriguez', 'Employment Law Consultant', 'Employment Law', -71.0589, 42.3601, 'Boston', 'MA',
+('Lisa Rodriguez', 'Employment Law Consultant', 'Employment Law', 42.3601, -71.0589, 'Boston', 'MA',
   'lisa.rodriguez@bostonemployment.com', 'https://bostonemploymentlaw.com', 4.6, 73, 325,
   'Lisa Rodriguez helps businesses navigate employment contracts, compliance, and labor relations.',
   ARRAY['Massachusetts Bar License', 'HR Law Specialist'], ARRAY['English', 'Portuguese'], true, false),
 
--- Business Law Consultants
-('Robert Taylor', 'Business Law Attorney', 'Business Law', -118.2437, 34.0522, 'Los Angeles', 'CA',
+('Robert Taylor', 'Business Law Attorney', 'Business Law', 34.0522, -118.2437, 'Los Angeles', 'CA',
   'robert.taylor@businesslawla.com', 'https://businesslawla.com', 4.8, 142, 400,
   'Robert Taylor provides comprehensive business law services including contracts, partnerships, and corporate governance.',
   ARRAY['California Bar License', 'Business Law Certification'], ARRAY['English'], true, true),
 
-('Jennifer Lee', 'Business Law Consultant', 'Business Law', -87.6298, 41.8781, 'Chicago', 'IL',
+('Jennifer Lee', 'Business Law Consultant', 'Business Law', 41.8781, -87.6298, 'Chicago', 'IL',
   'jennifer.lee@chicagobusinesslaw.com', 'https://chicagobusinesslaw.com', 4.7, 91, 375,
   'Jennifer Lee specializes in business formation, contract drafting, and commercial transactions.',
   ARRAY['Illinois Bar License', 'Corporate Law Specialist'], ARRAY['English', 'Korean'], true, false),
 
--- Legal Services
-('Alexander Brown', 'Commercial Law Attorney', 'Commercial Law', -74.0060, 40.7128, 'New York', 'NY',
+('Alexander Brown', 'Commercial Law Attorney', 'Commercial Law', 40.7128, -74.0060, 'New York', 'NY',
   'alexander.brown@nylegalservices.com', 'https://nylegalservices.com', 4.9, 203, 450,
   'Alexander Brown offers comprehensive legal services including NDA drafting, partnership agreements, and dispute resolution.',
   ARRAY['New York Bar License', 'Commercial Law Certification'], ARRAY['English', 'French'], true, true),
 
-('Maria Garcia', 'Legal Consultant', 'Business & Startup Law', -122.4194, 37.7749, 'San Francisco', 'CA',
+('Maria Garcia', 'Legal Consultant', 'Business & Startup Law', 37.7749, -122.4194, 'San Francisco', 'CA',
   'maria.garcia@sflegalservices.com', 'https://sflegalservices.com', 4.8, 118, 375,
   'Maria Garcia provides legal consulting for startups, small businesses, and entrepreneurs.',
   ARRAY['California Bar License', 'Startup Law Specialist'], ARRAY['English', 'Spanish'], true, false)
@@ -206,59 +169,15 @@ ON CONFLICT DO NOTHING;
 
 -- Link experts to their specializations
 INSERT INTO expert_specializations (expert_id, category_id, expertise_level) VALUES
--- Real Estate Experts
 ((SELECT id FROM expert_partners WHERE name = 'Sarah Johnson'), (SELECT id FROM contract_categories WHERE name = 'Real Estate'), 'expert'),
 ((SELECT id FROM expert_partners WHERE name = 'Michael Davis'), (SELECT id FROM contract_categories WHERE name = 'Real Estate'), 'expert'),
 ((SELECT id FROM expert_partners WHERE name = 'Emily Chen'), (SELECT id FROM contract_categories WHERE name = 'Real Estate'), 'expert'),
-
--- Employment Experts
 ((SELECT id FROM expert_partners WHERE name = 'David Wilson'), (SELECT id FROM contract_categories WHERE name = 'Employment'), 'expert'),
 ((SELECT id FROM expert_partners WHERE name = 'Lisa Rodriguez'), (SELECT id FROM contract_categories WHERE name = 'Employment'), 'general'),
-
--- Business Services Experts
 ((SELECT id FROM expert_partners WHERE name = 'Robert Taylor'), (SELECT id FROM contract_categories WHERE name = 'Business Services'), 'expert'),
 ((SELECT id FROM expert_partners WHERE name = 'Jennifer Lee'), (SELECT id FROM contract_categories WHERE name = 'Business Services'), 'general'),
-
--- Legal Experts (multiple categories)
 ((SELECT id FROM expert_partners WHERE name = 'Alexander Brown'), (SELECT id FROM contract_categories WHERE name = 'Legal'), 'expert'),
 ((SELECT id FROM expert_partners WHERE name = 'Alexander Brown'), (SELECT id FROM contract_categories WHERE name = 'Business Services'), 'general'),
 ((SELECT id FROM expert_partners WHERE name = 'Maria Garcia'), (SELECT id FROM contract_categories WHERE name = 'Legal'), 'general'),
 ((SELECT id FROM expert_partners WHERE name = 'Maria Garcia'), (SELECT id FROM contract_categories WHERE name = 'Business Services'), 'general')
 ON CONFLICT DO NOTHING;
-
--- Create storage bucket for contract files
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('contract-files', 'contract-files', false)
-ON CONFLICT (id) DO NOTHING;
-
--- Storage policies for contract files
-CREATE POLICY "Allow authenticated users to upload contract files" ON storage.objects
-    FOR INSERT
-    WITH CHECK (bucket_id = 'contract-files' AND auth.role() = 'authenticated');
-
-CREATE POLICY "Allow users to view their own contract files" ON storage.objects
-    FOR SELECT
-    USING (bucket_id = 'contract-files' AND auth.role() = 'authenticated');
-
--- For now, allow anonymous access (will be restricted later with user auth)
-CREATE POLICY "Allow anonymous contract file uploads" ON storage.objects
-    FOR INSERT
-    WITH CHECK (bucket_id = 'contract-files');
-
-CREATE POLICY "Allow anonymous contract file reads" ON storage.objects
-    FOR SELECT
-    USING (bucket_id = 'contract-files');
-
--- Optional: Create a view for analytics
-CREATE OR REPLACE VIEW contract_analysis_stats AS
-SELECT
-    COUNT(*) as total_analyses,
-    AVG(CASE
-        WHEN overall_risk = 'low' THEN 1
-        WHEN overall_risk = 'medium' THEN 2
-        WHEN overall_risk = 'high' THEN 3
-    END) as avg_risk_score,
-    COUNT(CASE WHEN overall_risk = 'high' THEN 1 END) as high_risk_count,
-    COUNT(CASE WHEN overall_risk = 'medium' THEN 1 END) as medium_risk_count,
-    COUNT(CASE WHEN overall_risk = 'low' THEN 1 END) as low_risk_count
-FROM contract_analyses;
