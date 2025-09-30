@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeContract } from '@/lib/ai-service';
+import { createSupabaseServerClient } from '@/lib/supabase-server';
 import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 
@@ -38,6 +39,23 @@ async function extractTextFromFile(file: File): Promise<string> {
 
 export async function POST(request: NextRequest) {
   try {
+    // Check authentication
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json(
+        { error: 'Database not configured' },
+        { status: 500 }
+      );
+    }
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 }
+      );
+    }
+
     const formData = await request.formData();
     const file = formData.get('file') as File;
 
@@ -77,10 +95,9 @@ export async function POST(request: NextRequest) {
     // Analyze the contract using AI
     const analysisResult = await analyzeContract(contractText, file.name);
 
-    // Store the analysis in Supabase (if available)
+    // Store the analysis in Supabase (now required for authenticated users)
     let analysisId: string | null = null;
     try {
-      const { supabase } = await import('@/lib/supabase');
       if (supabase) {
         // Store the contract file in Supabase storage
         const fileExt = file.name.split('.').pop() || 'txt';
@@ -109,7 +126,8 @@ export async function POST(request: NextRequest) {
             key_clauses: analysisResult.keyClauses,
             recommendations: analysisResult.recommendations,
             overall_risk: analysisResult.overallRisk,
-            file_path: filePath // Store the storage path
+            file_path: filePath, // Store the storage path
+            user_id: user.id // Link to authenticated user
           })
           .select('id')
           .single();

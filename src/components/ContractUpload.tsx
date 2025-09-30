@@ -1,7 +1,11 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { DocumentIcon, CloudArrowUpIcon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { Upload, File, X, Sparkles, FileText, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 interface ContractUploadProps {
   onFileSelect: (file: File | null) => void;
@@ -12,6 +16,7 @@ interface ContractUploadProps {
 
 export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyzing }: ContractUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -26,6 +31,7 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
+    setError(null);
 
     const files = Array.from(e.dataTransfer.files);
     if (files.length > 0) {
@@ -38,6 +44,7 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
+    setError(null);
     if (files && files.length > 0) {
       const file = files[0];
       if (isValidFile(file)) {
@@ -56,12 +63,12 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
     const maxSize = 10 * 1024 * 1024; // 10MB
 
     if (!validTypes.includes(file.type)) {
-      alert('Please upload a PDF, Word document (.doc or .docx), or text file.');
+      setError('Please upload a PDF, Word document (.doc or .docx), or text file.');
       return false;
     }
 
     if (file.size > maxSize) {
-      alert('File size must be less than 10MB.');
+      setError('File size must be less than 10MB.');
       return false;
     }
 
@@ -70,6 +77,7 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
 
   const removeFile = useCallback(() => {
     onFileSelect(null);
+    setError(null);
   }, [onFileSelect]);
 
   const formatFileSize = (bytes: number) => {
@@ -81,126 +89,133 @@ export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyz
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Upload Area */}
       {!selectedFile ? (
-        <div
-          className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 ${
-            isDragOver
-              ? 'border-indigo-400 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg'
-              : 'border-slate-300 hover:border-indigo-300 hover:bg-slate-50/50'
-          }`}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onDrop={handleDrop}
-        >
-          <input
-            type="file"
-            accept=".pdf,.doc,.docx,.txt"
-            onChange={handleFileInput}
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          />
+        <Card className={`relative border-2 border-dashed transition-all duration-300 ${
+          isDragOver
+            ? 'border-primary bg-primary/5 shadow-lg scale-[1.02]'
+            : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50'
+        }`}>
+          <CardContent className="flex flex-col items-center justify-center p-12 text-center">
+            <input
+              type="file"
+              accept=".pdf,.doc,.docx,.txt"
+              onChange={handleFileInput}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            />
 
-          <div className="space-y-6">
-            <div className="relative mx-auto w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <CloudArrowUpIcon className="w-10 h-10 text-white" />
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center">
-                <SparklesIcon className="w-4 h-4 text-white" />
+            <div className="relative mb-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg">
+                <Upload className="w-10 h-10 text-primary-foreground" />
+              </div>
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                <Sparkles className="w-4 h-4 text-white" />
               </div>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-semibold text-slate-900 mb-3">
-                Upload Your Contract
-              </h3>
-              <p className="text-slate-600 mb-6 text-lg">
-                Drag and drop your contract file here, or{' '}
-                <span className="text-indigo-600 hover:text-indigo-700 font-medium cursor-pointer underline underline-offset-2">
-                  browse your files
-                </span>
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-2xl font-semibold mb-2">Upload Your Contract</h3>
+                <p className="text-muted-foreground text-lg">
+                  Drag and drop your contract file here, or{' '}
+                  <span className="text-primary hover:text-primary/80 font-medium cursor-pointer underline underline-offset-2">
+                    browse your files
+                  </span>
+                </p>
+              </div>
+
+              <div className="flex justify-center gap-3">
+                <Badge variant="secondary" className="px-3 py-1">
+                  <FileText className="w-3 h-3 mr-1" />
+                  PDF
+                </Badge>
+                <Badge variant="secondary" className="px-3 py-1">
+                  <FileText className="w-3 h-3 mr-1" />
+                  Word
+                </Badge>
+                <Badge variant="secondary" className="px-3 py-1">
+                  <FileText className="w-3 h-3 mr-1" />
+                  Text
+                </Badge>
+              </div>
+
+              <p className="text-sm text-muted-foreground">
+                Maximum file size: 10MB
               </p>
             </div>
-
-            <div className="flex justify-center space-x-6 text-sm text-slate-500">
-              <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
-                <DocumentIcon className="w-4 h-4" />
-                <span>PDF</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
-                <DocumentIcon className="w-4 h-4" />
-                <span>Word</span>
-              </div>
-              <div className="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full">
-                <DocumentIcon className="w-4 h-4" />
-                <span>Text</span>
-              </div>
-            </div>
-
-            <p className="text-sm text-slate-500">
-              Maximum file size: 10MB
-            </p>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       ) : (
         /* Selected File Display */
-        <div className="bg-gradient-to-r from-slate-50 to-indigo-50 rounded-2xl p-8 border border-slate-200">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <DocumentIcon className="w-7 h-7 text-white" />
+        <Card className="bg-gradient-to-r from-muted/50 to-primary/5 border-primary/20">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
+                  <File className="w-7 h-7 text-primary-foreground" />
+                </div>
+                <div>
+                  <p className="font-semibold text-lg">{selectedFile.name}</p>
+                  <p className="text-sm text-muted-foreground flex items-center gap-2">
+                    <span>{formatFileSize(selectedFile.size)}</span>
+                    <CheckCircle className="w-4 h-4 text-green-500" />
+                    <span>Ready for analysis</span>
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold text-slate-900 text-lg">{selectedFile.name}</p>
-                <p className="text-sm text-slate-600">{formatFileSize(selectedFile.size)} • Ready for analysis</p>
-              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={removeFile}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <X className="w-4 h-4" />
+              </Button>
             </div>
-            <button
-              onClick={removeFile}
-              className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-200 rounded-lg transition-colors"
-              title="Remove file"
-            >
-              <XMarkIcon className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {error && (
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       )}
 
       {/* Analyze Button */}
       <div className="flex justify-center">
-        <button
+        <Button
           onClick={onAnalyze}
           disabled={!selectedFile || isAnalyzing}
-          className={`px-12 py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
-            !selectedFile || isAnalyzing
-              ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-              : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
-          }`}
+          size="lg"
+          className="px-12 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
         >
           {isAnalyzing ? (
             <div className="flex items-center space-x-3">
-              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
               <span>Analyzing Your Contract...</span>
             </div>
           ) : (
             <div className="flex items-center space-x-3">
-              <SparklesIcon className="w-5 h-5" />
+              <Sparkles className="w-5 h-5" />
               <span>Analyze Contract</span>
             </div>
           )}
-        </button>
+        </Button>
       </div>
 
       {!selectedFile && (
         <div className="text-center">
-          <p className="text-slate-500 text-sm">
+          <p className="text-sm text-muted-foreground">
             By uploading, you agree to our{' '}
-            <a href="#" className="text-indigo-600 hover:text-indigo-700 underline underline-offset-2">
+            <Button variant="link" className="p-0 h-auto font-normal">
               Terms of Service
-            </a>{' '}
+            </Button>{' '}
             and{' '}
-            <a href="#" className="text-indigo-600 hover:text-indigo-700 underline underline-offset-2">
+            <Button variant="link" className="p-0 h-auto font-normal">
               Privacy Policy
-            </a>
+            </Button>
           </p>
         </div>
       )}

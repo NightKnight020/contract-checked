@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/lib/auth-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Contract Checked - AI Contract Analysis & Free Templates",
-  description: "Upload any contract and get instant AI-powered analysis. Free legal templates for rental agreements, service contracts, and more. Make informed decisions with smart contract insights.",
+  description: "Has it been Contract Checked? Upload any contract and get instant AI-powered analysis. Free legal templates for rental agreements, service contracts, and more. Make informed decisions with smart contract insights.",
   keywords: "contract analysis, AI legal review, free contract templates, rental agreements, service contracts, legal documents",
   authors: [{ name: "Contract Checked" }],
   openGraph: {
@@ -34,7 +35,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

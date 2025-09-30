@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS contract_analyses (
     key_clauses JSONB NOT NULL,
     recommendations JSONB NOT NULL,
     overall_risk TEXT NOT NULL CHECK (overall_risk IN ('high', 'medium', 'low')),
-    user_id UUID, -- Optional: for future user authentication
+    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE, -- Required: link to authenticated user
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW())
 );
 
@@ -23,16 +23,20 @@ CREATE INDEX IF NOT EXISTS idx_contract_analyses_user_id ON contract_analyses(us
 -- Enable Row Level Security (RLS)
 ALTER TABLE contract_analyses ENABLE ROW LEVEL SECURITY;
 
--- Create policy to allow anonymous inserts (for now)
--- In production, you might want to restrict this or add user authentication
-CREATE POLICY "Allow anonymous analysis inserts" ON contract_analyses
+-- Create policy to allow authenticated users to insert their own analyses
+CREATE POLICY "Users can insert their own analyses" ON contract_analyses
     FOR INSERT
-    WITH CHECK (true);
+    WITH CHECK (auth.uid() = user_id);
 
--- Allow reading analyses (for future features)
-CREATE POLICY "Allow anonymous analysis reads" ON contract_analyses
+-- Allow users to read their own analyses
+CREATE POLICY "Users can read their own analyses" ON contract_analyses
     FOR SELECT
-    USING (true);
+    USING (auth.uid() = user_id);
+
+-- Allow users to update their own analyses
+CREATE POLICY "Users can update their own analyses" ON contract_analyses
+    FOR UPDATE
+    USING (auth.uid() = user_id);
 
 -- Contract categories for classification
 CREATE TABLE IF NOT EXISTS contract_categories (
