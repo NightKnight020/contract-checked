@@ -113,7 +113,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ mode: 'single', ...result });
   } catch (error) {
     console.error('Analysis error:', error);
-    const msg = error instanceof Error ? error.message : 'Failed to analyze contract.';
+    const raw = error instanceof Error ? error.message : '';
+
+    // OpenAI quota / billing error
+    if (raw.includes('429') || raw.toLowerCase().includes('quota') || raw.toLowerCase().includes('billing')) {
+      return NextResponse.json(
+        { error: 'Our AI service is temporarily unavailable due to high demand. Please try again in a few minutes.' },
+        { status: 503 }
+      );
+    }
+
+    const msg = raw || 'Failed to analyze contract. Please try again.';
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
