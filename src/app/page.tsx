@@ -41,7 +41,7 @@ const FAQS = [
 const CONTRACT_TYPES = [
   'Residential Lease', 'Employment Agreement', 'NDA / Confidentiality',
   'Service Agreement', 'Purchase Agreement', 'Partnership Agreement',
-  'Independent Contractor', 'Repair & Maintenance', 'Air Charter Service',
+  'Independent Contractor', 'Repair & Maintenance',
   'Real Estate (APS)', 'Consulting Contract', 'Franchise Agreement',
 ];
 
@@ -182,7 +182,6 @@ export default function Home() {
             <nav className="hidden md:flex items-center gap-6 text-sm">
               <Link href="/resources" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Templates</Link>
               <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Blog</Link>
-              <Link href="/aircharterservice" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">ACS Tool</Link>
             </nav>
 
             <button
@@ -365,7 +364,7 @@ export default function Home() {
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/#upload-section" className="hover:text-white transition-colors">Analyze Contract</Link></li>
                   <li><Link href="/resources" className="hover:text-white transition-colors">Free Templates</Link></li>
-                  <li><Link href="/aircharterservice" className="hover:text-white transition-colors">ACS Tool</Link></li>
+                  <li></li>
                 </ul>
               </div>
               <div>
@@ -393,5 +392,6 @@ export default function Home() {
     </>
   );
 }
+
 
 
