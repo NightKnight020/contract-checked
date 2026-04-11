@@ -14,7 +14,7 @@ import { AnalysisResults, type AnalysisResultPayload } from '@/components/Analys
 const FAQS = [
   {
     q: 'Is Contract Checked free to use?',
-    a: 'Yes. Core contract analysis is completely free — no login required. Simply upload your contract and get instant AI analysis.',
+    a: 'Yes. Core contract analysis is completely free — no login required. Simply upload your contract and get instant Smart Analysis.',
   },
   {
     q: 'What file types are supported?',
@@ -48,13 +48,13 @@ const CONTRACT_TYPES = [
 const FEATURES = [
   {
     icon: <Zap className="w-6 h-6 text-[#2D6A4F]" />,
-    title: 'Instant AI Analysis',
+    title: 'Instant Smart Analysis',
     desc: 'Upload and get a full professional analysis in seconds — risks, pros, cons, missing clauses, and plain English summary.',
   },
   {
     icon: <Camera className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Photo OCR Upload',
-    desc: 'Snap a photo of a paper contract. Our GPT-4 Vision AI reads and analyzes it just like a digital file.',
+    desc: 'Snap a photo of a paper contract. Our smart analysis reads and extracts text from your photo just like a digital file.',
   },
   {
     icon: <GitCompare className="w-6 h-6 text-[#2D6A4F]" />,
@@ -206,7 +206,7 @@ export default function Home() {
               <span className="text-emerald-400">You Sign</span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Upload any contract — PDF, Word, photo — and get an instant AI analysis.
+              Upload any contract — PDF, Word, photo — and get an instant Smart Analysis.
               Risks, plain English summary, missing clauses, and more.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -237,7 +237,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { n: '1', title: 'Upload', desc: 'PDF, Word, text, or a photo of a paper contract' },
-              { n: '2', title: 'Analyze', desc: 'Our AI reads and analyzes every clause in seconds' },
+              { n: '2', title: 'Analyze', desc: 'Every clause is read and analyzed in seconds' },
               { n: '3', title: 'Understand', desc: 'Get risks, plain English summary, and recommendations' },
             ].map((step) => (
               <div key={step.n} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex gap-4">
@@ -393,4 +393,5 @@ export default function Home() {
     </>
   );
 }
+
 

@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
     const raw = error instanceof Error ? error.message : '';
 
     // OpenAI quota / billing error
-    if (raw.includes('429') || raw.toLowerCase().includes('quota') || raw.toLowerCase().includes('billing')) {
+    if (raw.includes('429') || raw.toLowerCase().includes('quota') || raw.toLowerCase().includes('billing') || raw.toLowerCase().includes('overloaded')) {
       return NextResponse.json(
         { error: 'Our AI service is temporarily unavailable due to high demand. Please try again in a few minutes.' },
         { status: 503 }
@@ -127,3 +127,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
+

@@ -1,11 +1,11 @@
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 
-let _openai: OpenAI | null = null;
-function getOpenAI(): OpenAI {
-  if (!_openai) {
-    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let _client: Anthropic | null = null;
+function getClient(): Anthropic {
+  if (!_client) {
+    _client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   }
-  return _openai;
+  return _client;
 }
 
 export interface RiskItem {
@@ -35,22 +35,22 @@ export interface ComparisonResult {
   differences: Array<{ category: string; description: string }>;
 }
 
-const SYSTEM_PROMPT = 'You are a senior legal analyst. Always respond with valid JSON only, no markdown, no extra text.';
+const SYSTEM_PROMPT = 'You are a senior legal analyst with 20 years of experience reviewing contracts. Always respond with valid JSON only — no markdown, no extra text, no code fences.';
 
-const ANALYSIS_PROMPT = (text: string) => `Analyze the following contract and return a JSON object matching this exact schema:
+const ANALYSIS_PROMPT = (text: string) => `Analyze the following contract and return a JSON object matching this exact schema. Be thorough and professional.
 
 {
-  "contractType": "string — e.g. Rental Agreement, NDA, Employment Contract",
-  "summary": "2-3 sentence summary",
+  "contractType": "string — e.g. Rental Agreement, NDA, Employment Contract, Agreement of Purchase and Sale",
+  "summary": "2-3 sentence summary of the contract",
   "overallRisk": "low|medium|high",
   "pros": [{ "title": "string", "description": "string" }],
   "cons": [{ "title": "string", "description": "string" }],
   "risks": [{ "severity": "low|medium|high", "title": "string", "description": "string", "clause": "brief quoted or paraphrased clause" }],
-  "missingClauses": [{ "title": "string", "importance": "low|medium|high", "description": "string" }],
+  "missingClauses": [{ "title": "string", "importance": "low|medium|high", "description": "why this clause is typically expected and its absence matters" }],
   "keyDates": [{ "label": "string", "value": "string" }],
   "keyParties": [{ "role": "string", "name": "string" }],
-  "recommendations": [{ "priority": "urgent|important|optional", "text": "string" }],
-  "plainEnglishSummary": "A plain English paragraph explaining the contract to a non-lawyer"
+  "recommendations": [{ "priority": "urgent|important|optional", "text": "specific, actionable recommendation" }],
+  "plainEnglishSummary": "A clear, plain English paragraph explaining the contract to someone with no legal background — what they are agreeing to, any red flags, and what to watch out for"
 }
 
 CONTRACT TEXT:
@@ -64,18 +64,15 @@ function cleanJSON(raw: string): string {
 }
 
 export async function analyzeContractText(text: string): Promise<ContractAnalysis> {
-  const completion = await getOpenAI().chat.completions.create({
-    model: 'gpt-4o',
-    messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'user', content: ANALYSIS_PROMPT(text) },
-    ],
-    temperature: 0.1,
+  const message = await getClient().messages.create({
+    model: 'claude-opus-4-5',
     max_tokens: 3000,
+    system: SYSTEM_PROMPT,
+    messages: [{ role: 'user', content: ANALYSIS_PROMPT(text) }],
   });
 
-  const raw = completion.choices[0]?.message?.content;
-  if (!raw) throw new Error('No response from AI service');
+  const raw = message.content[0]?.type === 'text' ? message.content[0].text : '';
+  if (!raw) throw new Error('No response from analysis service');
 
   return JSON.parse(cleanJSON(raw)) as ContractAnalysis;
 }
@@ -83,29 +80,29 @@ export async function analyzeContractText(text: string): Promise<ContractAnalysi
 export async function ocrImageToText(imageFile: File): Promise<string> {
   const arrayBuffer = await imageFile.arrayBuffer();
   const base64 = Buffer.from(arrayBuffer).toString('base64');
-  const mimeType = imageFile.type as 'image/jpeg' | 'image/png' | 'image/webp';
+  const mimeType = imageFile.type as 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif';
 
-  const completion = await getOpenAI().chat.completions.create({
-    model: 'gpt-4o',
+  const message = await getClient().messages.create({
+    model: 'claude-opus-4-5',
+    max_tokens: 4000,
     messages: [
       {
         role: 'user',
         content: [
           {
-            type: 'text',
-            text: 'This is an image of a contract document. Please extract ALL the text from this image exactly as it appears, preserving formatting as much as possible. Return only the extracted text.',
+            type: 'image',
+            source: { type: 'base64', media_type: mimeType, data: base64 },
           },
           {
-            type: 'image_url',
-            image_url: { url: `data:${mimeType};base64,${base64}`, detail: 'high' },
+            type: 'text',
+            text: 'This is an image of a contract document. Please extract ALL the text from this image exactly as it appears, preserving formatting as much as possible. Return only the extracted text with no commentary.',
           },
         ],
       },
     ],
-    max_tokens: 4000,
   });
 
-  return completion.choices[0]?.message?.content ?? '';
+  return message.content[0]?.type === 'text' ? message.content[0].text : '';
 }
 
 export async function compareContracts(textA: string, textB: string): Promise<ComparisonResult> {
@@ -114,33 +111,32 @@ export async function compareContracts(textA: string, textB: string): Promise<Co
     analyzeContractText(textB),
   ]);
 
-  const diffCompletion = await getOpenAI().chat.completions.create({
-    model: 'gpt-4o',
+  const diffMessage = await getClient().messages.create({
+    model: 'claude-opus-4-5',
+    max_tokens: 1500,
+    system: SYSTEM_PROMPT,
     messages: [
-      { role: 'system', content: SYSTEM_PROMPT },
       {
         role: 'user',
-        content: `Compare these two contracts and return a JSON array of key differences:
-[{ "category": "string — e.g. Payment Terms, Termination, Liability", "description": "string — how they differ" }]
+        content: `Compare these two contracts and return a JSON array of the key differences:
+[{ "category": "string — e.g. Payment Terms, Termination, Liability, Duration", "description": "string — clearly explain how they differ" }]
 
-CONTRACT A SUMMARY: ${contractA.summary}
 CONTRACT A TYPE: ${contractA.contractType}
 CONTRACT A RISK: ${contractA.overallRisk}
+CONTRACT A SUMMARY: ${contractA.summary}
 
-CONTRACT B SUMMARY: ${contractB.summary}
 CONTRACT B TYPE: ${contractB.contractType}
 CONTRACT B RISK: ${contractB.overallRisk}
+CONTRACT B SUMMARY: ${contractB.summary}
 
 CONTRACT A TEXT (first 3000 chars): ${textA.substring(0, 3000)}
 
 CONTRACT B TEXT (first 3000 chars): ${textB.substring(0, 3000)}`,
       },
     ],
-    temperature: 0.1,
-    max_tokens: 1500,
   });
 
-  const diffRaw = diffCompletion.choices[0]?.message?.content ?? '[]';
+  const diffRaw = diffMessage.content[0]?.type === 'text' ? diffMessage.content[0].text : '[]';
   const differences = JSON.parse(cleanJSON(diffRaw)) as Array<{ category: string; description: string }>;
 
   return { contractA, contractB, differences };
