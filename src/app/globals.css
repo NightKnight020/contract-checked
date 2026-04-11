@@ -2,34 +2,40 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222.2 84% 4.9%;
+    /* Professional law-firm palette */
+    --background: 0 0% 99%;
+    --foreground: 220 20% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 20% 12%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 217 91% 60%;
-    --radius: 0.75rem;
+    --popover-foreground: 220 20% 12%;
+    --primary: 158 45% 28%;          /* Deep forest green — trust, law */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 20% 25%;
+    --muted: 220 14% 95%;
+    --muted-foreground: 220 10% 50%;
+    --accent: 42 60% 48%;            /* Muted gold — prestige */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 158 45% 28%;
+    --radius: 0.5rem;
 
-    /* Brand colors */
-    --navy: #0F172A;
-    --blue: #3B82F6;
-    --success: #10B981;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-    --light-bg: #F8FAFC;
+    /* Brand palette */
+    --charcoal: #1C2333;             /* Hero bg */
+    --forest: #2D6A4F;               /* Primary CTA */
+    --forest-light: #40916C;
+    --forest-dark: #1B4332;
+    --gold: #B7922A;                 /* Accent highlights */
+    --gold-light: #D4A843;
+    --slate: #374151;
+    --light-bg: #F9FAFB;
+    --success: #166534;
+    --warning: #92400E;
+    --danger: #991B1B;
   }
 
   .dark {

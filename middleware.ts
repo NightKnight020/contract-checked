@@ -39,14 +39,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Protect API routes that require authentication
-  if (request.nextUrl.pathname.startsWith('/api/analyze') && !user) {
-    return NextResponse.json(
-      { error: 'Authentication required' },
-      { status: 401 }
-    );
-  }
-
+  // /api/analyze is public — no auth required
   return response;
 }
 

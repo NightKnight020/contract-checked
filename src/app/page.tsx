@@ -47,32 +47,32 @@ const CONTRACT_TYPES = [
 
 const FEATURES = [
   {
-    icon: <Zap className="w-6 h-6 text-blue-600" />,
+    icon: <Zap className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Instant AI Analysis',
     desc: 'Upload and get a full professional analysis in seconds — risks, pros, cons, missing clauses, and plain English summary.',
   },
   {
-    icon: <Camera className="w-6 h-6 text-blue-600" />,
+    icon: <Camera className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Photo OCR Upload',
     desc: 'Snap a photo of a paper contract. Our GPT-4 Vision AI reads and analyzes it just like a digital file.',
   },
   {
-    icon: <GitCompare className="w-6 h-6 text-blue-600" />,
+    icon: <GitCompare className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Side-by-Side Comparison',
     desc: 'Upload two versions of a contract and instantly see what changed, what was added, and what was removed.',
   },
   {
-    icon: <Shield className="w-6 h-6 text-blue-600" />,
+    icon: <Shield className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Risk Assessment',
     desc: 'Every clause is rated low, medium, or high risk so you can quickly spot red flags before you sign.',
   },
   {
-    icon: <FileText className="w-6 h-6 text-blue-600" />,
+    icon: <FileText className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Free Templates',
     desc: 'Download professionally drafted contract templates — rental agreements, NDAs, service contracts, and more.',
   },
   {
-    icon: <BookOpen className="w-6 h-6 text-blue-600" />,
+    icon: <BookOpen className="w-6 h-6 text-[#2D6A4F]" />,
     title: 'Plain English',
     desc: 'Legal jargon translated into plain language so anyone can understand what they\'re agreeing to.',
   },
@@ -187,7 +187,7 @@ export default function Home() {
 
             <button
               onClick={scrollToUpload}
-              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+              className="bg-[#2D6A4F] hover:bg-[#40916C] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
             >
               Analyze Free
             </button>
@@ -198,12 +198,12 @@ export default function Home() {
         <section className="bg-[#0F172A] text-white pt-20 pb-32 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 text-center relative">
-            <div className="inline-flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 rounded-full px-4 py-1.5 mb-8 text-sm text-blue-300 font-medium">
+            <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium">
               <Star className="w-4 h-4" /> Powered by GPT-4 Vision · Free · No Login Required
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
               Know What<br />
-              <span className="text-blue-400">You Sign</span>
+              <span className="text-emerald-400">You Sign</span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
               Upload any contract — PDF, Word, photo — and get an instant AI analysis.
@@ -212,7 +212,7 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={scrollToUpload}
-                className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-blue-900/50"
+                className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
               >
                 Analyze Your Contract <ArrowRight className="w-5 h-5" />
               </button>
@@ -241,7 +241,7 @@ export default function Home() {
               { n: '3', title: 'Understand', desc: 'Get risks, plain English summary, and recommendations' },
             ].map((step) => (
               <div key={step.n} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex gap-4">
-                <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+                <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                   {step.n}
                 </div>
                 <div>
@@ -283,7 +283,7 @@ export default function Home() {
               { value: '99%', label: 'Accuracy Rate' },
             ].map((s) => (
               <div key={s.label}>
-                <p className="text-4xl font-extrabold text-blue-400 mb-2">{s.value}</p>
+                <p className="text-4xl font-extrabold text-emerald-400 mb-2">{s.value}</p>
                 <p className="text-slate-400 font-medium">{s.label}</p>
               </div>
             ))}
@@ -299,7 +299,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((f) => (
               <div key={f.title} className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
                   {f.icon}
                 </div>
                 <h3 className="font-bold text-slate-800 mb-2">{f.title}</h3>
@@ -315,7 +315,7 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-slate-800 text-center mb-10">Supported Contract Types</h2>
             <div className="flex flex-wrap justify-center gap-3">
               {CONTRACT_TYPES.map((t) => (
-                <span key={t} className="px-4 py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 rounded-full text-sm font-medium text-slate-700 transition-colors cursor-default">
+                <span key={t} className="px-4 py-2 bg-slate-100 hover:bg-emerald-50 hover:text-[#1B4332] rounded-full text-sm font-medium text-slate-700 transition-colors cursor-default">
                   {t}
                 </span>
               ))}
@@ -334,13 +334,13 @@ export default function Home() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="bg-blue-600 py-16 mb-0">
+        <section className="bg-[#2D6A4F] py-16 mb-0">
           <div className="max-w-2xl mx-auto px-4 text-center text-white">
             <h2 className="text-3xl font-bold mb-4">Ready to Check Your Contract?</h2>
-            <p className="text-blue-100 mb-8">Free, instant, and no login required.</p>
+            <p className="text-emerald-100 mb-8">Free, instant, and no login required.</p>
             <button
               onClick={scrollToUpload}
-              className="bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg"
+              className="bg-white text-[#2D6A4F] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
             >
               Analyze Now — It&apos;s Free
             </button>
@@ -393,3 +393,4 @@ export default function Home() {
     </>
   );
 }
+
