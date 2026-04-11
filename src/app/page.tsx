@@ -1,339 +1,395 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { FileText, Upload, Shield, Zap, CheckCircle, Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { ContractUpload } from '@/components/ContractUpload';
-import { AnalysisResults } from '@/components/AnalysisResults';
-import { AuthModal } from '@/components/AuthModal';
-import { useAuth } from '@/lib/auth-context';
-import { type AnalysisResult } from '@/lib/ai-service';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+import {
+  FileText, Shield, Zap, Camera, GitCompare, ChevronDown, ChevronUp,
+  CheckCircle, ArrowRight, Star, BookOpen
+} from 'lucide-react';
+import { ContractUpload, type UploadPayload } from '@/components/ContractUpload';
+import { AnalysisResults, type AnalysisResultPayload } from '@/components/AnalysisResults';
+
+// ─── FAQ data ────────────────────────────────────────────────────────────────
+
+const FAQS = [
+  {
+    q: 'Is Contract Checked free to use?',
+    a: 'Yes. Core contract analysis is completely free — no login required. Simply upload your contract and get instant AI analysis.',
+  },
+  {
+    q: 'What file types are supported?',
+    a: 'We support PDF, Word documents (.doc, .docx), plain text files, and photos/images of physical contracts (JPG, PNG, WEBP) via OCR.',
+  },
+  {
+    q: 'Is my contract data kept private?',
+    a: 'Your contract is processed securely and is not stored permanently or used to train AI models. We take privacy seriously.',
+  },
+  {
+    q: 'What types of contracts can you analyze?',
+    a: 'Any contract type — rental agreements, employment contracts, NDAs, service agreements, purchase agreements, partnership agreements, and more.',
+  },
+  {
+    q: 'Can I compare two contracts?',
+    a: 'Yes. Enable "Compare Mode" in the upload section to upload two contracts and get a side-by-side analysis with key differences highlighted.',
+  },
+  {
+    q: 'Is this legal advice?',
+    a: 'No. Contract Checked is an AI tool for informational purposes only. Always consult a qualified attorney before signing any contract.',
+  },
+];
+
+const CONTRACT_TYPES = [
+  'Residential Lease', 'Employment Agreement', 'NDA / Confidentiality',
+  'Service Agreement', 'Purchase Agreement', 'Partnership Agreement',
+  'Independent Contractor', 'Repair & Maintenance', 'Air Charter Service',
+  'Real Estate (APS)', 'Consulting Contract', 'Franchise Agreement',
+];
+
+const FEATURES = [
+  {
+    icon: <Zap className="w-6 h-6 text-blue-600" />,
+    title: 'Instant AI Analysis',
+    desc: 'Upload and get a full professional analysis in seconds — risks, pros, cons, missing clauses, and plain English summary.',
+  },
+  {
+    icon: <Camera className="w-6 h-6 text-blue-600" />,
+    title: 'Photo OCR Upload',
+    desc: 'Snap a photo of a paper contract. Our GPT-4 Vision AI reads and analyzes it just like a digital file.',
+  },
+  {
+    icon: <GitCompare className="w-6 h-6 text-blue-600" />,
+    title: 'Side-by-Side Comparison',
+    desc: 'Upload two versions of a contract and instantly see what changed, what was added, and what was removed.',
+  },
+  {
+    icon: <Shield className="w-6 h-6 text-blue-600" />,
+    title: 'Risk Assessment',
+    desc: 'Every clause is rated low, medium, or high risk so you can quickly spot red flags before you sign.',
+  },
+  {
+    icon: <FileText className="w-6 h-6 text-blue-600" />,
+    title: 'Free Templates',
+    desc: 'Download professionally drafted contract templates — rental agreements, NDAs, service contracts, and more.',
+  },
+  {
+    icon: <BookOpen className="w-6 h-6 text-blue-600" />,
+    title: 'Plain English',
+    desc: 'Legal jargon translated into plain language so anyone can understand what they\'re agreeing to.',
+  },
+];
+
+// ─── Components ───────────────────────────────────────────────────────────────
+
+function FAQItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-slate-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between p-5 text-left bg-white hover:bg-slate-50 transition-colors"
+      >
+        <span className="font-semibold text-slate-800 pr-4">{q}</span>
+        {open ? <ChevronUp className="w-5 h-5 text-slate-400 flex-shrink-0" /> : <ChevronDown className="w-5 h-5 text-slate-400 flex-shrink-0" />}
+      </button>
+      {open && (
+        <div className="px-5 pb-5 bg-white">
+          <p className="text-slate-600 text-sm leading-relaxed">{a}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+};
+
+const appSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Contract Checked',
+  url: 'https://contractchecked.com',
+  description: 'AI-powered contract analysis platform. Upload any contract and get instant professional analysis — free.',
+  applicationCategory: 'LegalApplication',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analysisResult, setAnalysisResult] = useState<AnalysisResult | null>(null);
+  const [result, setResult] = useState<AnalysisResultPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  const { user, signOut } = useAuth();
+  const scrollToUpload = () => {
+    document.getElementById('upload-section')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-  const handleFileSelect = useCallback((file: File | null) => {
-    setUploadedFile(file);
-    setError(null);
-    setAnalysisResult(null);
-  }, []);
-
-  const handleAnalyze = useCallback(async () => {
-    if (!uploadedFile) return;
-
-    // Check if user is authenticated
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
-
+  const handleAnalyze = useCallback(async (payload: UploadPayload) => {
     setIsAnalyzing(true);
     setError(null);
+    setResult(null);
 
     try {
-      // Create form data to send the file to the API
       const formData = new FormData();
-      formData.append('file', uploadedFile);
+      formData.append('mode', payload.mode);
+      formData.append('tab', payload.tab);
 
-      // Call the analysis API
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to analyze contract');
+      if (payload.tab === 'text') {
+        formData.append('text', payload.text ?? '');
+      } else {
+        if (payload.fileA) formData.append('fileA', payload.fileA);
+        if (payload.mode === 'compare' && payload.fileB) formData.append('fileB', payload.fileB);
       }
 
-      const analysisResult = await response.json();
-      setAnalysisResult(analysisResult);
-    } catch (err) {
-      console.error('Analysis error:', err);
-      setError(err instanceof Error ? err.message : 'Failed to analyze contract. Please try again.');
+      const res = await fetch('/api/analyze', { method: 'POST', body: formData });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error ?? 'Failed to analyze contract');
+      }
+      const data = await res.json();
+      setResult(data as AnalysisResultPayload);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
     } finally {
       setIsAnalyzing(false);
     }
-  }, [uploadedFile, user]);
-
-  const handleAuthSuccess = useCallback(() => {
-    // After successful authentication, automatically trigger the analysis
-    if (uploadedFile) {
-      handleAnalyze();
-    }
-  }, [uploadedFile, handleAnalyze]);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Navigation Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center">
-              <FileText className="h-6 w-6 text-primary-foreground" />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                Contract Checked
-              </h1>
-              <p className="text-xs text-muted-foreground">AI Contract Analysis</p>
-            </div>
-          </Link>
+    <>
+      {/* JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-          <nav className="flex items-center space-x-6">
-            <Link href="/" className="text-sm font-medium text-primary border-b-2 border-primary pb-1">
-              Home
-            </Link>
-            <Link href="/blog" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Blog
-            </Link>
-            <Link href="/resources" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Resources
-            </Link>
-
-            {/* Auth Buttons */}
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <span className="text-sm text-muted-foreground">
-                  Welcome, {user.email}
-                </span>
-                <Button variant="ghost" size="sm" onClick={signOut}>
-                  Sign Out
-                </Button>
+      <div className="min-h-screen bg-[#F8FAFC]">
+        {/* ── Navigation ── */}
+        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
+          <div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-16">
+            <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+              <div className="w-9 h-9 bg-[#0F172A] rounded-xl flex items-center justify-center">
+                <FileText className="w-5 h-5 text-white" />
               </div>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <Button variant="ghost" size="sm" onClick={() => setShowAuthModal(true)}>
-                  Sign In
-                </Button>
-                <Button onClick={() => setShowAuthModal(true)} className="shadow-lg">
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            )}
-          </nav>
-        </div>
-      </header>
+              <span className="text-lg font-bold text-[#0F172A]">Contract Checked</span>
+            </Link>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden py-24">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10" />
-        <div className="relative container px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <Badge variant="secondary" className="mb-6 px-4 py-2 text-sm font-medium">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Has it been Contract Checked?
-            </Badge>
+            <nav className="hidden md:flex items-center gap-6 text-sm">
+              <Link href="/resources" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Templates</Link>
+              <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Blog</Link>
+              <Link href="/aircharterservice" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">ACS Tool</Link>
+            </nav>
 
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Understand Your<br />
-              <span className="text-primary">Contracts</span> in Minutes
+            <button
+              onClick={scrollToUpload}
+              className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
+              Analyze Free
+            </button>
+          </div>
+        </header>
+
+        {/* ── Hero ── */}
+        <section className="bg-[#0F172A] text-white pt-20 pb-32 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
+          <div className="max-w-6xl mx-auto px-4 text-center relative">
+            <div className="inline-flex items-center gap-2 bg-blue-600/20 border border-blue-500/30 rounded-full px-4 py-1.5 mb-8 text-sm text-blue-300 font-medium">
+              <Star className="w-4 h-4" /> Powered by GPT-4 Vision · Free · No Login Required
+            </div>
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+              Know What<br />
+              <span className="text-blue-400">You Sign</span>
             </h1>
-
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              Upload any contract and let our AI analyze it for you. Get summaries, identify key clauses,
-              spot potential risks, and understand which party has the advantage.
+            <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+              Upload any contract — PDF, Word, photo — and get an instant AI analysis.
+              Risks, plain English summary, missing clauses, and more.
             </p>
-
-            <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground mb-12">
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-green-500" />
-                <span>Secure & Private</span>
-              </div>
-              <Separator orientation="vertical" className="h-4" />
-              <div className="flex items-center gap-2">
-                <Zap className="w-5 h-5 text-blue-500" />
-                <span>AI-Powered</span>
-              </div>
-              <Separator orientation="vertical" className="h-4" />
-              <div className="flex items-center gap-2">
-                <Upload className="w-5 h-5 text-purple-500" />
-                <span>Lightning Fast</span>
-              </div>
+            <div className="flex flex-wrap justify-center gap-4">
+              <button
+                onClick={scrollToUpload}
+                className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-blue-900/50"
+              >
+                Analyze Your Contract <ArrowRight className="w-5 h-5" />
+              </button>
+              <Link
+                href="/resources"
+                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors border border-white/20"
+              >
+                Free Templates
+              </Link>
+            </div>
+            <div className="flex flex-wrap justify-center gap-8 mt-12 text-slate-400 text-sm">
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />No login needed</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />All file types</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />Photo OCR</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />Side-by-side compare</span>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Upload Section */}
-      <section className="container px-4 -mt-12 relative z-10">
-        <Card className="max-w-4xl mx-auto shadow-2xl border-0 bg-card/50 backdrop-blur">
-          <CardContent className="p-8 md:p-12">
-            <ContractUpload
-              onFileSelect={handleFileSelect}
-              selectedFile={uploadedFile}
-              onAnalyze={handleAnalyze}
-              isAnalyzing={isAnalyzing}
-            />
+        {/* ── How It Works ── */}
+        <section className="max-w-6xl mx-auto px-4 -mt-16 relative z-10 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { n: '1', title: 'Upload', desc: 'PDF, Word, text, or a photo of a paper contract' },
+              { n: '2', title: 'Analyze', desc: 'Our AI reads and analyzes every clause in seconds' },
+              { n: '3', title: 'Understand', desc: 'Get risks, plain English summary, and recommendations' },
+            ].map((step) => (
+              <div key={step.n} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex gap-4">
+                <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+                  {step.n}
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800 mb-1">{step.title}</p>
+                  <p className="text-sm text-slate-500">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
+        {/* ── Upload Section ── */}
+        <section id="upload-section" className="max-w-4xl mx-auto px-4 mb-24">
+          <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 md:p-12">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">Analyze Your Contract</h2>
+            <p className="text-slate-500 text-center mb-8 text-sm">Upload a file, paste text, or take a photo — completely free</p>
+            <ContractUpload onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} />
             {error && (
-              <div className="mt-6">
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
+              <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+                {error}
               </div>
             )}
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Results Section */}
-      {analysisResult && (
-        <section className="container px-4 py-16">
-          <AnalysisResults result={analysisResult} />
-        </section>
-      )}
-
-      {/* Features Section */}
-      {!analysisResult && (
-        <section className="container px-4 py-24">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">
-              Why Choose Contract Checked?
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Our AI technology makes contract analysis accessible to everyone, from individuals to businesses.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <Card className="text-center group hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <FileText className="h-8 w-8 text-primary-foreground" />
-                </div>
-                <CardTitle className="text-xl">Smart Document Analysis</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  Our AI reads and understands your contracts, identifying key terms, clauses, and legal implications with human-like comprehension.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center group hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <Shield className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle className="text-xl">Risk Assessment</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  Get clear insights into potential risks, advantages, and areas requiring attention. Understand which party has the stronger position.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center group hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <Upload className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle className="text-xl">Lightning Fast</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  Upload your contract and get comprehensive analysis in seconds. Support for PDF, Word documents, and text files up to 10MB.
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* CTA Section */}
-          <div className="text-center">
-            <Card className="max-w-2xl mx-auto bg-gradient-to-r from-primary/5 to-primary/10 border-primary/20">
-              <CardContent className="p-8">
-                <h3 className="text-2xl font-bold mb-4">
-                  Need Contract Templates?
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Download free, professionally crafted contract templates for common agreements including rental agreements, service contracts, and more.
-                </p>
-                <Button size="lg" className="shadow-lg">
-                  <FileText className="mr-2 h-5 w-5" />
-                  Browse Templates
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </section>
-      )}
 
-      {/* Footer */}
-      <footer className="bg-muted/50 border-t mt-24">
-        <div className="container px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-primary-foreground" />
+        {/* ── Results ── */}
+        {result && (
+          <section className="max-w-6xl mx-auto px-4 mb-24">
+            <AnalysisResults result={result} />
+          </section>
+        )}
+
+        {/* ── Stats ── */}
+        <section className="bg-[#0F172A] py-16 mb-20">
+          <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
+            {[
+              { value: '10,000+', label: 'Contracts Analyzed' },
+              { value: '50+', label: 'Contract Types Supported' },
+              { value: '99%', label: 'Accuracy Rate' },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="text-4xl font-extrabold text-blue-400 mb-2">{s.value}</p>
+                <p className="text-slate-400 font-medium">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── Features ── */}
+        <section className="max-w-6xl mx-auto px-4 mb-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Everything You Need</h2>
+            <p className="text-slate-500 max-w-xl mx-auto">Professional contract intelligence without the lawyer fees.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {FEATURES.map((f) => (
+              <div key={f.title} className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mb-4">
+                  {f.icon}
                 </div>
-                <h3 className="text-xl font-bold">Contract Checked</h3>
+                <h3 className="font-bold text-slate-800 mb-2">{f.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
               </div>
-              <p className="text-muted-foreground mb-4 max-w-md">
-                Making contract analysis accessible to everyone with AI-powered insights and free legal templates.
-              </p>
-              <div className="flex space-x-4">
-                <Button variant="link" className="p-0 h-auto font-normal">
-                  Home
-                </Button>
-                <Button variant="link" className="p-0 h-auto font-normal">
-                  Blog
-                </Button>
-                <Button variant="link" className="p-0 h-auto font-normal">
-                  Resources
-                </Button>
-              </div>
-            </div>
+            ))}
+          </div>
+        </section>
 
-            <div>
-              <h4 className="font-semibold mb-4">Features</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
-                <li>AI Contract Analysis</li>
-                <li>Risk Assessment</li>
-                <li>Free Templates</li>
-                <li>Document Support</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Legal</h4>
-              <ul className="space-y-2 text-muted-foreground text-sm">
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
-                <li>Not Legal Advice</li>
-                <li>Contact Us</li>
-              </ul>
+        {/* ── Contract Types ── */}
+        <section className="bg-white py-16 mb-20 border-y border-slate-200">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-2xl font-bold text-slate-800 text-center mb-10">Supported Contract Types</h2>
+            <div className="flex flex-wrap justify-center gap-3">
+              {CONTRACT_TYPES.map((t) => (
+                <span key={t} className="px-4 py-2 bg-slate-100 hover:bg-blue-50 hover:text-blue-700 rounded-full text-sm font-medium text-slate-700 transition-colors cursor-default">
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
+        </section>
 
-          <Separator className="mb-8" />
-          <div className="text-center text-sm text-muted-foreground">
-            <p>&copy; 2024 Contract Checked. AI-powered contract analysis made simple. Not legal advice.</p>
+        {/* ── FAQ ── */}
+        <section className="max-w-3xl mx-auto px-4 mb-24">
+          <h2 className="text-3xl font-bold text-slate-800 text-center mb-10">Frequently Asked Questions</h2>
+          <div className="space-y-3">
+            {FAQS.map((faq) => (
+              <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+            ))}
           </div>
-        </div>
-      </footer>
+        </section>
 
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        onSuccess={handleAuthSuccess}
-        initialMode="signup"
-      />
-    </div>
+        {/* ── CTA ── */}
+        <section className="bg-blue-600 py-16 mb-0">
+          <div className="max-w-2xl mx-auto px-4 text-center text-white">
+            <h2 className="text-3xl font-bold mb-4">Ready to Check Your Contract?</h2>
+            <p className="text-blue-100 mb-8">Free, instant, and no login required.</p>
+            <button
+              onClick={scrollToUpload}
+              className="bg-white text-blue-600 font-bold px-8 py-4 rounded-xl hover:bg-blue-50 transition-colors shadow-lg"
+            >
+              Analyze Now — It&apos;s Free
+            </button>
+          </div>
+        </section>
+
+        {/* ── Footer ── */}
+        <footer className="bg-[#0F172A] text-slate-400 py-12">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
+              <div className="col-span-2 md:col-span-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+                    <FileText className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="font-bold text-white">Contract Checked</span>
+                </div>
+                <p className="text-sm leading-relaxed">AI contract analysis for everyone. Free, private, no login needed.</p>
+              </div>
+              <div>
+                <p className="font-semibold text-white mb-3 text-sm">Tools</p>
+                <ul className="space-y-2 text-sm">
+                  <li><Link href="/#upload-section" className="hover:text-white transition-colors">Analyze Contract</Link></li>
+                  <li><Link href="/resources" className="hover:text-white transition-colors">Free Templates</Link></li>
+                  <li><Link href="/aircharterservice" className="hover:text-white transition-colors">ACS Tool</Link></li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold text-white mb-3 text-sm">Learn</p>
+                <ul className="space-y-2 text-sm">
+                  <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+                  <li><Link href="/resources" className="hover:text-white transition-colors">Resources</Link></li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-semibold text-white mb-3 text-sm">Legal</p>
+                <ul className="space-y-2 text-sm">
+                  <li><span>Not Legal Advice</span></li>
+                  <li><span>Privacy Policy</span></li>
+                  <li><span>Terms of Service</span></li>
+                </ul>
+              </div>
+            </div>
+            <div className="border-t border-white/10 pt-8 text-center text-xs">
+              &copy; {new Date().getFullYear()} Contract Checked. AI-powered contract analysis. Not legal advice.
+            </div>
+          </div>
+        </footer>
+      </div>
+    </>
   );
 }

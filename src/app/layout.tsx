@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/auth-context";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
@@ -14,14 +16,49 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Contract Checked - AI Contract Analysis & Free Templates",
-  description: "Has it been Contract Checked? Upload any contract and get instant AI-powered analysis. Free legal templates for rental agreements, service contracts, and more. Make informed decisions with smart contract insights.",
-  keywords: "contract analysis, AI legal review, free contract templates, rental agreements, service contracts, legal documents",
+  metadataBase: new URL("https://contractchecked.com"),
+  title: {
+    default: "Contract Checked — AI Contract Analysis, Free & Instant",
+    template: "%s | Contract Checked",
+  },
+  description:
+    "Upload any contract — PDF, Word, or photo — and get instant AI-powered analysis. Risks, plain English summary, missing clauses, and recommendations. Free, no login required.",
+  keywords: [
+    "contract analysis", "AI contract review", "free contract analysis",
+    "contract checker", "NDA analysis", "rental agreement review",
+    "employment contract analysis", "legal document AI", "OCR contract photo",
+    "contract comparison", "contract risk assessment",
+  ],
   authors: [{ name: "Contract Checked" }],
+  creator: "Contract Checked",
+  publisher: "Contract Checked",
+  robots: { index: true, follow: true },
   openGraph: {
-    title: "Contract Checked - AI Contract Analysis",
-    description: "Understand your contracts in minutes with AI-powered analysis and free legal templates.",
     type: "website",
+    locale: "en_US",
+    url: "https://contractchecked.com",
+    siteName: "Contract Checked",
+    title: "Contract Checked — Know What You Sign",
+    description:
+      "Free AI contract analysis. Upload PDF, Word, or a photo of any contract and get instant risk assessment, plain English summary, and recommendations.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Contract Checked — AI Contract Analysis",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contract Checked — Know What You Sign",
+    description:
+      "Free AI contract analysis. Upload any contract and get instant risk assessment and plain English summary.",
+    images: ["/og-image.png"],
+  },
+  alternates: {
+    canonical: "https://contractchecked.com",
   },
 };
 
@@ -32,12 +69,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

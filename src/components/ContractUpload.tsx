@@ -1,224 +1,346 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { Upload, File, X, Sparkles, FileText, CheckCircle } from 'lucide-react';
+import { Upload, File, X, Sparkles, FileText, CheckCircle, Camera, Type, GitCompare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
+type TabType = 'file' | 'photo' | 'text';
+
+export interface UploadPayload {
+  mode: 'single' | 'compare';
+  tab: TabType;
+  fileA?: File;
+  fileB?: File;
+  text?: string;
+}
+
 interface ContractUploadProps {
-  onFileSelect: (file: File | null) => void;
-  selectedFile: File | null;
-  onAnalyze: () => void;
+  onAnalyze: (payload: UploadPayload) => void;
   isAnalyzing: boolean;
 }
 
-export function ContractUpload({ onFileSelect, selectedFile, onAnalyze, isAnalyzing }: ContractUploadProps) {
+const VALID_DOC_TYPES = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'text/plain',
+];
+
+const VALID_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+function formatFileSize(bytes: number) {
+  if (bytes === 0) return '0 Bytes';
+  const k = 1024;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+interface DropZoneProps {
+  label: string;
+  accept: string;
+  validTypes: string[];
+  maxSize?: number;
+  file: File | null;
+  onFile: (f: File | null) => void;
+  error: string | null;
+  onError: (e: string | null) => void;
+}
+
+function DropZone({ label, accept, validTypes, maxSize = 10 * 1024 * 1024, file, onFile, error, onError }: DropZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  }, []);
+  const validate = (f: File): boolean => {
+    if (!validTypes.includes(f.type)) {
+      onError(`Invalid file type. Accepted: ${accept}`);
+      return false;
+    }
+    if (f.size > maxSize) {
+      onError('File size must be less than 10MB.');
+      return false;
+    }
+    return true;
+  };
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    setError(null);
+    onError(null);
+    const f = e.dataTransfer.files[0];
+    if (f && validate(f)) onFile(f);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onFile, onError, validTypes, maxSize, accept]);
 
-    const files = Array.from(e.dataTransfer.files);
-    if (files.length > 0) {
-      const file = files[0];
-      if (isValidFile(file)) {
-        onFileSelect(file);
-      }
-    }
-  }, [onFileSelect]);
+  const handleInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onError(null);
+    const f = e.target.files?.[0];
+    if (f && validate(f)) onFile(f);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onFile, onError, validTypes, maxSize, accept]);
 
-  const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    setError(null);
-    if (files && files.length > 0) {
-      const file = files[0];
-      if (isValidFile(file)) {
-        onFileSelect(file);
-      }
-    }
-  }, [onFileSelect]);
+  if (file) {
+    return (
+      <div className="flex items-center justify-between p-4 rounded-xl bg-blue-50 border border-blue-200">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+            <File className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <p className="font-medium text-sm text-slate-800">{file.name}</p>
+            <p className="text-xs text-slate-500 flex items-center gap-1">
+              {formatFileSize(file.size)}
+              <CheckCircle className="w-3 h-3 text-emerald-500" />
+              Ready
+            </p>
+          </div>
+        </div>
+        <button onClick={() => onFile(null)} className="p-1 rounded hover:bg-blue-100 text-slate-400 hover:text-slate-600 transition-colors">
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    );
+  }
 
-  const isValidFile = (file: File) => {
-    const validTypes = [
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'text/plain'
-    ];
-    const maxSize = 10 * 1024 * 1024; // 10MB
+  return (
+    <div
+      onDragOver={(e) => { e.preventDefault(); setIsDragOver(true); }}
+      onDragLeave={(e) => { e.preventDefault(); setIsDragOver(false); }}
+      onDrop={handleDrop}
+      className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 ${
+        isDragOver ? 'border-blue-500 bg-blue-50 scale-[1.01]' : 'border-slate-200 hover:border-blue-400 hover:bg-slate-50'
+      }`}
+    >
+      <input
+        type="file"
+        accept={accept}
+        onChange={handleInput}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+      />
+      <Upload className="w-8 h-8 mx-auto mb-2 text-slate-400" />
+      <p className="text-sm text-slate-600 font-medium">{label}</p>
+      <p className="text-xs text-slate-400 mt-1">or click to browse</p>
+      {error && (
+        <Alert variant="destructive" className="mt-3 text-left">
+          <AlertDescription className="text-xs">{error}</AlertDescription>
+        </Alert>
+      )}
+    </div>
+  );
+}
 
-    if (!validTypes.includes(file.type)) {
-      setError('Please upload a PDF, Word document (.doc or .docx), or text file.');
-      return false;
-    }
+export function ContractUpload({ onAnalyze, isAnalyzing }: ContractUploadProps) {
+  const [activeTab, setActiveTab] = useState<TabType>('file');
+  const [compareMode, setCompareMode] = useState(false);
 
-    if (file.size > maxSize) {
-      setError('File size must be less than 10MB.');
-      return false;
-    }
+  const [fileA, setFileA] = useState<File | null>(null);
+  const [fileB, setFileB] = useState<File | null>(null);
+  const [errorA, setErrorA] = useState<string | null>(null);
+  const [errorB, setErrorB] = useState<string | null>(null);
 
-    return true;
+  const [photoA, setPhotoA] = useState<File | null>(null);
+  const [photoB, setPhotoB] = useState<File | null>(null);
+  const [photoErrorA, setPhotoErrorA] = useState<string | null>(null);
+  const [photoErrorB, setPhotoErrorB] = useState<string | null>(null);
+
+  const [textValue, setTextValue] = useState('');
+  const [textValueB, setTextValueB] = useState('');
+
+  const canSubmit = () => {
+    if (isAnalyzing) return false;
+    if (activeTab === 'file') return compareMode ? !!(fileA && fileB) : !!fileA;
+    if (activeTab === 'photo') return compareMode ? !!(photoA && photoB) : !!photoA;
+    if (activeTab === 'text') return compareMode ? !!(textValue.trim() && textValueB.trim()) : !!textValue.trim();
+    return false;
   };
 
-  const removeFile = useCallback(() => {
-    onFileSelect(null);
-    setError(null);
-  }, [onFileSelect]);
-
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  const handleSubmit = () => {
+    const mode = compareMode ? 'compare' : 'single';
+    if (activeTab === 'file') {
+      onAnalyze({ mode, tab: 'file', fileA: fileA ?? undefined, fileB: fileB ?? undefined });
+    } else if (activeTab === 'photo') {
+      onAnalyze({ mode, tab: 'photo', fileA: photoA ?? undefined, fileB: photoB ?? undefined });
+    } else {
+      onAnalyze({ mode, tab: 'text', text: compareMode ? `CONTRACT A:\n${textValue}\n\n---\n\nCONTRACT B:\n${textValueB}` : textValue });
+    }
   };
+
+  const tabs: { id: TabType; label: string; icon: React.ReactNode }[] = [
+    { id: 'file', label: 'Upload File', icon: <FileText className="w-4 h-4" /> },
+    { id: 'photo', label: 'Upload Photo', icon: <Camera className="w-4 h-4" /> },
+    { id: 'text', label: 'Paste Text', icon: <Type className="w-4 h-4" /> },
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Upload Area */}
-      {!selectedFile ? (
-        <Card className={`relative border-2 border-dashed transition-all duration-300 ${
-          isDragOver
-            ? 'border-primary bg-primary/5 shadow-lg scale-[1.02]'
-            : 'border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50'
-        }`}>
-          <CardContent className="flex flex-col items-center justify-center p-12 text-center">
-            <input
-              type="file"
+      {/* Tabs */}
+      <div className="flex gap-1 p-1 bg-slate-100 rounded-xl">
+        {tabs.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setActiveTab(t.id)}
+            className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all duration-200 ${
+              activeTab === t.id
+                ? 'bg-white text-blue-600 shadow-sm'
+                : 'text-slate-500 hover:text-slate-700'
+            }`}
+          >
+            {t.icon}
+            <span className="hidden sm:inline">{t.label}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Compare Mode Toggle */}
+      <div className="flex items-center justify-between py-2 px-4 bg-slate-50 rounded-xl border border-slate-200">
+        <div className="flex items-center gap-2">
+          <GitCompare className="w-4 h-4 text-slate-500" />
+          <span className="text-sm font-medium text-slate-700">Compare Mode</span>
+          <Badge variant="secondary" className="text-xs">Compare 2 contracts</Badge>
+        </div>
+        <button
+          onClick={() => setCompareMode(!compareMode)}
+          className={`relative w-11 h-6 rounded-full transition-colors duration-200 focus:outline-none ${
+            compareMode ? 'bg-blue-600' : 'bg-slate-300'
+          }`}
+        >
+          <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${
+            compareMode ? 'translate-x-5' : 'translate-x-0'
+          }`} />
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === 'file' && (
+        <div className={compareMode ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : ''}>
+          <div>
+            {compareMode && <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Contract A</p>}
+            <DropZone
+              label="Drag & drop PDF, Word, or text file"
               accept=".pdf,.doc,.docx,.txt"
-              onChange={handleFileInput}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              validTypes={VALID_DOC_TYPES}
+              file={fileA}
+              onFile={setFileA}
+              error={errorA}
+              onError={setErrorA}
             />
-
-            <div className="relative mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/80 rounded-2xl flex items-center justify-center shadow-lg">
-                <Upload className="w-10 h-10 text-primary-foreground" />
-              </div>
-              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-orange-400 to-pink-500 rounded-full flex items-center justify-center shadow-lg">
-                <Sparkles className="w-4 h-4 text-white" />
-              </div>
+          </div>
+          {compareMode && (
+            <div>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Contract B</p>
+              <DropZone
+                label="Drag & drop PDF, Word, or text file"
+                accept=".pdf,.doc,.docx,.txt"
+                validTypes={VALID_DOC_TYPES}
+                file={fileB}
+                onFile={setFileB}
+                error={errorB}
+                onError={setErrorB}
+              />
             </div>
+          )}
+        </div>
+      )}
 
-            <div className="space-y-4">
+      {activeTab === 'photo' && (
+        <div>
+          <p className="text-sm text-slate-500 mb-3 text-center">
+            Take a photo of a physical contract — our AI will read it using OCR.
+          </p>
+          <div className={compareMode ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : ''}>
+            <div>
+              {compareMode && <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Contract A</p>}
+              <DropZone
+                label="Upload JPG, PNG, or WEBP image"
+                accept=".jpg,.jpeg,.png,.webp"
+                validTypes={VALID_IMAGE_TYPES}
+                file={photoA}
+                onFile={setPhotoA}
+                error={photoErrorA}
+                onError={setPhotoErrorA}
+              />
+            </div>
+            {compareMode && (
               <div>
-                <h3 className="text-2xl font-semibold mb-2">Upload Your Contract</h3>
-                <p className="text-muted-foreground text-lg">
-                  Drag and drop your contract file here, or{' '}
-                  <span className="text-primary hover:text-primary/80 font-medium cursor-pointer underline underline-offset-2">
-                    browse your files
-                  </span>
-                </p>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Contract B</p>
+                <DropZone
+                  label="Upload JPG, PNG, or WEBP image"
+                  accept=".jpg,.jpeg,.png,.webp"
+                  validTypes={VALID_IMAGE_TYPES}
+                  file={photoB}
+                  onFile={setPhotoB}
+                  error={photoErrorB}
+                  onError={setPhotoErrorB}
+                />
               </div>
-
-              <div className="flex justify-center gap-3">
-                <Badge variant="secondary" className="px-3 py-1">
-                  <FileText className="w-3 h-3 mr-1" />
-                  PDF
-                </Badge>
-                <Badge variant="secondary" className="px-3 py-1">
-                  <FileText className="w-3 h-3 mr-1" />
-                  Word
-                </Badge>
-                <Badge variant="secondary" className="px-3 py-1">
-                  <FileText className="w-3 h-3 mr-1" />
-                  Text
-                </Badge>
-              </div>
-
-              <p className="text-sm text-muted-foreground">
-                Maximum file size: 10MB
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      ) : (
-        /* Selected File Display */
-        <Card className="bg-gradient-to-r from-muted/50 to-primary/5 border-primary/20">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg">
-                  <File className="w-7 h-7 text-primary-foreground" />
-                </div>
-                <div>
-                  <p className="font-semibold text-lg">{selectedFile.name}</p>
-                  <p className="text-sm text-muted-foreground flex items-center gap-2">
-                    <span>{formatFileSize(selectedFile.size)}</span>
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    <span>Ready for analysis</span>
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={removeFile}
-                className="text-muted-foreground hover:text-foreground"
-              >
-                <X className="w-4 h-4" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+            )}
+          </div>
+        </div>
       )}
 
-      {error && (
-        <Alert variant="destructive">
-          <AlertDescription>{error}</AlertDescription>
-        </Alert>
+      {activeTab === 'text' && (
+        <div className={compareMode ? 'grid grid-cols-1 md:grid-cols-2 gap-4' : ''}>
+          <div>
+            {compareMode && <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Contract A</p>}
+            <textarea
+              value={textValue}
+              onChange={(e) => setTextValue(e.target.value)}
+              placeholder="Paste your contract text here..."
+              rows={10}
+              className="w-full p-4 rounded-xl border border-slate-200 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y bg-white"
+            />
+          </div>
+          {compareMode && (
+            <div>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Contract B</p>
+              <textarea
+                value={textValueB}
+                onChange={(e) => setTextValueB(e.target.value)}
+                placeholder="Paste second contract text here..."
+                rows={10}
+                className="w-full p-4 rounded-xl border border-slate-200 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y bg-white"
+              />
+            </div>
+          )}
+        </div>
       )}
 
-      {/* Analyze Button */}
+      {/* Supported formats note */}
+      {activeTab === 'file' && (
+        <div className="flex justify-center gap-2 flex-wrap">
+          {['PDF', 'DOCX', 'DOC', 'TXT'].map((f) => (
+            <Badge key={f} variant="secondary" className="text-xs">{f}</Badge>
+          ))}
+          <span className="text-xs text-slate-400">· Max 10MB</span>
+        </div>
+      )}
+
+      {/* Submit Button */}
       <div className="flex justify-center">
         <Button
-          onClick={onAnalyze}
-          disabled={!selectedFile || isAnalyzing}
+          onClick={handleSubmit}
+          disabled={!canSubmit()}
           size="lg"
-          className="px-12 py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+          className="px-10 py-6 text-base font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl"
         >
           {isAnalyzing ? (
-            <div className="flex items-center space-x-3">
-              <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-              <span>Analyzing Your Contract...</span>
-            </div>
+            <span className="flex items-center gap-3">
+              <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+              {compareMode ? 'Comparing Contracts...' : 'Analyzing Contract...'}
+            </span>
           ) : (
-            <div className="flex items-center space-x-3">
+            <span className="flex items-center gap-2">
               <Sparkles className="w-5 h-5" />
-              <span>Analyze Contract</span>
-            </div>
+              {compareMode ? 'Compare Contracts' : 'Analyze Contract'}
+            </span>
           )}
         </Button>
       </div>
 
-      {!selectedFile && (
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground">
-            By uploading, you agree to our{' '}
-            <Button variant="link" className="p-0 h-auto font-normal">
-              Terms of Service
-            </Button>{' '}
-            and{' '}
-            <Button variant="link" className="p-0 h-auto font-normal">
-              Privacy Policy
-            </Button>
-          </p>
-        </div>
-      )}
+      <p className="text-center text-xs text-slate-400">
+        No login required · Secure & private · Not legal advice
+      </p>
     </div>
   );
 }
