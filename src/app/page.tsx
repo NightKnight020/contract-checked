@@ -181,6 +181,7 @@ export default function Home() {
 
             <nav className="hidden md:flex items-center gap-6 text-sm">
               <Link href="/resources" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Templates</Link>
+              <Link href="/contract-types" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Contract Types</Link>
               <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Blog</Link>
             </nav>
 
@@ -363,8 +364,11 @@ export default function Home() {
                 <p className="font-semibold text-white mb-3 text-sm">Tools</p>
                 <ul className="space-y-2 text-sm">
                   <li><Link href="/#upload-section" className="hover:text-white transition-colors">Analyze Contract</Link></li>
+                  <li><Link href="/contract-types" className="hover:text-white transition-colors">Contract Types</Link></li>
                   <li><Link href="/resources" className="hover:text-white transition-colors">Free Templates</Link></li>
-                  <li></li>
+                  <li><Link href="/analyze/rental-agreement" className="hover:text-white transition-colors">Rental Agreement</Link></li>
+                  <li><Link href="/analyze/employment-contract" className="hover:text-white transition-colors">Employment Contract</Link></li>
+                  <li><Link href="/analyze/nda" className="hover:text-white transition-colors">NDA Analysis</Link></li>
                 </ul>
               </div>
               <div>
