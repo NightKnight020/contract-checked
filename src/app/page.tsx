@@ -190,18 +190,33 @@ export default function Home() {
     }
   }, []);
 
-  // Build analysis context string for Q&A (single mode only)
-  const singleResult = result && result.mode !== 'compare' ? result as import('@/lib/contract-ai').ContractAnalysis & { mode: string } : null;
-  const analysisContext = singleResult
-    ? [
-        singleResult.contractType ? `Contract type: ${singleResult.contractType}` : null,
-        singleResult.summary ? `Summary: ${singleResult.summary}` : null,
-        singleResult.risks?.length
-          ? `Key risks: ${singleResult.risks.slice(0, 3).map((r: import('@/lib/contract-ai').RiskItem) => r.description ?? r.title).join('; ')}`
-          : null,
-      ]
-        .filter(Boolean)
-        .join('\n')
+  // Build analysis context string for Q&A
+  const analysisContext = result
+    ? (() => {
+        if (result.mode === 'compare') {
+          const r = result as import('@/lib/contract-ai').ComparisonResult & { mode: string };
+          return [
+            `COMPARISON of two contracts:`,
+            `Contract A: ${r.contractA?.contractType} (risk: ${r.contractA?.overallRisk}) — ${r.contractA?.summary}`,
+            `Contract B: ${r.contractB?.contractType} (risk: ${r.contractB?.overallRisk}) — ${r.contractB?.summary}`,
+            r.contractA?.keyParties?.length ? `Contract A parties: ${r.contractA.keyParties.map((p: {role:string;name:string}) => `${p.role}: ${p.name}`).join(', ')}` : null,
+            r.contractB?.keyParties?.length ? `Contract B parties: ${r.contractB.keyParties.map((p: {role:string;name:string}) => `${p.role}: ${p.name}`).join(', ')}` : null,
+            r.differences?.length ? `Key differences: ${r.differences.slice(0,4).map((d: {category:string;description:string}) => `${d.category}: ${d.description}`).join('; ')}` : null,
+          ].filter(Boolean).join('\n');
+        } else {
+          const r = result as import('@/lib/contract-ai').ContractAnalysis & { mode: string };
+          return [
+            `Contract type: ${r.contractType}`,
+            `Risk level: ${r.overallRisk}`,
+            `Summary: ${r.summary}`,
+            r.keyParties?.length ? `Parties: ${r.keyParties.map((p: {role:string;name:string}) => `${p.role}: ${p.name}`).join(', ')}` : null,
+            r.keyDates?.length ? `Key dates: ${r.keyDates.map((d: {label:string;value:string}) => `${d.label}: ${d.value}`).join(', ')}` : null,
+            r.risks?.length ? `Risks: ${r.risks.slice(0,3).map((r: import('@/lib/contract-ai').RiskItem) => `${r.title} (${r.severity})`).join('; ')}` : null,
+            r.pros?.length ? `Pros: ${r.pros.slice(0,3).map((p: {title:string}) => p.title).join(', ')}` : null,
+            r.cons?.length ? `Cons: ${r.cons.slice(0,3).map((c: {title:string}) => c.title).join(', ')}` : null,
+          ].filter(Boolean).join('\n');
+        }
+      })()
     : undefined;
 
   return (

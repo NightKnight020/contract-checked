@@ -12,11 +12,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'question is required' }, { status: 400 });
     }
 
-    const systemPrompt =
-      "You are a plain-English contract law assistant. Explain everything clearly as if talking to someone with no legal background. Be concise, practical, and helpful. Never give formal legal advice — always suggest consulting a lawyer for serious matters.";
+    const systemPrompt = contractContext
+      ? `You are a contract analyst. The user has uploaded and analyzed a contract. You ONLY answer questions about THAT specific contract.
+RULES:
+- Answer in 1-3 short sentences max. Be direct and specific.
+- If the question is about something NOT in the contract, say: "That doesn't appear to be covered in your contract."
+- Never use headers, bullet points, or markdown formatting.
+- Never give generic explanations — always tie your answer to the actual contract.
+- If you don't know, say so briefly. Do not pad your answer.
+- No legal disclaimers unless absolutely critical.`
+      : `You are a contract assistant. Answer questions about contracts in plain English.
+RULES:
+- Answer in 2-4 sentences max. Be direct and specific.
+- No headers, no bullet points, no markdown.
+- If the question has nothing to do with contracts, say: "I can only help with contract-related questions."
+- No padding, no filler.`;
 
     const userMessage = contractContext
-      ? `The user has analyzed a contract. Here is the context: ${contractContext}\n\nAnswer their question in relation to this contract.\n\nQuestion: ${question}`
+      ? `Contract context: ${contractContext}\n\nUser question: ${question}`
       : question;
 
     const message = await client.messages.create({
