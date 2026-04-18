@@ -36,48 +36,81 @@ export interface ComparisonResult {
   differences: Array<{ category: string; description: string }>;
 }
 
-const SYSTEM_PROMPT = 'You are a senior legal analyst with 20 years of experience reviewing contracts. Always respond with valid JSON only — no markdown, no extra text, no code fences.';
+const SYSTEM_PROMPT = `You are a senior legal analyst. You MUST respond with a single valid JSON object only.
+CRITICAL RULES:
+- Output ONLY the JSON object. No text before or after.
+- No markdown, no code fences, no backticks.
+- All string values must use straight double quotes.
+- Escape any double quotes inside string values with backslash.
+- Do NOT include newlines inside string values — use spaces instead.
+- Keep all text values concise (under 200 characters each).
+- Limit arrays: max 5 pros, 5 cons, 6 risks, 4 missingClauses, 4 keyDates, 4 keyParties, 5 recommendations.`;
 
-const ANALYSIS_PROMPT = (text: string) => `Analyze the following contract and return a JSON object matching this exact schema. Be thorough and professional.
+const ANALYSIS_PROMPT = (text: string) => `Analyze the contract below. Return ONLY a JSON object with exactly these fields:
 
-{
-  "contractType": "string — e.g. Rental Agreement, NDA, Employment Contract, Agreement of Purchase and Sale",
-  "summary": "2-3 sentence summary of the contract",
-  "overallRisk": "low|medium|high",
-  "pros": [{ "title": "string", "description": "string" }],
-  "cons": [{ "title": "string", "description": "string" }],
-  "risks": [{ "severity": "low|medium|high", "title": "string", "description": "string", "clause": "brief quoted or paraphrased clause" }],
-  "missingClauses": [{ "title": "string", "importance": "low|medium|high", "description": "why this clause is typically expected and its absence matters" }],
-  "keyDates": [{ "label": "string", "value": "string" }],
-  "keyParties": [{ "role": "string", "name": "string" }],
-  "recommendations": [{ "priority": "urgent|important|optional", "text": "specific, actionable recommendation" }],
-  "plainEnglishSummary": "A clear, plain English paragraph explaining the contract to someone with no legal background — what they are agreeing to, any red flags, and what to watch out for"
-}
+contractType: string (e.g. "Rental Agreement")
+summary: string (2-3 sentences, no line breaks)
+overallRisk: "low" or "medium" or "high"
+pros: array of {title: string, description: string}
+cons: array of {title: string, description: string}
+risks: array of {severity: "low"|"medium"|"high", title: string, description: string, clause: string}
+missingClauses: array of {title: string, importance: "low"|"medium"|"high", description: string}
+keyDates: array of {label: string, value: string}
+keyParties: array of {role: string, name: string}
+recommendations: array of {priority: "urgent"|"important"|"optional", text: string}
+plainEnglishSummary: string (plain English explanation, no line breaks)
 
-CONTRACT TEXT:
+CONTRACT TO ANALYZE:
 ${text}`;
 
-function cleanJSON(raw: string): string {
+function cleanAndRepairJSON(raw: string): string {
   let s = raw.trim();
+
   // Strip markdown code fences
-  if (s.startsWith('```json')) s = s.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-  else if (s.startsWith('```')) s = s.replace(/^```\s*/, '').replace(/\s*```$/, '');
-  s = s.trim();
-  // Extract just the JSON object/array if there's surrounding text
-  const objMatch = s.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
-  if (objMatch) s = objMatch[1];
-  // Use jsonrepair to fix any truncation or formatting issues
+  s = s.replace(/^```json\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+  s = s.replace(/^```\s*/i, '').replace(/\s*```\s*$/i, '').trim();
+
+  // Find the outermost JSON object
+  const start = s.indexOf('{');
+  const end = s.lastIndexOf('}');
+  if (start !== -1 && end !== -1 && end > start) {
+    s = s.slice(start, end + 1);
+  }
+
+  // Use jsonrepair to fix common issues
   try {
     s = jsonrepair(s);
   } catch {
-    // If repair fails, return as-is and let JSON.parse throw a clear error
+    // continue with what we have
   }
+
   return s;
 }
 
+function safeParseJSON<T>(raw: string): T {
+  const cleaned = cleanAndRepairJSON(raw);
+  try {
+    return JSON.parse(cleaned) as T;
+  } catch (e) {
+    // Last resort: try to parse after aggressive cleanup
+    const aggressive = cleaned
+      .replace(/[\x00-\x1F\x7F]/g, ' ') // strip control chars
+      .replace(/,\s*([}\]])/g, '$1')      // trailing commas
+      .replace(/([{,]\s*)(\w+):/g, '$1"$2":'); // unquoted keys
+    try {
+      return JSON.parse(jsonrepair(aggressive)) as T;
+    } catch {
+      throw new Error(`Analysis service returned invalid data. Please try again. (${e instanceof Error ? e.message : 'parse error'})`);
+    }
+  }
+}
+
 export async function analyzeContractText(text: string): Promise<ContractAnalysis> {
-  // Truncate very long contracts — enough for thorough analysis
-  const truncated = text.length > 14000 ? text.slice(0, 14000) + '\n\n[Document truncated for analysis]' : text;
+  // Truncate long contracts — 10000 chars is plenty for analysis
+  const truncated = text.length > 10000
+    ? text.slice(0, 10000) + '\n[truncated]'
+    : text;
+
   const message = await getClient().messages.create({
     model: 'claude-sonnet-4-5',
     max_tokens: 4096,
@@ -88,7 +121,7 @@ export async function analyzeContractText(text: string): Promise<ContractAnalysi
   const raw = message.content[0]?.type === 'text' ? message.content[0].text : '';
   if (!raw) throw new Error('No response from analysis service');
 
-  return JSON.parse(cleanJSON(raw)) as ContractAnalysis;
+  return safeParseJSON<ContractAnalysis>(raw);
 }
 
 export async function ocrImageToText(imageFile: File): Promise<string> {
@@ -132,26 +165,25 @@ export async function compareContracts(textA: string, textB: string): Promise<Co
     messages: [
       {
         role: 'user',
-        content: `Compare these two contracts and return a JSON array of the key differences:
-[{ "category": "string — e.g. Payment Terms, Termination, Liability, Duration", "description": "string — clearly explain how they differ" }]
+        content: `Compare these two contracts. Return ONLY a JSON array of differences.
+Format: [{"category": "string", "description": "string"}]
+Max 8 differences. No markdown, no extra text.
 
-CONTRACT A TYPE: ${contractA.contractType}
-CONTRACT A RISK: ${contractA.overallRisk}
-CONTRACT A SUMMARY: ${contractA.summary}
+CONTRACT A: ${contractA.contractType} (risk: ${contractA.overallRisk})
+Summary: ${contractA.summary}
 
-CONTRACT B TYPE: ${contractB.contractType}
-CONTRACT B RISK: ${contractB.overallRisk}
-CONTRACT B SUMMARY: ${contractB.summary}
+CONTRACT B: ${contractB.contractType} (risk: ${contractB.overallRisk})
+Summary: ${contractB.summary}
 
-CONTRACT A TEXT (first 3000 chars): ${textA.substring(0, 3000)}
+CONTRACT A TEXT: ${textA.substring(0, 2500)}
 
-CONTRACT B TEXT (first 3000 chars): ${textB.substring(0, 3000)}`,
+CONTRACT B TEXT: ${textB.substring(0, 2500)}`,
       },
     ],
   });
 
   const diffRaw = diffMessage.content[0]?.type === 'text' ? diffMessage.content[0].text : '[]';
-  const differences = JSON.parse(cleanJSON(diffRaw)) as Array<{ category: string; description: string }>;
+  const differences = safeParseJSON<Array<{ category: string; description: string }>>(diffRaw);
 
   return { contractA, contractB, differences };
 }
