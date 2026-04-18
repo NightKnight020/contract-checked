@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { jsonrepair } from 'jsonrepair';
 
 let _client: Anthropic | null = null;
 function getClient(): Anthropic {
@@ -61,9 +62,16 @@ function cleanJSON(raw: string): string {
   // Strip markdown code fences
   if (s.startsWith('```json')) s = s.replace(/^```json\s*/, '').replace(/\s*```$/, '');
   else if (s.startsWith('```')) s = s.replace(/^```\s*/, '').replace(/\s*```$/, '');
+  s = s.trim();
   // Extract just the JSON object/array if there's surrounding text
   const objMatch = s.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
   if (objMatch) s = objMatch[1];
+  // Use jsonrepair to fix any truncation or formatting issues
+  try {
+    s = jsonrepair(s);
+  } catch {
+    // If repair fails, return as-is and let JSON.parse throw a clear error
+  }
   return s;
 }
 
@@ -72,7 +80,7 @@ export async function analyzeContractText(text: string): Promise<ContractAnalysi
   const truncated = text.length > 14000 ? text.slice(0, 14000) + '\n\n[Document truncated for analysis]' : text;
   const message = await getClient().messages.create({
     model: 'claude-sonnet-4-5',
-    max_tokens: 2500,
+    max_tokens: 4096,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: ANALYSIS_PROMPT(truncated) }],
   });
@@ -119,7 +127,7 @@ export async function compareContracts(textA: string, textB: string): Promise<Co
 
   const diffMessage = await getClient().messages.create({
     model: 'claude-sonnet-4-5',
-    max_tokens: 1200,
+    max_tokens: 2000,
     system: SYSTEM_PROMPT,
     messages: [
       {
