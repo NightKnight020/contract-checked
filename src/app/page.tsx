@@ -193,7 +193,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 text-center relative">
             <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium">
-              <Star className="w-4 h-4" /> Free · No Login Required · Powered by AI
+              <Star className="w-4 h-4" /> Free · Instant Analysis · No Login Required
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
               Know What<br />
