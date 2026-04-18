@@ -39,13 +39,18 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Contact & Legal */}
           <div>
-            <p className="font-semibold text-white mb-3 text-sm">Legal</p>
+            <p className="font-semibold text-white mb-3 text-sm">Contact & Legal</p>
             <ul className="space-y-2 text-sm">
-              <li><span>Not Legal Advice</span></li>
-              <li><span>Privacy Policy</span></li>
-              <li><span>Terms of Service</span></li>
+              <li>
+                <a href="mailto:support@contractchecked.com" className="hover:text-white transition-colors">
+                  support@contractchecked.com
+                </a>
+              </li>
+              <li><span className="text-slate-500">Not Legal Advice</span></li>
+              <li><span className="text-slate-500">Privacy Policy</span></li>
+              <li><span className="text-slate-500">Terms of Service</span></li>
             </ul>
           </div>
         </div>
