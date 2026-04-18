@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { DocumentIcon, ArrowDownTrayIcon, MagnifyingGlassIcon, DocumentTextIcon, ShieldCheckIcon, HomeIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
+import { FileText, Download, Search, ShieldCheck, Home, Briefcase, Lock, Film } from 'lucide-react';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 
 interface ContractTemplate {
   id: string;
@@ -22,7 +23,7 @@ const templates: ContractTemplate[] = [
     category: 'Housing',
     popular: true,
     downloadUrl: '/api/templates/residential-rental-agreement',
-    icon: <HomeIcon className="w-6 h-6" />
+    icon: <Home className="w-6 h-6" />,
   },
   {
     id: 'sublease-agreement',
@@ -31,7 +32,7 @@ const templates: ContractTemplate[] = [
     category: 'Housing',
     popular: true,
     downloadUrl: '/api/templates/sublease-agreement',
-    icon: <DocumentTextIcon className="w-6 h-6" />
+    icon: <FileText className="w-6 h-6" />,
   },
   {
     id: 'media-release',
@@ -40,7 +41,7 @@ const templates: ContractTemplate[] = [
     category: 'Media',
     popular: true,
     downloadUrl: '/api/templates/media-release',
-    icon: <ShieldCheckIcon className="w-6 h-6" />
+    icon: <Film className="w-6 h-6" />,
   },
   {
     id: 'general-services-contract',
@@ -49,7 +50,7 @@ const templates: ContractTemplate[] = [
     category: 'Business',
     popular: true,
     downloadUrl: '/api/templates/general-services-contract',
-    icon: <DocumentIcon className="w-6 h-6" />
+    icon: <FileText className="w-6 h-6" />,
   },
   {
     id: 'independent-contractor',
@@ -58,7 +59,7 @@ const templates: ContractTemplate[] = [
     category: 'Business',
     popular: true,
     downloadUrl: '/api/templates/independent-contractor',
-    icon: <DocumentTextIcon className="w-6 h-6" />
+    icon: <Briefcase className="w-6 h-6" />,
   },
   {
     id: 'nda',
@@ -67,7 +68,7 @@ const templates: ContractTemplate[] = [
     category: 'Legal',
     popular: true,
     downloadUrl: '/api/templates/nda',
-    icon: <ShieldCheckIcon className="w-6 h-6" />
+    icon: <Lock className="w-6 h-6" />,
   },
   {
     id: 'partnership-agreement',
@@ -76,7 +77,7 @@ const templates: ContractTemplate[] = [
     category: 'Business',
     popular: false,
     downloadUrl: '/api/templates/partnership-agreement',
-    icon: <DocumentIcon className="w-6 h-6" />
+    icon: <FileText className="w-6 h-6" />,
   },
   {
     id: 'employment-contract',
@@ -85,7 +86,7 @@ const templates: ContractTemplate[] = [
     category: 'Employment',
     popular: false,
     downloadUrl: '/api/templates/employment-contract',
-    icon: <DocumentTextIcon className="w-6 h-6" />
+    icon: <Briefcase className="w-6 h-6" />,
   },
   {
     id: 'consulting-agreement',
@@ -94,7 +95,7 @@ const templates: ContractTemplate[] = [
     category: 'Business',
     popular: false,
     downloadUrl: '/api/templates/consulting-agreement',
-    icon: <DocumentIcon className="w-6 h-6" />
+    icon: <FileText className="w-6 h-6" />,
   },
   {
     id: 'goods-sales-contract',
@@ -103,8 +104,8 @@ const templates: ContractTemplate[] = [
     category: 'Sales',
     popular: false,
     downloadUrl: '/api/templates/goods-sales-contract',
-    icon: <DocumentIcon className="w-6 h-6" />
-  }
+    icon: <FileText className="w-6 h-6" />,
+  },
 ];
 
 const categories = ['All', 'Housing', 'Business', 'Legal', 'Media', 'Employment', 'Sales'];
@@ -113,15 +114,15 @@ export default function ResourcesPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredTemplates = templates.filter(template => {
+  const filteredTemplates = templates.filter((template) => {
     const matchesCategory = selectedCategory === 'All' || template.category === selectedCategory;
-    const matchesSearch = template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         template.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      template.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   const handleDownload = (template: ContractTemplate) => {
-    // Create a temporary link element to trigger download
     const link = document.createElement('a');
     link.href = template.downloadUrl;
     link.download = template.downloadUrl.split('/').pop() || `${template.id}.docx`;
@@ -132,83 +133,53 @@ export default function ResourcesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      {/* Navigation Header */}
-      <header className="bg-white/80 backdrop-blur-lg shadow-sm border-b border-slate-200/50 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <DocumentIcon className="h-8 w-8 text-indigo-600" />
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                Contract Checked
-              </h1>
-            </Link>
-            <nav className="flex space-x-8">
-              <Link
-                href="/"
-                className="text-slate-600 hover:text-indigo-600 font-medium transition-colors"
-              >
-                Home
-              </Link>
-              <Link
-                href="/resources"
-                className="text-indigo-600 font-semibold border-b-2 border-indigo-600 pb-1"
-              >
-                Resources
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#F9FAFB]">
+      <SiteHeader />
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/5 to-pink-500/10"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-slate-900 via-indigo-800 to-slate-900 bg-clip-text text-transparent mb-6">
-              Free Contract Templates
-            </h1>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
-              Download professionally crafted, fully editable contract templates for common legal agreements.
-              All templates are complete documents ready for customization and use.
-            </p>
-            <div className="flex items-center justify-center space-x-4 text-sm text-slate-500">
-              <ShieldCheckIcon className="w-5 h-5 text-green-500" />
-              <span>Legally reviewed templates</span>
-              <span className="text-slate-300">•</span>
-              <span>Free downloads</span>
-              <span className="text-slate-300">•</span>
-              <span>Word format (.docx)</span>
-            </div>
+      {/* Hero */}
+      <section className="bg-[#1C2333] text-white pt-16 pb-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+            Free Contract Templates
+          </h1>
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-6 leading-relaxed">
+            Download professionally crafted, fully editable contract templates for common legal agreements.
+            All templates are complete documents ready for customization.
+          </p>
+          <div className="flex items-center justify-center gap-4 text-sm text-slate-400 flex-wrap">
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-emerald-400" /> Legally reviewed</span>
+            <span>·</span>
+            <span>Free downloads</span>
+            <span>·</span>
+            <span>Word format (.docx)</span>
           </div>
         </div>
       </section>
 
-      {/* Search and Filter Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200/50 p-8">
-          {/* Search Bar */}
-          <div className="relative mb-8">
-            <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+      {/* Search + Filter + Grid */}
+      <section className="max-w-6xl mx-auto px-4 py-12">
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+          {/* Search */}
+          <div className="relative mb-6">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-lg"
+              className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/40 focus:border-[#2D6A4F] text-slate-800 placeholder-slate-400"
             />
           </div>
 
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-3 mb-8">
+          {/* Category filters */}
+          <div className="flex flex-wrap gap-2 mb-8">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                className={`px-5 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-indigo-600 text-white shadow-lg'
+                    ? 'bg-[#2D6A4F] text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -217,42 +188,35 @@ export default function ResourcesPage() {
             ))}
           </div>
 
-          {/* Templates Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Templates grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
             {filteredTemplates.map((template) => (
               <div
                 key={template.id}
-                className="group bg-gradient-to-br from-white to-slate-50/50 rounded-xl border border-slate-200/50 p-6 hover:shadow-lg hover:border-indigo-200 transition-all duration-300"
+                className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md hover:border-emerald-200 transition-all group"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 group-hover:bg-indigo-200 transition-colors">
+                  <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-[#2D6A4F] group-hover:bg-emerald-100 transition-colors">
                     {template.icon}
                   </div>
                   {template.popular && (
-                    <span className="px-2 py-1 bg-gradient-to-r from-orange-400 to-pink-500 text-white text-xs font-semibold rounded-full">
+                    <span className="px-2.5 py-1 bg-[#B7922A] text-white text-xs font-semibold rounded-full">
                       Popular
                     </span>
                   )}
                 </div>
-
-                <h3 className="text-xl font-semibold text-slate-900 mb-2 group-hover:text-indigo-700 transition-colors">
-                  {template.title}
-                </h3>
-
-                <p className="text-slate-600 mb-4 leading-relaxed">
-                  {template.description}
-                </p>
-
+                <h3 className="text-base font-bold text-slate-800 mb-2">{template.title}</h3>
+                <p className="text-sm text-slate-500 mb-4 leading-relaxed">{template.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                  <span className="text-xs text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
                     {template.category}
                   </span>
                   <button
                     onClick={() => handleDownload(template)}
-                    className="flex items-center space-x-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium"
+                    className="flex items-center gap-1.5 bg-[#2D6A4F] hover:bg-[#40916C] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                   >
-                    <ArrowDownTrayIcon className="w-4 h-4" />
-                    <span>Download</span>
+                    <Download className="w-3.5 h-3.5" />
+                    Download
                   </button>
                 </div>
               </div>
@@ -261,58 +225,31 @@ export default function ResourcesPage() {
 
           {filteredTemplates.length === 0 && (
             <div className="text-center py-12">
-              <DocumentIcon className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-slate-600 mb-2">No templates found</h3>
-              <p className="text-slate-500">Try adjusting your search or filter criteria.</p>
+              <FileText className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+              <h3 className="font-semibold text-slate-600 mb-1">No templates found</h3>
+              <p className="text-sm text-slate-400">Try adjusting your search or filter criteria.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* Disclaimer Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6">
-          <div className="flex items-start space-x-3">
-            <ShieldCheckIcon className="w-6 h-6 text-amber-600 mt-0.5" />
-            <div>
-              <h3 className="text-lg font-semibold text-amber-800 mb-2">Legal Disclaimer</h3>
-              <p className="text-amber-700 leading-relaxed">
-                These templates are provided for informational purposes only and do not constitute legal advice.
-                Laws vary by jurisdiction, and these templates may not be appropriate for your specific situation.
-                <strong> Always consult with a qualified attorney</strong> before using any contract template.
-                Contract Checked is not a law firm and does not provide legal services.
-              </p>
-            </div>
+      {/* Disclaimer */}
+      <section className="max-w-6xl mx-auto px-4 pb-12">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-6 flex gap-3">
+          <ShieldCheck className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-semibold text-amber-800 mb-1">Legal Disclaimer</h3>
+            <p className="text-sm text-amber-700 leading-relaxed">
+              These templates are provided for informational purposes only and do not constitute legal advice.
+              Laws vary by jurisdiction, and these templates may not be appropriate for your specific situation.
+              <strong> Always consult with a qualified attorney</strong> before using any contract template.
+              Contract Checked is not a law firm and does not provide legal services.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 text-white mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-3 mb-4">
-              <DocumentIcon className="h-8 w-8 text-indigo-400" />
-              <h3 className="text-2xl font-bold">Contract Checked</h3>
-            </div>
-            <p className="text-slate-400 mb-8">
-              Making contract analysis accessible to everyone. Free templates and AI-powered insights.
-            </p>
-            <div className="flex justify-center space-x-6">
-              <Link href="/" className="text-slate-400 hover:text-white transition-colors">
-                Home
-              </Link>
-              <Link href="/resources" className="text-indigo-400 hover:text-white transition-colors">
-                Resources
-              </Link>
-            </div>
-            <div className="mt-8 pt-8 border-t border-slate-800 text-center text-slate-500">
-              <p>&copy; 2024 Contract Checked. Not legal advice.</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
-

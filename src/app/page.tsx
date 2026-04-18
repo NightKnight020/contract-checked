@@ -8,6 +8,9 @@ import {
 } from 'lucide-react';
 import { ContractUpload, type UploadPayload } from '@/components/ContractUpload';
 import { AnalysisResults, type AnalysisResultPayload } from '@/components/AnalysisResults';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
+import { ContractQA } from '@/components/ContractQA';
 
 // ─── FAQ data ────────────────────────────────────────────────────────────────
 
@@ -162,44 +165,35 @@ export default function Home() {
     }
   }, []);
 
+  // Build analysis context string for Q&A (single mode only)
+  const singleResult = result && result.mode !== 'compare' ? result as import('@/lib/contract-ai').ContractAnalysis & { mode: string } : null;
+  const analysisContext = singleResult
+    ? [
+        singleResult.contractType ? `Contract type: ${singleResult.contractType}` : null,
+        singleResult.summary ? `Summary: ${singleResult.summary}` : null,
+        singleResult.risks?.length
+          ? `Key risks: ${singleResult.risks.slice(0, 3).map((r: import('@/lib/contract-ai').RiskItem) => r.description ?? r.title).join('; ')}`
+          : null,
+      ]
+        .filter(Boolean)
+        .join('\n')
+    : undefined;
+
   return (
     <>
       {/* JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <div className="min-h-screen bg-[#F8FAFC]">
-        {/* ── Navigation ── */}
-        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
-          <div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-16">
-            <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-              <div className="w-9 h-9 bg-[#0F172A] rounded-xl flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-lg font-bold text-[#0F172A]">Contract Checked</span>
-            </Link>
-
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-              <Link href="/resources" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Templates</Link>
-              <Link href="/contract-types" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Contract Types</Link>
-              <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Blog</Link>
-            </nav>
-
-            <button
-              onClick={scrollToUpload}
-              className="bg-[#2D6A4F] hover:bg-[#40916C] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-            >
-              Analyze Free
-            </button>
-          </div>
-        </header>
+      <div className="min-h-screen bg-[#F9FAFB]">
+        <SiteHeader />
 
         {/* ── Hero ── */}
-        <section className="bg-[#0F172A] text-white pt-20 pb-32 relative overflow-hidden">
+        <section className="bg-[#1C2333] text-white pt-20 pb-32 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 text-center relative">
             <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium">
-              <Star className="w-4 h-4" /> Powered by GPT-4 Vision · Free · No Login Required
+              <Star className="w-4 h-4" /> Free · No Login Required · Powered by AI
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
               Know What<br />
@@ -274,8 +268,17 @@ export default function Home() {
           </section>
         )}
 
+        {/* ── Contract Q&A ── */}
+        <section className="max-w-3xl mx-auto px-4 mb-24">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Ask Questions About Your Contract</h2>
+            <p className="text-slate-500 text-sm">Get plain-English answers instantly</p>
+          </div>
+          <ContractQA analysisContext={analysisContext} />
+        </section>
+
         {/* ── Stats ── */}
-        <section className="bg-[#0F172A] py-16 mb-20">
+        <section className="bg-[#1C2333] py-16 mb-20">
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
             {[
               { value: '10,000+', label: 'Contracts Analyzed' },
@@ -347,55 +350,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Footer ── */}
-        <footer className="bg-[#0F172A] text-slate-400 py-12">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-              <div className="col-span-2 md:col-span-1">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
-                    <FileText className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="font-bold text-white">Contract Checked</span>
-                </div>
-                <p className="text-sm leading-relaxed">AI contract analysis for everyone. Free, private, no login needed.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-3 text-sm">Tools</p>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href="/#upload-section" className="hover:text-white transition-colors">Analyze Contract</Link></li>
-                  <li><Link href="/contract-types" className="hover:text-white transition-colors">Contract Types</Link></li>
-                  <li><Link href="/resources" className="hover:text-white transition-colors">Free Templates</Link></li>
-                  <li><Link href="/analyze/rental-agreement" className="hover:text-white transition-colors">Rental Agreement</Link></li>
-                  <li><Link href="/analyze/employment-contract" className="hover:text-white transition-colors">Employment Contract</Link></li>
-                  <li><Link href="/analyze/nda" className="hover:text-white transition-colors">NDA Analysis</Link></li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-3 text-sm">Learn</p>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                  <li><Link href="/resources" className="hover:text-white transition-colors">Resources</Link></li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-3 text-sm">Legal</p>
-                <ul className="space-y-2 text-sm">
-                  <li><span>Not Legal Advice</span></li>
-                  <li><span>Privacy Policy</span></li>
-                  <li><span>Terms of Service</span></li>
-                </ul>
-              </div>
-            </div>
-            <div className="border-t border-white/10 pt-8 text-center text-xs">
-              &copy; {new Date().getFullYear()} Contract Checked. AI-powered contract analysis. Not legal advice.
-            </div>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </>
   );
 }
-
-
-

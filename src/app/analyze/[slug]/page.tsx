@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
-  FileText, ArrowRight, AlertTriangle, CheckCircle,
-  Shield, Search, ChevronRight,
+  ArrowRight, AlertTriangle, CheckCircle,
+  Shield, Search, ChevronRight, FileText,
 } from 'lucide-react';
+import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 
 // ─── Contract Data ────────────────────────────────────────────────────────────
 
@@ -996,29 +998,8 @@ export default async function AnalyzePage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <div className="min-h-screen bg-[#F8FAFC]">
-        {/* Navigation */}
-        <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200">
-          <div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-16">
-            <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-              <div className="w-9 h-9 bg-[#0F172A] rounded-xl flex items-center justify-center">
-                <FileText className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-lg font-bold text-[#0F172A]">Contract Checked</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-6 text-sm">
-              <Link href="/resources" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Templates</Link>
-              <Link href="/contract-types" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Contract Types</Link>
-              <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Blog</Link>
-            </nav>
-            <Link
-              href="/#upload-section"
-              className="bg-[#2D6A4F] hover:bg-[#40916C] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-            >
-              Analyze Free
-            </Link>
-          </div>
-        </header>
+      <div className="min-h-screen bg-[#F9FAFB]">
+        <SiteHeader />
 
         {/* Hero */}
         <section className="bg-[#1C2333] text-white pt-16 pb-20">
@@ -1152,48 +1133,7 @@ export default async function AnalyzePage({ params }: PageProps) {
 
         </div>
 
-        {/* Footer */}
-        <footer className="bg-[#0F172A] text-slate-400 py-12 mt-8">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-              <div className="col-span-2 md:col-span-1">
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
-                    <FileText className="w-4 h-4 text-white" />
-                  </div>
-                  <span className="font-bold text-white">Contract Checked</span>
-                </div>
-                <p className="text-sm leading-relaxed">Contract analysis for everyone. Free, private, no login needed.</p>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-3 text-sm">Tools</p>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href="/#upload-section" className="hover:text-white transition-colors">Analyze Contract</Link></li>
-                  <li><Link href="/contract-types" className="hover:text-white transition-colors">Contract Types</Link></li>
-                  <li><Link href="/resources" className="hover:text-white transition-colors">Free Templates</Link></li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-3 text-sm">Learn</p>
-                <ul className="space-y-2 text-sm">
-                  <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
-                  <li><Link href="/resources" className="hover:text-white transition-colors">Resources</Link></li>
-                </ul>
-              </div>
-              <div>
-                <p className="font-semibold text-white mb-3 text-sm">Legal</p>
-                <ul className="space-y-2 text-sm">
-                  <li><span>Not Legal Advice</span></li>
-                  <li><span>Privacy Policy</span></li>
-                  <li><span>Terms of Service</span></li>
-                </ul>
-              </div>
-            </div>
-            <div className="border-t border-white/10 pt-8 text-center text-xs">
-              &copy; {new Date().getFullYear()} Contract Checked. Contract analysis tool. Not legal advice.
-            </div>
-          </div>
-        </footer>
+        <SiteFooter />
       </div>
     </>
   );
