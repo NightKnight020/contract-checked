@@ -58,17 +58,21 @@ ${text}`;
 
 function cleanJSON(raw: string): string {
   let s = raw.trim();
+  // Strip markdown code fences
   if (s.startsWith('```json')) s = s.replace(/^```json\s*/, '').replace(/\s*```$/, '');
   else if (s.startsWith('```')) s = s.replace(/^```\s*/, '').replace(/\s*```$/, '');
+  // Extract just the JSON object/array if there's surrounding text
+  const objMatch = s.match(/(\{[\s\S]*\}|\[[\s\S]*\])/);
+  if (objMatch) s = objMatch[1];
   return s;
 }
 
 export async function analyzeContractText(text: string): Promise<ContractAnalysis> {
-  // Truncate very long contracts to first 12000 chars — enough for thorough analysis
-  const truncated = text.length > 12000 ? text.slice(0, 12000) + '\n\n[Document truncated for analysis]' : text;
+  // Truncate very long contracts — enough for thorough analysis
+  const truncated = text.length > 14000 ? text.slice(0, 14000) + '\n\n[Document truncated for analysis]' : text;
   const message = await getClient().messages.create({
-    model: 'claude-haiku-4-5',
-    max_tokens: 2000,
+    model: 'claude-sonnet-4-5',
+    max_tokens: 2500,
     system: SYSTEM_PROMPT,
     messages: [{ role: 'user', content: ANALYSIS_PROMPT(truncated) }],
   });
@@ -85,7 +89,7 @@ export async function ocrImageToText(imageFile: File): Promise<string> {
   const mimeType = imageFile.type as 'image/jpeg' | 'image/png' | 'image/webp' | 'image/gif';
 
   const message = await getClient().messages.create({
-    model: 'claude-haiku-4-5',
+    model: 'claude-sonnet-4-5',
     max_tokens: 3000,
     messages: [
       {
@@ -114,8 +118,8 @@ export async function compareContracts(textA: string, textB: string): Promise<Co
   ]);
 
   const diffMessage = await getClient().messages.create({
-    model: 'claude-haiku-4-5',
-    max_tokens: 1000,
+    model: 'claude-sonnet-4-5',
+    max_tokens: 1200,
     system: SYSTEM_PROMPT,
     messages: [
       {
