@@ -11,6 +11,9 @@ import { AnalysisResults, type AnalysisResultPayload } from '@/components/Analys
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ContractQA } from '@/components/ContractQA';
+import { useAuth } from '@/lib/auth-context';
+import { saveAnalysisToHistory } from '@/lib/supabase';
+import type { ContractAnalysis, ComparisonResult } from '@/lib/contract-ai';
 
 // ─── FAQ data ────────────────────────────────────────────────────────────────
 
@@ -142,6 +145,7 @@ const PROGRESS_STEPS = [
 ];
 
 export default function Home() {
+  const { user } = useAuth();
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [progressStep, setProgressStep] = useState(0);
   const [result, setResult] = useState<AnalysisResultPayload | null>(null);
@@ -180,7 +184,31 @@ export default function Home() {
         throw new Error(err.error ?? 'Failed to analyze contract');
       }
       const data = await res.json();
-      setResult(data as AnalysisResultPayload);
+      const analysisPayload = data as AnalysisResultPayload;
+      setResult(analysisPayload);
+
+      // Auto-save to history if logged in
+      if (user) {
+        const analysisResult = data as Record<string, unknown>;
+        if (analysisPayload.mode === 'single') {
+          const s = analysisPayload as unknown as ContractAnalysis;
+          saveAnalysisToHistory(user.id, {
+            contractType: s.contractType,
+            fileName: payload.fileA?.name,
+            overallRisk: s.overallRisk,
+            analysisMode: 'single',
+            analysisResult,
+            plainEnglishSummary: s.plainEnglishSummary,
+          });
+        } else {
+          const c = analysisPayload as unknown as ComparisonResult;
+          saveAnalysisToHistory(user.id, {
+            contractType: `${c.contractA.contractType} vs ${c.contractB.contractType}`,
+            analysisMode: 'compare',
+            analysisResult,
+          });
+        }
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
     } finally {
@@ -321,10 +349,26 @@ export default function Home() {
 
         {/* ── Results ── */}
         {result && (
-          <section className="max-w-6xl mx-auto px-4 mb-24">
+          <section className="max-w-6xl mx-auto px-4 mb-8">
             <AnalysisResults result={result} />
+            {!user && (
+              <div className="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-wrap items-center justify-between gap-3">
+                <p className="text-sm text-emerald-800">
+                  <strong>Save your analysis</strong> — Sign in to access your contract history anytime.
+                </p>
+                <Link
+                  href="/auth/signup"
+                  className="text-sm font-semibold text-[#2D6A4F] hover:underline whitespace-nowrap"
+                >
+                  Create free account →
+                </Link>
+              </div>
+            )}
           </section>
         )}
+
+        {/* spacer when no result */}
+        {!result && <div className="mb-16" />}
 
         {/* ── Contract Q&A ── */}
         <section className="max-w-3xl mx-auto px-4 mb-24">

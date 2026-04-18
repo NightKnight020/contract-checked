@@ -33,5 +33,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${base}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${base}/aircharterservice`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/dashboard`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${base}/auth/login`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${base}/auth/signup`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
   ];
 }
