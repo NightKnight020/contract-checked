@@ -28,6 +28,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
+    { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${base}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${base}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
     { url: `${base}/aircharterservice`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ];
 }

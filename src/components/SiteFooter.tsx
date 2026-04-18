@@ -48,9 +48,9 @@ export function SiteFooter() {
                   support@contractchecked.com
                 </a>
               </li>
-              <li><span className="text-slate-500">Not Legal Advice</span></li>
-              <li><span className="text-slate-500">Privacy Policy</span></li>
-              <li><span className="text-slate-500">Terms of Service</span></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>

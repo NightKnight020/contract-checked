@@ -326,6 +326,58 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── From Our Legal Blog ── */}
+        <section className="max-w-6xl mx-auto px-4 mb-24">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">From Our Legal Blog</h2>
+            <p className="text-slate-500 max-w-xl mx-auto">Practical guides to help you understand the contracts you encounter every day.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                href: '/blog/rental-agreement-red-flags',
+                tag: 'Rental Agreements',
+                title: '12 Rental Agreement Red Flags Landlords Hope You Miss',
+                excerpt: 'Signing a lease without reading it carefully can cost you thousands. Here are the clauses that could blindside you.',
+              },
+              {
+                href: '/blog/employment-contract-negotiation-guide',
+                tag: 'Employment',
+                title: 'Employment Contract Negotiation: What You Can (and Must) Push Back On',
+                excerpt: 'Most employment contracts are written by company lawyers. Know which clauses are negotiable before you sign.',
+              },
+              {
+                href: '/blog/freelancer-contract-checklist',
+                tag: 'Freelancing',
+                title: 'The Freelancer\'s Contract Checklist: 10 Things Every Client Agreement Must Have',
+                excerpt: 'Protect your work, your payment, and your time. A checklist of must-have clauses in every freelance contract.',
+              },
+            ].map((post) => (
+              <Link
+                key={post.href}
+                href={post.href}
+                className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-md transition-shadow group"
+              >
+                <span className="inline-block text-xs font-semibold text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full mb-4">
+                  {post.tag}
+                </span>
+                <h3 className="font-bold text-slate-800 mb-3 leading-snug group-hover:text-[#2D6A4F] transition-colors">
+                  {post.title}
+                </h3>
+                <p className="text-sm text-slate-500 leading-relaxed mb-4">{post.excerpt}</p>
+                <span className="text-sm font-semibold text-[#2D6A4F] flex items-center gap-1">
+                  Read more <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link href="/blog" className="inline-flex items-center gap-2 text-[#2D6A4F] font-semibold hover:underline">
+              View all legal guides <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </section>
+
         {/* ── FAQ ── */}
         <section className="max-w-3xl mx-auto px-4 mb-24">
           <h2 className="text-3xl font-bold text-slate-800 text-center mb-10">Frequently Asked Questions</h2>

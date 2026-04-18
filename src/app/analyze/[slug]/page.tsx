@@ -937,6 +937,45 @@ const CONTRACT_DATA: Record<string, ContractData> = {
   },
 };
 
+// Blog article mapping for each contract type
+const RELATED_BLOG: Record<string, { href: string; title: string; excerpt: string }> = {
+  'rental-agreement': {
+    href: '/blog/rental-agreement-red-flags',
+    title: '12 Rental Agreement Red Flags Landlords Hope You Miss',
+    excerpt: 'The clauses that could cost you hundreds before you even move in.',
+  },
+  'employment-contract': {
+    href: '/blog/employment-contract-negotiation-guide',
+    title: 'Employment Contract Negotiation: What You Can (and Must) Push Back On',
+    excerpt: 'Know which employment contract clauses are actually negotiable.',
+  },
+  'nda': {
+    href: '/blog/nda-mistakes-that-backfire',
+    title: 'NDA Mistakes That Can Backfire on the Person Who Drafted Them',
+    excerpt: 'Common NDA drafting errors that create more risk than protection.',
+  },
+  'independent-contractor': {
+    href: '/blog/freelancer-contract-checklist',
+    title: 'The Freelancer\'s Contract Checklist: 10 Things Every Client Agreement Must Have',
+    excerpt: 'Protect your work, your payment, and your time with this checklist.',
+  },
+  'real-estate-aps': {
+    href: '/blog/real-estate-purchase-agreement-guide',
+    title: 'The Real Estate Purchase Agreement: What Every Buyer Must Check Before Signing',
+    excerpt: 'The clauses that can cost you — or save you — thousands on a property deal.',
+  },
+  'service-agreement': {
+    href: '/blog/service-agreement-problems',
+    title: '8 Service Agreement Problems That Lead to Disputes (and How to Prevent Them)',
+    excerpt: 'Vague service contracts are the root cause of most client-freelancer disputes.',
+  },
+  'partnership-agreement': {
+    href: '/blog/partnership-agreement-must-haves',
+    title: 'Partnership Agreement Must-Haves: 9 Clauses That Prevent Business Divorces',
+    excerpt: 'The provisions every business partnership agreement needs before you start.',
+  },
+};
+
 const CONTRACT_TITLES: Record<string, string> = {
   'rental-agreement': 'Rental & Lease Agreements',
   'employment-contract': 'Employment Contracts',
@@ -1130,6 +1169,41 @@ export default async function AnalyzePage({ params }: PageProps) {
               </Link>
             </div>
           </section>
+
+          {/* Related Articles */}
+          {RELATED_BLOG[slug] ? (
+            <section className="border-t border-slate-200 pt-10">
+              <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#2D6A4F]" />
+                Related Article
+              </h2>
+              <Link
+                href={RELATED_BLOG[slug].href}
+                className="block bg-white border border-slate-200 rounded-xl p-6 hover:shadow-md hover:border-emerald-200 transition-all group"
+              >
+                <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#2D6A4F] transition-colors">
+                  {RELATED_BLOG[slug].title}
+                </h3>
+                <p className="text-sm text-slate-500 mb-3">{RELATED_BLOG[slug].excerpt}</p>
+                <span className="text-sm font-semibold text-[#2D6A4F] flex items-center gap-1">
+                  Read the guide <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </Link>
+            </section>
+          ) : (
+            <section className="border-t border-slate-200 pt-10">
+              <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-[#2D6A4F]" />
+                Related Articles
+              </h2>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 text-[#2D6A4F] font-semibold hover:underline text-sm"
+              >
+                Browse all legal guides <ArrowRight className="w-4 h-4" />
+              </Link>
+            </section>
+          )}
 
         </div>
 

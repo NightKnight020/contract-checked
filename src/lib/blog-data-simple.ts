@@ -119,6 +119,12 @@ This is standard in co-tenancy situations and is generally enforceable. What you
 
 The clauses above are exactly the kind of issues that get missed in a quick read. Upload your lease to **Contract Checked** before you sign — our AI analysis flags problematic clauses in plain English so you know what you're agreeing to before it's too late.
 
+## Related Guides
+
+- [Rental Agreement Analysis: What to Check](/analyze/rental-agreement)
+- [Browse All Contract Types](/contract-types)
+- [Resources & Templates](/resources)
+
 ## Analyze Your Contract Before You Sign
 
 Don't navigate this alone. Upload your contract to Contract Checked and get an instant plain-English analysis — free, no login required. [Analyze your contract now →](https://contractchecked.com/#upload-section)`;
@@ -208,6 +214,12 @@ Non-solicitation clauses prevent you from recruiting your colleagues or soliciti
 Employment contracts are long, and the problematic clauses are rarely in the main body — they're in the schedules, exhibits, and defined terms. Run your offer letter and employment agreement through **Contract Checked** to get a plain-English breakdown of every clause before you sign.
 
 The cost of negotiating these terms before you start is zero. The cost of discovering you can't take your next job because of an overbroad non-compete is enormous.
+
+## Related Guides
+
+- [Employment Contract Analysis: What to Look For](/analyze/employment-contract)
+- [NDA Guide: Mistakes That Can Backfire](/blog/nda-mistakes-that-backfire)
+- [Browse All Contract Types](/contract-types)
 
 ## Analyze Your Contract Before You Sign
 
@@ -305,6 +317,12 @@ NDAs and non-compete agreements are different things that are often confused —
 Some NDAs include non-compete language buried in definitions or use clauses. If you're signing what's presented as an NDA and you see language about "not engaging in competitive activity" or "not working for competitors," you're looking at a non-compete provision — with all the scrutiny that entails.
 
 **Run your NDA through Contract Checked** before signing. Our analysis specifically identifies whether an NDA contains non-compete provisions, whether the duration is reasonable, and whether standard carve-outs are present.
+
+## Related Guides
+
+- [NDA Analysis: What to Watch For](/analyze/nda)
+- [Partnership Agreement Guide](/analyze/partnership-agreement)
+- [Employment Contract Red Flags](/blog/employment-contract-negotiation-guide)
 
 ## Analyze Your Contract Before You Sign
 
@@ -432,6 +450,12 @@ Protections:
 
 Before doing large projects on net-60 or net-90 terms with a startup or distressed company, assess the credit risk. **Contract Checked** can flag unusual payment terms that increase your financial exposure.
 
+## Related Guides
+
+- [Independent Contractor Agreement: What to Check](/analyze/independent-contractor)
+- [Service Agreement Analysis](/analyze/service-agreement)
+- [Browse All Contract Types](/contract-types)
+
 ## Analyze Your Contract Before You Sign
 
 Don't navigate this alone. Upload your contract to Contract Checked and get an instant plain-English analysis — free, no login required. [Analyze your contract now →](https://contractchecked.com/#upload-section)`;
@@ -548,6 +572,12 @@ Push for a representation and warranty survival period of at least 12 months for
 
 Before signing any Agreement of Purchase and Sale, upload it to **Contract Checked** for a plain-English review of every condition, deadline, and risk provision.
 
+## Related Guides
+
+- [Real Estate APS Analysis: What to Look For](/analyze/real-estate-aps)
+- [Purchase Agreement Guide](/analyze/purchase-agreement)
+- [Browse All Contract Types](/contract-types)
+
 ## Analyze Your Contract Before You Sign
 
 Don't navigate this alone. Upload your contract to Contract Checked and get an instant plain-English analysis — free, no login required. [Analyze your contract now →](https://contractchecked.com/#upload-section)`;
@@ -641,6 +671,12 @@ If you've built your operations around this service — integrated their API, tr
 **What to push for:** If the provider has a for-convenience termination right, you should have an equivalent right on equivalent terms. If the contract has a minimum term, the provider's for-convenience termination should be limited or should trigger compensation for your transition costs.
 
 Upload your service agreement to **Contract Checked** before you sign. Our analysis flags these eight clauses — and others — so you can negotiate before you're locked in.
+
+## Related Guides
+
+- [Service Agreement Analysis: What to Check](/analyze/service-agreement)
+- [Independent Contractor Agreement Guide](/analyze/independent-contractor)
+- [Browse All Contract Types](/contract-types)
 
 ## Analyze Your Contract Before You Sign
 
@@ -767,6 +803,12 @@ One of the most under-discussed risks in early-stage businesses: **personal guar
 Know before you sign: which partners are personally guaranteeing which obligations, what the maximum exposure is, and whether joint-and-several liability means one partner can be pursued for the full amount.
 
 Review your partnership agreement *and* any guarantee documents with **Contract Checked** and with a qualified business lawyer before committing. The 30 minutes you spend now can prevent years of dispute.
+
+## Related Guides
+
+- [Partnership Agreement Analysis: What to Look For](/analyze/partnership-agreement)
+- [NDA Guide for Business Partners](/analyze/nda)
+- [Browse All Contract Types](/contract-types)
 
 ## Analyze Your Contract Before You Sign
 
@@ -963,6 +1005,12 @@ Any "yes" is a question to raise with the other party or a lawyer before signing
 ---
 
 Want a faster path to the same result? Upload your contract to **Contract Checked** and our AI will run through this framework for you — flagging risks, explaining clauses in plain English, and highlighting what's missing. It takes less than two minutes and is completely free.
+
+## Related Guides
+
+- [Browse All Contract Types](/contract-types)
+- [Resources & Contract Templates](/resources)
+- [Rental Agreement Red Flags](/blog/rental-agreement-red-flags)
 
 ## Analyze Your Contract Before You Sign
 
