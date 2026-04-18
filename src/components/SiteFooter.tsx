@@ -24,6 +24,7 @@ export function SiteFooter() {
               <li><Link href="/contract-types" className="hover:text-white transition-colors">Contract Types</Link></li>
               <li><Link href="/resources" className="hover:text-white transition-colors">Templates</Link></li>
               <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
             </ul>
           </div>
 

@@ -11,6 +11,7 @@ interface AuthContextType {
   signUp: (email: string, password: string) => Promise<{ error: AuthError | null }>;
   signOut: () => Promise<void>;
   resetPassword: (email: string) => Promise<{ error: AuthError | null }>;
+  signInWithGoogle: () => Promise<{ error: AuthError | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -111,6 +112,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const signInWithGoogle = async () => {
+    if (!supabase) return { error: { message: 'Auth not configured' } as AuthError };
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/dashboard` },
+    });
+    return { error };
+  };
+
   const value = {
     user,
     loading,
@@ -118,6 +128,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signUp,
     signOut,
     resetPassword,
+    signInWithGoogle,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

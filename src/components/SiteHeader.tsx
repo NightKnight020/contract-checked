@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { label: 'Contract Types', href: '/contract-types' },
   { label: 'Templates', href: '/resources' },
   { label: 'Blog', href: '/blog' },
+  { label: 'Pricing', href: '/pricing' },
 ];
 
 export function SiteHeader() {

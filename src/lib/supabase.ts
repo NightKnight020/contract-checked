@@ -103,6 +103,65 @@ export interface ContractLearningPattern {
   created_at: string;
 }
 
+export interface HistoryEntry {
+  id: string;
+  user_id: string;
+  created_at: string;
+  contract_type: string | null;
+  file_name: string | null;
+  overall_risk: 'low' | 'medium' | 'high' | null;
+  analysis_mode: 'single' | 'compare';
+  analysis_result: Record<string, unknown>;
+  plain_english_summary: string | null;
+}
+
+export async function saveAnalysisToHistory(
+  userId: string,
+  data: {
+    contractType?: string;
+    fileName?: string;
+    overallRisk?: 'low' | 'medium' | 'high';
+    analysisMode: 'single' | 'compare';
+    analysisResult: Record<string, unknown>;
+    plainEnglishSummary?: string;
+  }
+): Promise<{ id: string } | null> {
+  if (!supabase) return null;
+  const { data: row, error } = await supabase
+    .from('contract_history')
+    .insert({
+      user_id: userId,
+      contract_type: data.contractType ?? null,
+      file_name: data.fileName ?? null,
+      overall_risk: data.overallRisk ?? null,
+      analysis_mode: data.analysisMode,
+      analysis_result: data.analysisResult as Record<string, unknown>,
+      plain_english_summary: data.plainEnglishSummary ?? null,
+    })
+    .select('id')
+    .single();
+  if (error) { console.error('saveAnalysis error:', error); return null; }
+  return row;
+}
+
+export async function getUserHistory(userId: string): Promise<HistoryEntry[]> {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from('contract_history')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(50);
+  if (error) { console.error('getUserHistory error:', error); return []; }
+  return (data ?? []) as HistoryEntry[];
+}
+
+export async function deleteHistoryEntry(id: string): Promise<boolean> {
+  if (!supabase) return false;
+  const { error } = await supabase.from('contract_history').delete().eq('id', id);
+  return !error;
+}
+
 export interface Database {
   public: {
     Tables: {
