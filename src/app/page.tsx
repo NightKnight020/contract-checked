@@ -42,10 +42,17 @@ const FAQS = [
 ];
 
 const CONTRACT_TYPES = [
-  'Residential Lease', 'Employment Agreement', 'NDA / Confidentiality',
-  'Service Agreement', 'Purchase Agreement', 'Partnership Agreement',
-  'Independent Contractor', 'Repair & Maintenance',
-  'Real Estate (APS)', 'Consulting Contract', 'Franchise Agreement',
+  { label: 'Residential Lease', slug: '/analyze/rental-agreement' },
+  { label: 'Employment Agreement', slug: '/analyze/employment-contract' },
+  { label: 'NDA / Confidentiality', slug: '/analyze/nda' },
+  { label: 'Service Agreement', slug: '/analyze/service-agreement' },
+  { label: 'Purchase Agreement', slug: '/analyze/purchase-agreement' },
+  { label: 'Partnership Agreement', slug: '/analyze/partnership-agreement' },
+  { label: 'Independent Contractor', slug: '/analyze/independent-contractor' },
+  { label: 'Repair & Maintenance', slug: '/analyze/repair-agreement' },
+  { label: 'Real Estate (APS)', slug: '/analyze/real-estate-aps' },
+  { label: 'Consulting Contract', slug: '/analyze/service-agreement' },
+  { label: 'Franchise Agreement', slug: '/analyze/franchise-agreement' },
 ];
 
 const FEATURES = [
@@ -318,11 +325,21 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-slate-800 text-center mb-10">Supported Contract Types</h2>
             <div className="flex flex-wrap justify-center gap-3">
               {CONTRACT_TYPES.map((t) => (
-                <span key={t} className="px-4 py-2 bg-slate-100 hover:bg-emerald-50 hover:text-[#1B4332] rounded-full text-sm font-medium text-slate-700 transition-colors cursor-default">
-                  {t}
-                </span>
+                <Link
+                  key={t.label}
+                  href={t.slug}
+                  className="px-4 py-2 bg-slate-100 hover:bg-[#2D6A4F] hover:text-white rounded-full text-sm font-medium text-slate-700 transition-colors"
+                >
+                  {t.label}
+                </Link>
               ))}
             </div>
+            <p className="text-center mt-6 text-sm text-slate-500">
+              Don&apos;t see your type?{' '}
+              <Link href="/contract-types" className="text-[#2D6A4F] hover:underline font-medium">
+                View all supported contract types →
+              </Link>
+            </p>
           </div>
         </section>
 
