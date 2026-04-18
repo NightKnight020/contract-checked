@@ -132,8 +132,18 @@ const appSchema = {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
+const PROGRESS_STEPS = [
+  'Reading your contract...',
+  'Identifying parties and key terms...',
+  'Checking for risks and red flags...',
+  'Evaluating missing clauses...',
+  'Generating plain English summary...',
+  'Almost done...',
+];
+
 export default function Home() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [progressStep, setProgressStep] = useState(0);
   const [result, setResult] = useState<AnalysisResultPayload | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -143,8 +153,14 @@ export default function Home() {
 
   const handleAnalyze = useCallback(async (payload: UploadPayload) => {
     setIsAnalyzing(true);
+    setProgressStep(0);
     setError(null);
     setResult(null);
+
+    // Cycle through progress steps every 3s while analyzing
+    const progressInterval = setInterval(() => {
+      setProgressStep((s) => Math.min(s + 1, PROGRESS_STEPS.length - 1));
+    }, 3000);
 
     try {
       const formData = new FormData();
@@ -168,7 +184,9 @@ export default function Home() {
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.');
     } finally {
+      clearInterval(progressInterval);
       setIsAnalyzing(false);
+      setProgressStep(0);
     }
   }, []);
 
@@ -260,6 +278,24 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">Analyze Your Contract</h2>
             <p className="text-slate-500 text-center mb-8 text-sm">Upload a file, paste text, or take a photo — completely free</p>
             <ContractUpload onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} />
+            {isAnalyzing && (
+              <div className="mt-8 flex flex-col items-center gap-4">
+                <div className="flex gap-1.5">
+                  {[0,1,2].map(i => (
+                    <div key={i} className="w-2 h-2 rounded-full bg-[#2D6A4F] animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+                  ))}
+                </div>
+                <p className="text-sm font-medium text-[#2D6A4F] transition-all duration-500">
+                  {PROGRESS_STEPS[progressStep]}
+                </p>
+                <div className="w-full max-w-xs bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                  <div
+                    className="h-full bg-[#2D6A4F] rounded-full transition-all duration-[3000ms] ease-linear"
+                    style={{ width: `${((progressStep + 1) / PROGRESS_STEPS.length) * 100}%` }}
+                  />
+                </div>
+              </div>
+            )}
             {error && (
               <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
                 {error}
