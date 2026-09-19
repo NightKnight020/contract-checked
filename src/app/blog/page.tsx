@@ -27,7 +27,7 @@ export default function BlogPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-20">
+      <section className="bg-[#0F172A] text-white pt-16 pb-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
             Contract Insights &amp; Legal Guides
@@ -57,7 +57,7 @@ export default function BlogPage() {
               <button
                 onClick={() => setSelectedCategory('')}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                  selectedCategory === '' ? 'bg-[#2D6A4F] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  selectedCategory === '' ? 'bg-[#059669] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
                 All Topics
@@ -67,7 +67,7 @@ export default function BlogPage() {
                   key={category}
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                    selectedCategory === category ? 'bg-[#2D6A4F] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    selectedCategory === category ? 'bg-[#059669] text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
                   {category}
@@ -84,7 +84,7 @@ export default function BlogPage() {
                 >
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="px-3 py-1 bg-emerald-50 text-[#2D6A4F] rounded-full text-xs font-medium">
+                      <span className="px-3 py-1 bg-emerald-50 text-[#059669] rounded-full text-xs font-medium">
                         {post.category}
                       </span>
                       <div className="flex items-center gap-1 text-slate-500 text-sm">
@@ -94,7 +94,7 @@ export default function BlogPage() {
                     </div>
 
                     <h2 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-[#2D6A4F] transition-colors">
+                      <Link href={`/blog/${post.slug}`} className="hover:text-[#059669] transition-colors">
                         {post.title}
                       </Link>
                     </h2>
@@ -148,7 +148,7 @@ export default function BlogPage() {
                 {recentPosts.map((post) => (
                   <div key={post.id} className="border-b border-slate-100 last:border-0 pb-4 last:pb-0">
                     <h4 className="font-medium text-slate-800 mb-1 line-clamp-2 text-sm">
-                      <Link href={`/blog/${post.slug}`} className="hover:text-[#2D6A4F] transition-colors">
+                      <Link href={`/blog/${post.slug}`} className="hover:text-[#059669] transition-colors">
                         {post.title}
                       </Link>
                     </h4>
@@ -172,7 +172,7 @@ export default function BlogPage() {
                       onClick={() => setSelectedCategory(category)}
                       className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                         selectedCategory === category
-                          ? 'bg-emerald-50 text-[#2D6A4F] font-medium'
+                          ? 'bg-emerald-50 text-[#059669] font-medium'
                           : 'text-slate-600 hover:bg-slate-50'
                       }`}
                     >
@@ -184,12 +184,12 @@ export default function BlogPage() {
             </div>
 
             {/* CTA */}
-            <div className="bg-[#1C2333] rounded-2xl p-6 text-white">
+            <div className="bg-[#0F172A] rounded-2xl p-6 text-white">
               <h3 className="font-bold mb-2">Need Contract Help?</h3>
               <p className="text-slate-400 text-sm mb-4">Upload your contract and get AI-powered analysis instantly.</p>
               <Link
                 href="/#upload-section"
-                className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+                className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
               >
                 <FileText className="h-4 w-4" />
                 Analyze Contract

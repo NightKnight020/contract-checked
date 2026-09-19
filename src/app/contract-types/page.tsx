@@ -87,7 +87,7 @@ export default function ContractTypesPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-20">
+      <section className="bg-[#0F172A] text-white pt-16 pb-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-6 text-sm text-emerald-300 font-medium">
             <Search className="w-4 h-4" /> Specialized Analysis for Every Contract Type
@@ -120,13 +120,13 @@ export default function ContractTypesPage() {
               className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-md hover:border-emerald-200 transition-all group"
             >
               <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-emerald-100 transition-colors">
-                <Icon className="w-6 h-6 text-[#2D6A4F]" />
+                <Icon className="w-6 h-6 text-[#059669]" />
               </div>
               <h2 className="font-bold text-slate-800 text-lg mb-2">{title}</h2>
               <p className="text-sm text-slate-500 leading-relaxed mb-5">{description}</p>
               <Link
                 href={`/analyze/${slug}`}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2D6A4F] hover:text-[#40916C] transition-colors"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#059669] hover:text-[#10B981] transition-colors"
               >
                 Analyze Free <ArrowRight className="w-4 h-4" />
               </Link>
@@ -140,7 +140,7 @@ export default function ContractTypesPage() {
           <p className="text-slate-500 mb-5">Our tool analyzes <strong>any contract</strong> — not just the types listed here. Upload any agreement and get instant analysis.</p>
           <Link
             href="/#upload-section"
-            className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-6 py-3 rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white font-bold px-6 py-3 rounded-xl transition-colors"
           >
             Analyze Any Contract — Free <ArrowRight className="w-4 h-4" />
           </Link>

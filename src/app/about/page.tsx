@@ -17,32 +17,32 @@ export const metadata: Metadata = {
 
 const TRUST_SIGNALS = [
   {
-    icon: <Lock className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Lock className="w-6 h-6 text-[#059669]" />,
     title: 'Your Contracts Stay Private',
     desc: 'Uploaded documents are processed to generate your analysis and never permanently stored. We don\'t keep a database of your contracts.',
   },
   {
-    icon: <Zap className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Zap className="w-6 h-6 text-[#059669]" />,
     title: 'Instant, No Login Required',
     desc: 'No account needed. Upload your contract and get a full analysis in seconds — completely free.',
   },
   {
-    icon: <BookOpen className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <BookOpen className="w-6 h-6 text-[#059669]" />,
     title: 'Plain English, Always',
     desc: 'No legal jargon, no confusing technicalities. Every analysis is written so that anyone can understand what they\'re signing.',
   },
   {
-    icon: <Cpu className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Cpu className="w-6 h-6 text-[#059669]" />,
     title: 'Built on Proven Technology',
     desc: 'Powered by enterprise-grade language models from Anthropic — the same AI technology trusted by businesses worldwide.',
   },
   {
-    icon: <FileText className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <FileText className="w-6 h-6 text-[#059669]" />,
     title: '50+ Contract Types',
     desc: 'From rental agreements and employment contracts to business deals and NDAs — we cover the contracts that matter to real people.',
   },
   {
-    icon: <Star className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Star className="w-6 h-6 text-[#059669]" />,
     title: 'Always Free Core Analysis',
     desc: 'Core contract analysis is, and will remain, free. Legal clarity shouldn\'t be gated behind a subscription.',
   },
@@ -61,7 +61,7 @@ export default function AboutPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-20 pb-24 relative overflow-hidden">
+      <section className="bg-[#0F172A] text-white pt-20 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-transparent pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 text-center relative">
           <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
@@ -78,7 +78,7 @@ export default function AboutPage() {
       <section className="max-w-6xl mx-auto px-4 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <p className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-widest mb-4">Our Mission</p>
+            <p className="text-sm font-semibold text-[#059669] uppercase tracking-widest mb-4">Our Mission</p>
             <h2 className="text-3xl font-bold text-slate-800 mb-6 leading-snug">
               Everyone deserves to understand what they&apos;re signing.
             </h2>
@@ -93,18 +93,23 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
-            <div className="space-y-5">
+            <div className="space-y-6">
               {[
-                { icon: '📄', text: 'Upload your contract — PDF, Word, photo, or paste text' },
-                { icon: '🔍', text: 'AI reads every clause and identifies risks, red flags, and missing protections' },
-                { icon: '💬', text: 'Get a plain-English summary you can actually act on' },
-                { icon: '✅', text: 'Sign with confidence — or know when to push back' },
-              ].map((step, i) => (
-                <div key={i} className="flex items-start gap-4">
-                  <div className="text-2xl flex-shrink-0">{step.icon}</div>
-                  <p className="text-slate-700 text-sm leading-relaxed">{step.text}</p>
-                </div>
-              ))}
+                { icon: FileText, text: 'Upload your contract — PDF, Word, photo, or paste text' },
+                { icon: Zap, text: 'AI reads every clause and identifies risks, red flags, and missing protections' },
+                { icon: BookOpen, text: 'Get a plain-English summary you can actually act on' },
+                { icon: CheckCircle, text: 'Sign with confidence — or know when to push back' },
+              ].map((step, i) => {
+                const Icon = step.icon;
+                return (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Icon className="w-5 h-5 text-[#059669]" />
+                    </div>
+                    <p className="text-slate-700 leading-relaxed pt-2">{step.text}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -114,7 +119,7 @@ export default function AboutPage() {
       <section className="bg-white border-y border-slate-200 py-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-widest mb-3">Why People Trust Contract Checked</p>
+            <p className="text-sm font-semibold text-[#059669] uppercase tracking-widest mb-3">Why People Trust Contract Checked</p>
             <h2 className="text-3xl font-bold text-slate-800">Built with privacy and clarity at the core</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -132,7 +137,7 @@ export default function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="bg-[#1C2333] py-16">
+      <section className="bg-[#0F172A] py-16">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
           {STATS.map((s) => (
             <div key={s.label}>
@@ -185,7 +190,7 @@ export default function AboutPage() {
 
       {/* Team / Founder */}
       <section className="max-w-3xl mx-auto px-4 py-20 text-center">
-        <p className="text-sm font-semibold text-[#2D6A4F] uppercase tracking-widest mb-4">The Team</p>
+        <p className="text-sm font-semibold text-[#059669] uppercase tracking-widest mb-4">The Team</p>
         <h2 className="text-3xl font-bold text-slate-800 mb-6">A solo project with big ambitions</h2>
         <p className="text-slate-600 leading-relaxed mb-5">
           Contract Checked is an independent platform, built and maintained with a focus on making legal tools accessible to everyone. It started as a simple idea: most people sign contracts they don&apos;t fully understand, and that shouldn&apos;t be a privilege problem.
@@ -196,14 +201,14 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#2D6A4F] py-16">
+      <section className="bg-[#059669] py-16">
         <div className="max-w-2xl mx-auto px-4 text-center text-white">
           <CheckCircle className="w-10 h-10 text-emerald-300 mx-auto mb-4" />
           <h2 className="text-3xl font-bold mb-4">Ready to check your contract?</h2>
           <p className="text-emerald-100 mb-8">Free, instant, and no login required. Understand what you&apos;re signing before you sign it.</p>
           <Link
             href="/#upload-section"
-            className="inline-flex items-center gap-2 bg-white text-[#2D6A4F] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
+            className="inline-flex items-center gap-2 bg-white text-[#059669] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
           >
             Analyze Your Contract <ArrowRight className="w-5 h-5" />
           </Link>

@@ -137,7 +137,7 @@ export default function ResourcesPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-20">
+      <section className="bg-[#0F172A] text-white pt-16 pb-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
             Free Contract Templates
@@ -167,7 +167,7 @@ export default function ResourcesPage() {
               placeholder="Search templates..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/40 focus:border-[#2D6A4F] text-slate-800 placeholder-slate-400"
+              className="w-full pl-12 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#059669]/40 focus:border-[#059669] text-slate-800 placeholder-slate-400"
             />
           </div>
 
@@ -179,7 +179,7 @@ export default function ResourcesPage() {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-5 py-1.5 rounded-full text-sm font-medium transition-colors ${
                   selectedCategory === category
-                    ? 'bg-[#2D6A4F] text-white'
+                    ? 'bg-[#059669] text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -196,7 +196,7 @@ export default function ResourcesPage() {
                 className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md hover:border-emerald-200 transition-all group"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-[#2D6A4F] group-hover:bg-emerald-100 transition-colors">
+                  <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-[#059669] group-hover:bg-emerald-100 transition-colors">
                     {template.icon}
                   </div>
                   {template.popular && (
@@ -213,7 +213,7 @@ export default function ResourcesPage() {
                   </span>
                   <button
                     onClick={() => handleDownload(template)}
-                    className="flex items-center gap-1.5 bg-[#2D6A4F] hover:bg-[#40916C] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                    className="flex items-center gap-1.5 bg-[#059669] hover:bg-[#10B981] text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
                   >
                     <Download className="w-3.5 h-3.5" />
                     Download

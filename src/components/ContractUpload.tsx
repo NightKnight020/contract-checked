@@ -322,7 +322,7 @@ export function ContractUpload({ onAnalyze, isAnalyzing }: ContractUploadProps) 
           onClick={handleSubmit}
           disabled={!canSubmit()}
           size="lg"
-          className="px-10 py-6 text-base font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 rounded-xl"
+          className="px-10 py-6 text-base font-semibold bg-[#059669] hover:bg-[#047857] text-white shadow-2xl hover:shadow-emerald-900/30 transition-all duration-200 rounded-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           {isAnalyzing ? (
             <span className="flex items-center gap-3">

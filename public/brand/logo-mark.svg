@@ -1,0 +1,33 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Scales of justice -->
+  <g id="scales">
+    <!-- Central pillar -->
+    <rect x="22" y="8" width="4" height="32" rx="2" fill="#0F172A"/>
+    
+    <!-- Top beam -->
+    <rect x="8" y="12" width="32" height="3" rx="1.5" fill="#0F172A"/>
+    
+    <!-- Left scale string -->
+    <line x1="14" y1="13" x2="11" y2="26" stroke="#0F172A" stroke-width="2" stroke-linecap="round"/>
+    <line x1="14" y1="13" x2="17" y2="26" stroke="#0F172A" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Right scale string -->
+    <line x1="34" y1="13" x2="31" y2="26" stroke="#0F172A" stroke-width="2" stroke-linecap="round"/>
+    <line x1="34" y1="13" x2="37" y2="26" stroke="#0F172A" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Left pan -->
+    <path d="M8 26 Q14 30 20 26" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Right pan -->
+    <path d="M28 26 Q34 30 40 26" stroke="#0F172A" stroke-width="2" fill="none" stroke-linecap="round"/>
+    
+    <!-- Base -->
+    <path d="M16 40 H32" stroke="#0F172A" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Check mark overlay -->
+  <g id="checkmark">
+    <path d="M28 18L32 22L40 14" stroke="#059669" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="26" y="12" width="18" height="18" rx="3" stroke="#059669" stroke-width="2.5" fill="white"/>
+  </g>
+</svg>

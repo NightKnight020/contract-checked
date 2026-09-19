@@ -65,32 +65,32 @@ const CONTRACT_TYPES = [
 
 const FEATURES = [
   {
-    icon: <Zap className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Zap className="w-6 h-6 text-[#059669]" />,
     title: 'Instant Smart Analysis',
     desc: 'Upload and get a full professional analysis in seconds — risks, pros, cons, missing clauses, and plain English summary.',
   },
   {
-    icon: <Camera className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Camera className="w-6 h-6 text-[#059669]" />,
     title: 'Photo OCR Upload',
     desc: 'Snap a photo of a paper contract. Our smart analysis reads and extracts text from your photo just like a digital file.',
   },
   {
-    icon: <GitCompare className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <GitCompare className="w-6 h-6 text-[#059669]" />,
     title: 'Side-by-Side Comparison',
     desc: 'Upload two versions of a contract and instantly see what changed, what was added, and what was removed.',
   },
   {
-    icon: <Shield className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <Shield className="w-6 h-6 text-[#059669]" />,
     title: 'Risk Assessment',
     desc: 'Every clause is rated low, medium, or high risk so you can quickly spot red flags before you sign.',
   },
   {
-    icon: <FileText className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <FileText className="w-6 h-6 text-[#059669]" />,
     title: 'Free Templates',
     desc: 'Download professionally drafted contract templates — rental agreements, NDAs, service contracts, and more.',
   },
   {
-    icon: <BookOpen className="w-6 h-6 text-[#2D6A4F]" />,
+    icon: <BookOpen className="w-6 h-6 text-[#059669]" />,
     title: 'Plain English',
     desc: 'Legal jargon translated into plain language so anyone can understand what they\'re agreeing to.',
   },
@@ -258,17 +258,17 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(appSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      <div className="min-h-screen bg-[#F9FAFB]">
+      <div className="min-h-screen bg-[#FAFAF9]">
         <SiteHeader />
 
         {/* ── Hero ── */}
-        <section className="bg-[#1C2333] text-white pt-20 pb-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
+        <section className="bg-[#0F172A] text-white pt-20 pb-32 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-transparent pointer-events-none" />
           <div className="max-w-6xl mx-auto px-4 text-center relative">
-            <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium">
+            <div className="inline-flex items-center gap-2 bg-emerald-900/20 border border-emerald-500/20 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium backdrop-blur-sm">
               <Star className="w-4 h-4" /> Free · Instant Analysis · No Login Required
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
+            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
               Know what you&apos;re signing —<br />
               <span className="text-emerald-400">before you sign</span>
             </h1>
@@ -278,13 +278,13 @@ export default function Home() {
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={scrollToUpload}
-                className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
+                className="bg-[#059669] hover:bg-[#047857] text-white font-bold px-8 py-4 rounded-xl text-lg transition-all flex items-center gap-2 shadow-2xl shadow-emerald-900/50 hover:shadow-emerald-900/70 hover:scale-105"
               >
                 Analyze my contract — free <ArrowRight className="w-5 h-5" />
               </button>
               <button
                 onClick={() => document.getElementById('sample-report')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors border border-white/20"
+                className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all border border-white/20 backdrop-blur-sm"
               >
                 See a sample report
               </button>
@@ -303,7 +303,7 @@ export default function Home() {
 
         {/* ── Upload Section (Above the Fold) ── */}
         <section id="upload-section" className="max-w-4xl mx-auto px-4 -mt-16 relative z-10 mb-20">
-          <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 md:p-12">
+          <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 p-8 md:p-12 backdrop-blur-sm">
             <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">Analyze Your Contract</h2>
             <p className="text-slate-500 text-center mb-8 text-sm">Upload a file, paste text, or take a photo — completely free</p>
             <ContractUpload onAnalyze={handleAnalyze} isAnalyzing={isAnalyzing} />
@@ -311,15 +311,15 @@ export default function Home() {
               <div className="mt-8 flex flex-col items-center gap-4">
                 <div className="flex gap-1.5">
                   {[0,1,2].map(i => (
-                    <div key={i} className="w-2 h-2 rounded-full bg-[#2D6A4F] animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+                    <div key={i} className="w-2 h-2 rounded-full bg-[#059669] animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
                   ))}
                 </div>
-                <p className="text-sm font-medium text-[#2D6A4F] transition-all duration-500">
+                <p className="text-sm font-medium text-[#059669] transition-all duration-500">
                   {PROGRESS_STEPS[progressStep]}
                 </p>
                 <div className="w-full max-w-xs bg-slate-100 rounded-full h-1.5 overflow-hidden">
                   <div
-                    className="h-full bg-[#2D6A4F] rounded-full transition-all duration-[3000ms] ease-linear"
+                    className="h-full bg-[#059669] rounded-full transition-all duration-[3000ms] ease-linear"
                     style={{ width: `${((progressStep + 1) / PROGRESS_STEPS.length) * 100}%` }}
                   />
                 </div>
@@ -342,7 +342,7 @@ export default function Home() {
               { n: '3', title: 'Understand', desc: 'Get risks, plain English summary, and recommendations' },
             ].map((step) => (
               <div key={step.n} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex gap-4">
-                <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+                <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                   {step.n}
                 </div>
                 <div>
@@ -382,8 +382,9 @@ export default function Home() {
                     <p className="text-sm text-slate-700 mb-2">
                       <strong className="font-mono text-xs bg-white/50 px-2 py-0.5 rounded">§3.2</strong> Payment due within &quot;reasonable time&quot; is undefined and unenforceable.
                     </p>
-                    <p className="text-sm text-emerald-700 font-medium">
-                      💡 Ask: What specific timeline? Net 15? Net 30?
+                    <p className="text-sm text-emerald-700 font-medium flex items-start gap-1.5">
+                      <ArrowRight className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span>Ask: What specific timeline? Net 15? Net 30?</span>
                     </p>
                   </div>
                 </div>
@@ -400,8 +401,9 @@ export default function Home() {
                     <p className="text-sm text-slate-700 mb-2">
                       <strong className="font-mono text-xs bg-white/50 px-2 py-0.5 rounded">§7.1</strong> All work product automatically assigned — including drafts not delivered.
                     </p>
-                    <p className="text-sm text-emerald-700 font-medium">
-                      💡 Negotiate scope: only &quot;final deliverables&quot;
+                    <p className="text-sm text-emerald-700 font-medium flex items-start gap-1.5">
+                      <ArrowRight className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span>Negotiate scope: only &quot;final deliverables&quot;</span>
                     </p>
                   </div>
                 </div>
@@ -418,8 +420,9 @@ export default function Home() {
                     <p className="text-sm text-slate-700 mb-2">
                       If client cancels mid-project, you may not be paid for work already done.
                     </p>
-                    <p className="text-sm text-emerald-700 font-medium">
-                      💡 Add: 50% kill fee if cancelled after approval stage
+                    <p className="text-sm text-emerald-700 font-medium flex items-start gap-1.5">
+                      <ArrowRight className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                      <span>Add: 50% kill fee if cancelled after approval stage</span>
                     </p>
                   </div>
                 </div>
@@ -444,12 +447,12 @@ export default function Home() {
             <div className="mt-8 pt-6 border-t border-slate-200 text-center">
               <button
                 onClick={scrollToUpload}
-                className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-3 rounded-xl transition-colors shadow-md"
+                className="bg-[#059669] hover:bg-[#10B981] text-white font-bold px-8 py-3 rounded-xl transition-colors shadow-md"
               >
                 Upload yours — free
               </button>
               <p className="text-xs text-slate-500 mt-3">
-                Or <Link href="/contract-checker" className="text-[#2D6A4F] hover:underline font-medium">learn more about contract checking</Link>
+                Or <Link href="/contract-checker" className="text-[#059669] hover:underline font-medium">learn more about contract checking</Link>
               </p>
             </div>
           </div>
@@ -471,7 +474,7 @@ export default function Home() {
                 </p>
                 <Link
                   href="/auth/signup"
-                  className="text-sm font-semibold text-[#2D6A4F] hover:underline whitespace-nowrap"
+                  className="text-sm font-semibold text-[#059669] hover:underline whitespace-nowrap"
                 >
                   Create free account →
                 </Link>
@@ -504,7 +507,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-                  <FileText className="w-6 h-6 text-[#2D6A4F]" />
+                  <FileText className="w-6 h-6 text-[#059669]" />
                 </div>
                 <h3 className="font-bold text-slate-800 mb-2">Freelancers</h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -514,7 +517,7 @@ export default function Home() {
 
               <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-                  <Shield className="w-6 h-6 text-[#2D6A4F]" />
+                  <Shield className="w-6 h-6 text-[#059669]" />
                 </div>
                 <h3 className="font-bold text-slate-800 mb-2">Renters</h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -524,7 +527,7 @@ export default function Home() {
 
               <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-                  <CheckCircle className="w-6 h-6 text-[#2D6A4F]" />
+                  <CheckCircle className="w-6 h-6 text-[#059669]" />
                 </div>
                 <h3 className="font-bold text-slate-800 mb-2">Home Buyers (APS)</h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -534,7 +537,7 @@ export default function Home() {
 
               <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
                 <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-                  <Star className="w-6 h-6 text-[#2D6A4F]" />
+                  <Star className="w-6 h-6 text-[#059669]" />
                 </div>
                 <h3 className="font-bold text-slate-800 mb-2">Everyone Else</h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -573,7 +576,7 @@ export default function Home() {
                 <Link
                   key={t.label}
                   href={t.slug}
-                  className="px-4 py-2 bg-slate-100 hover:bg-[#2D6A4F] hover:text-white rounded-full text-sm font-medium text-slate-700 transition-colors"
+                  className="px-4 py-2 bg-slate-100 hover:bg-[#059669] hover:text-white rounded-full text-sm font-medium text-slate-700 transition-colors"
                 >
                   {t.label}
                 </Link>
@@ -581,7 +584,7 @@ export default function Home() {
             </div>
             <p className="text-center mt-6 text-sm text-slate-500">
               Don&apos;t see yours? Upload it anyway — the analyzer accepts any written agreement.{' '}
-              <Link href="/contract-types" className="text-[#2D6A4F] hover:underline font-medium">
+              <Link href="/contract-types" className="text-[#059669] hover:underline font-medium">
                 View all types →
               </Link>
             </p>
@@ -620,21 +623,21 @@ export default function Home() {
                 href={post.href}
                 className="bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-md transition-shadow group"
               >
-                <span className="inline-block text-xs font-semibold text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full mb-4">
+                <span className="inline-block text-xs font-semibold text-[#059669] bg-emerald-50 px-3 py-1 rounded-full mb-4">
                   {post.tag}
                 </span>
-                <h3 className="font-bold text-slate-800 mb-3 leading-snug group-hover:text-[#2D6A4F] transition-colors">
+                <h3 className="font-bold text-slate-800 mb-3 leading-snug group-hover:text-[#059669] transition-colors">
                   {post.title}
                 </h3>
                 <p className="text-sm text-slate-500 leading-relaxed mb-4">{post.excerpt}</p>
-                <span className="text-sm font-semibold text-[#2D6A4F] flex items-center gap-1">
+                <span className="text-sm font-semibold text-[#059669] flex items-center gap-1">
                   Read more <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
             ))}
           </div>
           <div className="text-center mt-8">
-            <Link href="/blog" className="inline-flex items-center gap-2 text-[#2D6A4F] font-semibold hover:underline">
+            <Link href="/blog" className="inline-flex items-center gap-2 text-[#059669] font-semibold hover:underline">
               View all legal guides <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -651,13 +654,13 @@ export default function Home() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="bg-[#2D6A4F] py-16 mb-0">
+        <section className="bg-[#059669] py-16 mb-0">
           <div className="max-w-2xl mx-auto px-4 text-center text-white">
             <h2 className="text-3xl font-bold mb-4">Ready to Check Your Contract?</h2>
             <p className="text-emerald-100 mb-8">Free, instant, and no login required.</p>
             <button
               onClick={scrollToUpload}
-              className="bg-white text-[#2D6A4F] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
+              className="bg-white text-[#059669] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
             >
               Analyze Now — It&apos;s Free
             </button>

@@ -1041,7 +1041,7 @@ export default async function AnalyzePage({ params }: PageProps) {
         <SiteHeader />
 
         {/* Hero */}
-        <section className="bg-[#1C2333] text-white pt-16 pb-20">
+        <section className="bg-[#0F172A] text-white pt-16 pb-20">
           <div className="max-w-4xl mx-auto px-4">
             <div className="flex items-center gap-2 text-slate-400 text-sm mb-4">
               <Link href="/contract-types" className="hover:text-emerald-400 transition-colors">Contract Types</Link>
@@ -1056,7 +1056,7 @@ export default async function AnalyzePage({ params }: PageProps) {
             </p>
             <Link
               href="/#upload-section"
-              className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-7 py-3.5 rounded-xl transition-colors shadow-lg shadow-emerald-900/40"
+              className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white font-bold px-7 py-3.5 rounded-xl transition-colors shadow-lg shadow-emerald-900/40"
             >
               Analyze Your {data.title} — Free <ArrowRight className="w-5 h-5" />
             </Link>
@@ -1068,14 +1068,14 @@ export default async function AnalyzePage({ params }: PageProps) {
           {/* What to Look For */}
           <section>
             <h2 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
-              <Search className="w-6 h-6 text-[#2D6A4F]" />
+              <Search className="w-6 h-6 text-[#059669]" />
               What to Look for in a {data.title}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {data.whatToLookFor.map((item, i) => (
                 <div key={i} className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-sm transition-shadow">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center text-xs font-bold text-[#2D6A4F]">
+                    <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center text-xs font-bold text-[#059669]">
                       {i + 1}
                     </div>
                     <h3 className="font-semibold text-slate-800 text-sm">{item.title}</h3>
@@ -1119,7 +1119,7 @@ export default async function AnalyzePage({ params }: PageProps) {
           </section>
 
           {/* CTA */}
-          <section className="bg-[#2D6A4F] rounded-2xl p-8 text-white text-center">
+          <section className="bg-[#059669] rounded-2xl p-8 text-white text-center">
             <CheckCircle className="w-10 h-10 text-emerald-300 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-3">Analyze Your {data.title} — Free</h2>
             <p className="text-emerald-100 mb-6 max-w-lg mx-auto">
@@ -1127,7 +1127,7 @@ export default async function AnalyzePage({ params }: PageProps) {
             </p>
             <Link
               href="/#upload-section"
-              className="inline-flex items-center gap-2 bg-white text-[#2D6A4F] font-bold px-7 py-3.5 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
+              className="inline-flex items-center gap-2 bg-white text-[#059669] font-bold px-7 py-3.5 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
             >
               Upload & Analyze Now <ArrowRight className="w-5 h-5" />
             </Link>
@@ -1156,14 +1156,14 @@ export default async function AnalyzePage({ params }: PageProps) {
                 <Link
                   key={relSlug}
                   href={`/analyze/${relSlug}`}
-                  className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-emerald-300 hover:text-[#2D6A4F] text-slate-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors"
+                  className="inline-flex items-center gap-1.5 bg-white border border-slate-200 hover:border-emerald-300 hover:text-[#059669] text-slate-700 font-medium px-4 py-2 rounded-lg text-sm transition-colors"
                 >
                   {CONTRACT_TITLES[relSlug]} <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               ))}
               <Link
                 href="/contract-types"
-                className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-[#2D6A4F] font-medium px-4 py-2 rounded-lg text-sm hover:bg-emerald-100 transition-colors"
+                className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-[#059669] font-medium px-4 py-2 rounded-lg text-sm hover:bg-emerald-100 transition-colors"
               >
                 View All Contract Types <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -1174,18 +1174,18 @@ export default async function AnalyzePage({ params }: PageProps) {
           {RELATED_BLOG[slug] ? (
             <section className="border-t border-slate-200 pt-10">
               <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#2D6A4F]" />
+                <FileText className="w-5 h-5 text-[#059669]" />
                 Related Article
               </h2>
               <Link
                 href={RELATED_BLOG[slug].href}
                 className="block bg-white border border-slate-200 rounded-xl p-6 hover:shadow-md hover:border-emerald-200 transition-all group"
               >
-                <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#2D6A4F] transition-colors">
+                <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#059669] transition-colors">
                   {RELATED_BLOG[slug].title}
                 </h3>
                 <p className="text-sm text-slate-500 mb-3">{RELATED_BLOG[slug].excerpt}</p>
-                <span className="text-sm font-semibold text-[#2D6A4F] flex items-center gap-1">
+                <span className="text-sm font-semibold text-[#059669] flex items-center gap-1">
                   Read the guide <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </Link>
@@ -1193,12 +1193,12 @@ export default async function AnalyzePage({ params }: PageProps) {
           ) : (
             <section className="border-t border-slate-200 pt-10">
               <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-[#2D6A4F]" />
+                <FileText className="w-5 h-5 text-[#059669]" />
                 Related Articles
               </h2>
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-[#2D6A4F] font-semibold hover:underline text-sm"
+                className="inline-flex items-center gap-2 text-[#059669] font-semibold hover:underline text-sm"
               >
                 Browse all legal guides <ArrowRight className="w-4 h-4" />
               </Link>
