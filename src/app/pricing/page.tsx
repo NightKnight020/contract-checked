@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { CheckCircle, X, Zap, Shield, Building2, ArrowRight, Star } from 'lucide-react';
+import { CheckCircle, Zap, Shield, ArrowRight, Star } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 
@@ -9,84 +9,6 @@ export const metadata: Metadata = {
   description: 'Contract Checked is free to use. Upload and analyze any contract at no cost. Deep PDF reports coming soon.',
   alternates: { canonical: 'https://www.contractchecked.com/pricing' },
 };
-
-const plans = [
-  {
-    name: 'Free',
-    price: '$0',
-    period: 'forever',
-    description: 'Perfect for occasional contract reviews.',
-    cta: 'Get Started Free',
-    ctaHref: '/auth/signup',
-    ctaStyle: 'border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white',
-    highlighted: false,
-    icon: <Zap className="w-5 h-5" />,
-    features: [
-      { text: '5 contract analyses per month', included: true },
-      { text: 'Risk assessment & plain English summary', included: true },
-      { text: 'Pros, cons & recommendations', included: true },
-      { text: 'PDF, Word & text file support', included: true },
-      { text: 'Photo / OCR upload', included: true },
-      { text: 'Contract history & saved analyses', included: false },
-      { text: 'Contract comparison (side-by-side)', included: false },
-      { text: 'Q&A chat per analysis', included: false },
-      { text: 'PDF export of reports', included: false },
-      { text: 'Team members', included: false },
-      { text: 'API access', included: false },
-    ],
-  },
-  {
-    name: 'Pro',
-    price: '$12',
-    period: 'per month',
-    annualNote: 'or $99/year — save 30%',
-    description: 'For individuals who sign contracts regularly.',
-    cta: 'Start Pro Free Trial',
-    ctaHref: '/auth/signup?plan=pro',
-    ctaStyle: 'bg-[#2D6A4F] hover:bg-[#40916C] text-white shadow-lg shadow-emerald-900/20',
-    highlighted: true,
-    badge: 'Most Popular',
-    icon: <Shield className="w-5 h-5" />,
-    features: [
-      { text: '50 contract analyses per month', included: true },
-      { text: 'Risk assessment & plain English summary', included: true },
-      { text: 'Pros, cons & recommendations', included: true },
-      { text: 'PDF, Word & text file support', included: true },
-      { text: 'Photo / OCR upload', included: true },
-      { text: 'Full contract history (1 year)', included: true },
-      { text: 'Contract comparison (side-by-side)', included: true },
-      { text: 'Q&A chat per analysis', included: true },
-      { text: 'PDF export of reports', included: true },
-      { text: 'Team members', included: false },
-      { text: 'API access', included: false },
-    ],
-  },
-  {
-    name: 'Business',
-    price: '$39',
-    period: 'per month',
-    annualNote: 'or $299/year — save 36%',
-    description: 'For teams, brokerages & small law firms.',
-    cta: 'Start Business Trial',
-    ctaHref: '/auth/signup?plan=business',
-    ctaStyle: 'border border-[#2D6A4F] text-[#2D6A4F] hover:bg-[#2D6A4F] hover:text-white',
-    highlighted: false,
-    icon: <Building2 className="w-5 h-5" />,
-    features: [
-      { text: 'Unlimited contract analyses', included: true },
-      { text: 'Risk assessment & plain English summary', included: true },
-      { text: 'Pros, cons & recommendations', included: true },
-      { text: 'PDF, Word & text file support', included: true },
-      { text: 'Photo / OCR upload', included: true },
-      { text: 'Unlimited contract history', included: true },
-      { text: 'Contract comparison (side-by-side)', included: true },
-      { text: 'Q&A chat per analysis', included: true },
-      { text: 'PDF export of reports', included: true },
-      { text: 'Up to 5 team members', included: true },
-      { text: 'API access', included: true },
-    ],
-  },
-];
 
 const faqs = [
   {
