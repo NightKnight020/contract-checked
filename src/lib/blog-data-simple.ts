@@ -1073,8 +1073,8 @@ export const blogPosts: BlogPost[] = [
     readTime: 11,
     tags: ["Freelancing", "Independent Contractor", "Contract Checklist"],
     category: "Freelancing",
-    seoTitle: "The Freelancer Contract Checklist: Every Clause You Need Before Starting Work",
-    seoDescription: "Every clause a freelancer needs before starting work — payment terms, kill fees, IP ownership, scope creep protection, and liability caps. Complete checklist.",
+    seoTitle: "Freelancer Contract Must-Haves: Payment Terms, Kill Fees & IP Ownership (2026)",
+    seoDescription: "Protect yourself before you start work. Essential freelance contract clauses every independent contractor needs: payment terms, kill fees, IP ownership, scope protection, and liability caps.",
     keywords: ["freelancer contract checklist", "independent contractor agreement", "freelance contract must-haves", "client contract red flags freelancer", "invoice payment terms contract"]
   },
   {

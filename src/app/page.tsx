@@ -40,7 +40,7 @@ const FAQS = [
   },
   {
     q: 'Is this legal advice?',
-    a: 'No. Contract Checked is an AI tool for informational purposes only. Always consult a qualified attorney before signing any contract.',
+    a: 'No. Contract Checked is an AI-powered tool for informational purposes only, not a substitute for legal advice. We help you understand contracts in plain English, but you should always consult a qualified attorney before making important legal decisions.',
   },
 ];
 
@@ -264,12 +264,12 @@ export default function Home() {
               <Star className="w-4 h-4" /> Free · Instant Analysis · No Login Required
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-              Know What<br />
-              <span className="text-emerald-400">You Sign</span>
+              Understand Your<br />
+              <span className="text-emerald-400">Contract Before You Sign</span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Upload any contract — PDF, Word, photo — and get an instant Smart Analysis.
-              Risks, plain English summary, missing clauses, and more.
+              Free contract analysis for Canadian freelancers, renters, and anyone signing a contract.
+              Upload any lease, freelance agreement, or contract — PDF, Word, or photo — and get instant plain-English analysis.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <button
@@ -294,29 +294,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── How It Works ── */}
-        <section className="max-w-6xl mx-auto px-4 -mt-16 relative z-10 mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { n: '1', title: 'Upload', desc: 'PDF, Word, text, or a photo of a paper contract' },
-              { n: '2', title: 'Analyze', desc: 'Every clause is read and analyzed in seconds' },
-              { n: '3', title: 'Understand', desc: 'Get risks, plain English summary, and recommendations' },
-            ].map((step) => (
-              <div key={step.n} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex gap-4">
-                <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
-                  {step.n}
-                </div>
-                <div>
-                  <p className="font-bold text-slate-800 mb-1">{step.title}</p>
-                  <p className="text-sm text-slate-500">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Upload Section ── */}
-        <section id="upload-section" className="max-w-4xl mx-auto px-4 mb-24">
+        {/* ── Upload Section (Above the Fold) ── */}
+        <section id="upload-section" className="max-w-4xl mx-auto px-4 -mt-16 relative z-10 mb-20">
           <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-8 md:p-12">
             <h2 className="text-2xl font-bold text-slate-800 mb-2 text-center">Analyze Your Contract</h2>
             <p className="text-slate-500 text-center mb-8 text-sm">Upload a file, paste text, or take a photo — completely free</p>
@@ -347,6 +326,27 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ── How It Works ── */}
+        <section className="max-w-6xl mx-auto px-4 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { n: '1', title: 'Upload', desc: 'PDF, Word, text, or a photo of a paper contract' },
+              { n: '2', title: 'Analyze', desc: 'Every clause is read and analyzed in seconds' },
+              { n: '3', title: 'Understand', desc: 'Get risks, plain English summary, and recommendations' },
+            ].map((step) => (
+              <div key={step.n} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex gap-4">
+                <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+                  {step.n}
+                </div>
+                <div>
+                  <p className="font-bold text-slate-800 mb-1">{step.title}</p>
+                  <p className="text-sm text-slate-500">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* ── Results ── */}
         {result && (
           <section className="max-w-6xl mx-auto px-4 mb-8">
@@ -367,9 +367,6 @@ export default function Home() {
           </section>
         )}
 
-        {/* spacer when no result */}
-        {!result && <div className="mb-16" />}
-
         {/* ── Contract Q&A ── */}
         <section className="max-w-3xl mx-auto px-4 mb-24">
           <div className="text-center mb-6">
@@ -377,22 +374,6 @@ export default function Home() {
             <p className="text-slate-500 text-sm">Get plain-English answers instantly</p>
           </div>
           <ContractQA analysisContext={analysisContext} />
-        </section>
-
-        {/* ── Stats ── */}
-        <section className="bg-[#1C2333] py-16 mb-20">
-          <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
-            {[
-              { value: '10,000+', label: 'Contracts Analyzed' },
-              { value: '50+', label: 'Contract Types Supported' },
-              { value: '99%', label: 'Accuracy Rate' },
-            ].map((s) => (
-              <div key={s.label}>
-                <p className="text-4xl font-extrabold text-emerald-400 mb-2">{s.value}</p>
-                <p className="text-slate-400 font-medium">{s.label}</p>
-              </div>
-            ))}
-          </div>
         </section>
 
         {/* ── Features ── */}
@@ -417,7 +398,7 @@ export default function Home() {
         {/* ── Contract Types ── */}
         <section className="bg-white py-16 mb-20 border-y border-slate-200">
           <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-2xl font-bold text-slate-800 text-center mb-10">Supported Contract Types</h2>
+            <h2 className="text-2xl font-bold text-slate-800 text-center mb-10">We Support Many Contract Types</h2>
             <div className="flex flex-wrap justify-center gap-3">
               {CONTRACT_TYPES.map((t) => (
                 <Link
