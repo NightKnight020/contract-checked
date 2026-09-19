@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import { analyzeContractText, ocrImageToText, compareContracts } from '@/lib/contract-ai';
+import { trackAnalysisEvent, trackGA4Event } from '@/lib/telemetry';
 
 const MAX_SIZE = 10 * 1024 * 1024;
 
@@ -40,10 +41,17 @@ function validateFile(file: File, validTypes: string[]): string | null {
 }
 
 export async function POST(request: NextRequest) {
+  const startTime = Date.now();
+  let primaryFile: File | null = null;
+  let anonSessionId: string | null = null;
+  
   try {
     const formData = await request.formData();
     const mode = (formData.get('mode') as string) ?? 'single';
     const tab = (formData.get('tab') as string) ?? 'file';
+    
+    // Extract anonymous session ID if provided (from client-side cookie/localStorage)
+    anonSessionId = (formData.get('anonSessionId') as string) || null;
 
     if (mode === 'compare') {
       // Comparison mode — two inputs
@@ -61,6 +69,18 @@ export async function POST(request: NextRequest) {
         const imgA = formData.get('fileA') as File | null;
         const imgB = formData.get('fileB') as File | null;
         if (!imgA || !imgB) return NextResponse.json({ error: 'Two images required for comparison.' }, { status: 400 });
+        
+        // Track upload for first file
+        primaryFile = imgA;
+        await trackAnalysisEvent({
+          eventType: 'upload_started',
+          source: 'web',
+          fileMime: imgA.type || null,
+          sizeBytes: imgA.size || null,
+          anonSessionId: anonSessionId || null,
+          path: '/api/analyze',
+        });
+        
         const errA = validateFile(imgA, VALID_IMAGE_TYPES);
         if (errA) return NextResponse.json({ error: errA }, { status: 400 });
         const errB = validateFile(imgB, VALID_IMAGE_TYPES);
@@ -70,6 +90,18 @@ export async function POST(request: NextRequest) {
         const fileA = formData.get('fileA') as File | null;
         const fileB = formData.get('fileB') as File | null;
         if (!fileA || !fileB) return NextResponse.json({ error: 'Two files required for comparison.' }, { status: 400 });
+        
+        // Track upload for first file
+        primaryFile = fileA;
+        await trackAnalysisEvent({
+          eventType: 'upload_started',
+          source: 'web',
+          fileMime: fileA.type || null,
+          sizeBytes: fileA.size || null,
+          anonSessionId: anonSessionId || null,
+          path: '/api/analyze',
+        });
+        
         const errA = validateFile(fileA, VALID_DOC_TYPES);
         if (errA) return NextResponse.json({ error: errA }, { status: 400 });
         const errB = validateFile(fileB, VALID_DOC_TYPES);
@@ -81,7 +113,37 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'Could not extract text from one or both contracts.' }, { status: 400 });
       }
 
+      // Track analysis start
+      await trackAnalysisEvent({
+        eventType: 'analysis_started',
+        source: 'web',
+        fileMime: primaryFile?.type || null,
+        sizeBytes: primaryFile?.size || null,
+        anonSessionId: anonSessionId || null,
+        path: '/api/analyze',
+      });
+
       const result = await compareContracts(textA, textB);
+      
+      // Track success
+      const duration = Date.now() - startTime;
+      await trackAnalysisEvent({
+        eventType: 'analysis_succeeded',
+        source: 'web',
+        fileMime: primaryFile?.type || null,
+        sizeBytes: primaryFile?.size || null,
+        contractTypeGuess: result.contractA.contractType || null,
+        durationMs: duration,
+        anonSessionId: anonSessionId || null,
+        path: '/api/analyze',
+      });
+      
+      // Optional: Track GA4 event
+      trackGA4Event('analysis_succeeded', {
+        contract_type: result.contractA.contractType,
+        mode: 'compare',
+      });
+      
       return NextResponse.json({ mode: 'compare', ...result });
     }
 
@@ -94,12 +156,36 @@ export async function POST(request: NextRequest) {
     } else if (tab === 'photo') {
       const img = formData.get('fileA') as File | null;
       if (!img) return NextResponse.json({ error: 'No image provided.' }, { status: 400 });
+      
+      // Track upload
+      primaryFile = img;
+      await trackAnalysisEvent({
+        eventType: 'upload_started',
+        source: 'web',
+        fileMime: img.type || null,
+        sizeBytes: img.size || null,
+        anonSessionId: anonSessionId || null,
+        path: '/api/analyze',
+      });
+      
       const err = validateFile(img, VALID_IMAGE_TYPES);
       if (err) return NextResponse.json({ error: err }, { status: 400 });
       contractText = await ocrImageToText(img);
     } else {
       const file = formData.get('fileA') as File | null;
       if (!file) return NextResponse.json({ error: 'No file provided.' }, { status: 400 });
+      
+      // Track upload
+      primaryFile = file;
+      await trackAnalysisEvent({
+        eventType: 'upload_started',
+        source: 'web',
+        fileMime: file.type || null,
+        sizeBytes: file.size || null,
+        anonSessionId: anonSessionId || null,
+        path: '/api/analyze',
+      });
+      
       const err = validateFile(file, VALID_DOC_TYPES);
       if (err) return NextResponse.json({ error: err }, { status: 400 });
       contractText = await extractText(file);
@@ -109,14 +195,68 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Could not extract text from the contract.' }, { status: 400 });
     }
 
+    // Track analysis start
+    await trackAnalysisEvent({
+      eventType: 'analysis_started',
+      source: 'web',
+      fileMime: primaryFile?.type || null,
+      sizeBytes: primaryFile?.size || null,
+      anonSessionId: anonSessionId || null,
+      path: '/api/analyze',
+    });
+
     const result = await analyzeContractText(contractText);
+    
+    // Track success
+    const duration = Date.now() - startTime;
+    await trackAnalysisEvent({
+      eventType: 'analysis_succeeded',
+      source: 'web',
+      fileMime: primaryFile?.type || null,
+      sizeBytes: primaryFile?.size || null,
+      contractTypeGuess: result.contractType || null,
+      durationMs: duration,
+      anonSessionId: anonSessionId || null,
+      path: '/api/analyze',
+    });
+    
+    // Optional: Track GA4 event
+    trackGA4Event('analysis_succeeded', {
+      contract_type: result.contractType,
+      mode: 'single',
+    });
+    
     return NextResponse.json({ mode: 'single', ...result });
   } catch (error) {
     console.error('Analysis error:', error);
     const raw = error instanceof Error ? error.message : '';
+    
+    // Track failure
+    const duration = Date.now() - startTime;
+    let errorCode = 'unknown_error';
+    
+    // Categorize errors
+    if (raw.includes('429') || raw.toLowerCase().includes('quota') || raw.toLowerCase().includes('billing') || raw.toLowerCase().includes('overloaded')) {
+      errorCode = 'ai_quota_exceeded';
+    } else if (raw.toLowerCase().includes('timeout')) {
+      errorCode = 'timeout';
+    } else if (raw.toLowerCase().includes('parse') || raw.toLowerCase().includes('json')) {
+      errorCode = 'parse_error';
+    }
+    
+    await trackAnalysisEvent({
+      eventType: 'analysis_failed',
+      source: 'web',
+      fileMime: primaryFile?.type || null,
+      sizeBytes: primaryFile?.size || null,
+      errorCode: errorCode || null,
+      durationMs: duration,
+      anonSessionId: anonSessionId || null,
+      path: '/api/analyze',
+    });
 
     // OpenAI quota / billing error
-    if (raw.includes('429') || raw.toLowerCase().includes('quota') || raw.toLowerCase().includes('billing') || raw.toLowerCase().includes('overloaded')) {
+    if (errorCode === 'ai_quota_exceeded') {
       return NextResponse.json(
         { error: 'Our AI service is temporarily unavailable due to high demand. Please try again in a few minutes.' },
         { status: 503 }
