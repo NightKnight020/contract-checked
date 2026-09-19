@@ -19,16 +19,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.contractchecked.com"),
   title: {
-    default: "Free Contract Checker — AI Contract Analysis & Review",
+    default: "Contract Checked — Free Contract Analysis (No Login)",
     template: "%s | Contract Checked",
   },
   description:
-    "Free contract checker for renters, freelancers, and anyone signing a contract. Upload any contract — lease, freelance agreement, NDA — and get instant AI analysis. No signup required.",
+    "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A. No login. Not legal advice.",
   keywords: [
-    "contract checker", "free contract analysis", "contract review",
-    "AI contract review", "lease checker", "rental agreement analysis",
-    "freelance contract review", "contract analyzer", "Ontario lease review",
-    "agreement of purchase and sale review", "free contract checker",
+    "contract analysis", "AI contract review", "free contract analysis",
+    "contract checker", "NDA analysis", "rental agreement review",
+    "employment contract analysis", "legal document AI", "OCR contract photo",
+    "contract comparison", "contract risk assessment", "Canadian contract analysis",
+    "Ontario lease review", "freelance contract checker",
   ],
   authors: [{ name: "Contract Checked" }],
   creator: "Contract Checked",
@@ -39,9 +40,9 @@ export const metadata: Metadata = {
     locale: "en_CA",
     url: "https://www.contractchecked.com",
     siteName: "Contract Checked",
-    title: "Free Contract Checker — Understand Your Contract Before You Sign",
+    title: "Contract Checked — Free Contract Analysis (No Login)",
     description:
-      "Free contract analysis for Canadian renters, freelancers, and anyone signing a contract. Upload any lease, agreement, or contract for instant plain-English review.",
+      "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A. No login. Not legal advice.",
     images: [
       {
         url: "https://www.contractchecked.com/og-image.png",
@@ -53,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Contract Checker — Understand Your Contract Before You Sign",
+    title: "Contract Checked — Free Contract Analysis (No Login)",
     description:
-      "Free contract analysis for renters, freelancers, and anyone signing a contract. Upload any lease or agreement for instant plain-English review.",
+      "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A.",
     images: ["https://www.contractchecked.com/og-image.png"],
   },
   alternates: {

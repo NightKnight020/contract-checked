@@ -30,6 +30,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     { url: base, lastModified: recentUpdate, changeFrequency: 'weekly', priority: 1 },
+    { url: `${base}/contract-checker`, lastModified: recentUpdate, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/free-contract-analysis`, lastModified: recentUpdate, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${base}/resources`, lastModified: olderUpdate, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/blog`, lastModified: recentUpdate, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${base}/contract-types`, lastModified: olderUpdate, changeFrequency: 'monthly', priority: 0.9 },

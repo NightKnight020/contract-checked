@@ -20,23 +20,23 @@ import type { ContractAnalysis, ComparisonResult } from '@/lib/contract-ai';
 const FAQS = [
   {
     q: 'Is Contract Checked free to use?',
-    a: 'Yes. Core contract analysis is completely free — no login required. Simply upload your contract and get instant Smart Analysis.',
+    a: 'Yes. Standard Smart Analysis is free — upload, risks, plain English summary, missing-clause notes, and Q&A. No login required. We\'re supported by ads. An optional paid deep PDF report may be offered later; it isn\'t required for a full free analysis.',
   },
   {
     q: 'What file types are supported?',
-    a: 'We support PDF, Word documents (.doc, .docx), plain text files, and photos/images of physical contracts (JPG, PNG, WEBP) via OCR.',
+    a: 'PDF, Word (.doc/.docx), plain text, and photos of paper contracts (OCR). If it reads clearly, we can analyze it.',
   },
   {
     q: 'Is my contract data kept private?',
-    a: 'Your contract is processed securely and is not stored permanently or used to train AI models. We take privacy seriously.',
+    a: 'We process uploads to produce your analysis. We don\'t sell your contracts. We don\'t use your documents to train public models. See Privacy Policy for retention details.',
   },
   {
     q: 'What types of contracts can you analyze?',
-    a: 'Any contract type — rental agreements, employment contracts, NDAs, service agreements, purchase agreements, partnership agreements, and more.',
+    a: 'Any written agreement. We especially help Canadian freelancers, renters (leases), and Ontario APS / real-estate purchase agreements — but the analyzer isn\'t limited to those.',
   },
   {
     q: 'Can I compare two contracts?',
-    a: 'Yes. Enable "Compare Mode" in the upload section to upload two contracts and get a side-by-side analysis with key differences highlighted.',
+    a: 'Yes — upload two versions to see what changed. Included on the free analyzer.',
   },
   {
     q: 'Is this legal advice?',
@@ -127,10 +127,10 @@ const appSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebApplication',
   name: 'Contract Checked',
-  url: 'https://contractchecked.com',
-  description: 'AI-powered contract analysis platform. Upload any contract and get instant professional analysis — free.',
+  url: 'https://www.contractchecked.com',
+  description: 'Free AI-powered contract analysis platform. Upload any contract and get instant Smart Analysis — risks, plain English, missing clauses, and Q&A. No login required.',
   applicationCategory: 'LegalApplication',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'CAD' },
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -264,32 +264,34 @@ export default function Home() {
               <Star className="w-4 h-4" /> Free · Instant Analysis · No Login Required
             </div>
             <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6">
-              Understand Your<br />
-              <span className="text-emerald-400">Contract Before You Sign</span>
+              Know what you&apos;re signing —<br />
+              <span className="text-emerald-400">before you sign</span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
-              Free contract analysis for Canadian freelancers, renters, and anyone signing a contract.
-              Upload any lease, freelance agreement, or contract — PDF, Word, or photo — and get instant plain-English analysis.
+              Upload a lease, freelance agreement, Ontario APS, or any contract. Get a free Smart Analysis in plain English — risks, gaps, and questions to ask. No login.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <button
                 onClick={scrollToUpload}
                 className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
               >
-                Analyze Your Contract <ArrowRight className="w-5 h-5" />
+                Analyze my contract — free <ArrowRight className="w-5 h-5" />
               </button>
-              <Link
-                href="/resources"
+              <button
+                onClick={() => document.getElementById('sample-report')?.scrollIntoView({ behavior: 'smooth' })}
                 className="bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors border border-white/20"
               >
-                Free Templates
-              </Link>
+                See a sample report
+              </button>
             </div>
-            <div className="flex flex-wrap justify-center gap-8 mt-12 text-slate-400 text-sm">
-              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />No login needed</span>
-              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />All file types</span>
-              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />Photo OCR</span>
-              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />Side-by-side compare</span>
+            <p className="text-emerald-100 text-sm mt-8 max-w-2xl mx-auto">
+              Built first for <strong className="text-white">Canadian freelancers and renters</strong> — works on any contract.
+            </p>
+            <div className="flex flex-wrap justify-center gap-8 mt-8 text-slate-400 text-sm">
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />Free · full analysis</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />No login</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />PDF, Word & photo OCR</span>
+              <span className="flex items-center gap-2"><CheckCircle className="w-4 h-4 text-emerald-400" />Not legal advice</span>
             </div>
           </div>
         </section>
@@ -376,11 +378,168 @@ export default function Home() {
           <ContractQA analysisContext={analysisContext} />
         </section>
 
+        {/* ── Sample Annotated Report ── */}
+        <section id="sample-report" className="max-w-6xl mx-auto px-4 mb-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+              Here&apos;s what a clear report looks like
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Example annotations on a typical freelance / lease-style agreement. Yours will match your document.
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-2xl border-2 border-slate-200 p-8 shadow-lg relative">
+            <div className="absolute top-4 right-4 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full border border-emerald-200">
+              SAMPLE REPORT
+            </div>
+            
+            <div className="space-y-6">
+              {/* High Risk Example */}
+              <div className="border-l-4 border-red-500 bg-red-50 p-5 rounded-r-lg">
+                <div className="flex items-start gap-3">
+                  <div className="w-16 h-6 bg-red-600 text-white text-xs font-bold rounded flex items-center justify-center flex-shrink-0">
+                    HIGH
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-slate-800 mb-2">Vague payment terms</p>
+                    <p className="text-sm text-slate-700 mb-2">
+                      <strong className="font-mono text-xs bg-white/50 px-2 py-0.5 rounded">§3.2</strong> Payment due within &quot;reasonable time&quot; is undefined and unenforceable.
+                    </p>
+                    <p className="text-sm text-emerald-700 font-medium">
+                      💡 Ask: What specific timeline? Net 15? Net 30?
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Medium Risk Example */}
+              <div className="border-l-4 border-yellow-500 bg-yellow-50 p-5 rounded-r-lg">
+                <div className="flex items-start gap-3">
+                  <div className="w-16 h-6 bg-yellow-600 text-white text-xs font-bold rounded flex items-center justify-center flex-shrink-0">
+                    MEDIUM
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-slate-800 mb-2">Broad IP assignment</p>
+                    <p className="text-sm text-slate-700 mb-2">
+                      <strong className="font-mono text-xs bg-white/50 px-2 py-0.5 rounded">§7.1</strong> All work product automatically assigned — including drafts not delivered.
+                    </p>
+                    <p className="text-sm text-emerald-700 font-medium">
+                      💡 Negotiate scope: only &quot;final deliverables&quot;
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Missing Clause Example */}
+              <div className="border-l-4 border-slate-400 bg-slate-50 p-5 rounded-r-lg">
+                <div className="flex items-start gap-3">
+                  <div className="w-16 h-6 bg-slate-600 text-white text-xs font-bold rounded flex items-center justify-center flex-shrink-0">
+                    MISSING
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-slate-800 mb-2">No kill fee / cancellation clause</p>
+                    <p className="text-sm text-slate-700 mb-2">
+                      If client cancels mid-project, you may not be paid for work already done.
+                    </p>
+                    <p className="text-sm text-emerald-700 font-medium">
+                      💡 Add: 50% kill fee if cancelled after approval stage
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lease-specific tip */}
+              <div className="border-l-4 border-blue-500 bg-blue-50 p-5 rounded-r-lg">
+                <div className="flex items-start gap-3">
+                  <div className="w-16 h-6 bg-blue-600 text-white text-xs font-bold rounded flex items-center justify-center flex-shrink-0">
+                    TIP
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-slate-800 mb-2">Deposit return timeline (Lease)</p>
+                    <p className="text-sm text-slate-700">
+                      <strong className="font-mono text-xs bg-white/50 px-2 py-0.5 rounded">§12</strong> Ontario RTA requires return within 30 days. Verify clause matches provincial law.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-slate-200 text-center">
+              <button
+                onClick={scrollToUpload}
+                className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-3 rounded-xl transition-colors shadow-md"
+              >
+                Upload yours — free
+              </button>
+              <p className="text-xs text-slate-500 mt-3">
+                Or <Link href="/contract-checker" className="text-[#2D6A4F] hover:underline font-medium">learn more about contract checking</Link>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Who It&apos;s For ── */}
+        <section className="bg-slate-50 py-16 mb-20 border-y border-slate-200">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
+                Made for the contracts Canadians actually sign
+              </h2>
+              <p className="text-slate-600 max-w-2xl mx-auto">
+                Built first for Canadian freelancers and renters — works on any contract
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
+                  <FileText className="w-6 h-6 text-[#2D6A4F]" />
+                </div>
+                <h3 className="font-bold text-slate-800 mb-2">Freelancers</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Payment terms, scope creep, IP, non-competes. Check the agreement before the first billable hour.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
+                  <Shield className="w-6 h-6 text-[#2D6A4F]" />
+                </div>
+                <h3 className="font-bold text-slate-800 mb-2">Renters</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Residential leases: renewals, deposits, entry, surprise fees. Ontario-aware language where it helps.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
+                  <CheckCircle className="w-6 h-6 text-[#2D6A4F]" />
+                </div>
+                <h3 className="font-bold text-slate-800 mb-2">Home Buyers (APS)</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Ontario Agreement of Purchase and Sale clause flags before you&apos;re locked in.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
+                  <Star className="w-6 h-6 text-[#2D6A4F]" />
+                </div>
+                <h3 className="font-bold text-slate-800 mb-2">Everyone Else</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  NDAs, employment, services, partnerships — upload any contract.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ── Features ── */}
         <section className="max-w-6xl mx-auto px-4 mb-24">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-4">Everything You Need</h2>
-            <p className="text-slate-500 max-w-xl mx-auto">Professional contract intelligence without the lawyer fees.</p>
+            <p className="text-slate-500 max-w-xl mx-auto">Clear contract insights — without booking a lawyer for a first read.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURES.map((f) => (
@@ -411,9 +570,9 @@ export default function Home() {
               ))}
             </div>
             <p className="text-center mt-6 text-sm text-slate-500">
-              Don&apos;t see your type?{' '}
+              Don&apos;t see yours? Upload it anyway — the analyzer accepts any written agreement.{' '}
               <Link href="/contract-types" className="text-[#2D6A4F] hover:underline font-medium">
-                View all supported contract types →
+                View all types →
               </Link>
             </p>
           </div>
