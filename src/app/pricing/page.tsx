@@ -108,7 +108,7 @@ export default function PricingPage() {
             <div className="px-7 pb-7">
               <Link
                 href="/#upload-section"
-                className="w-full flex items-center justify-center gap-2 font-semibold py-3 rounded-xl text-sm transition-colors bg-[#059669] hover:bg-[#10B981] text-white shadow-lg shadow-emerald-900/20"
+                className="w-full flex items-center justify-center gap-2 font-semibold py-3 rounded-xl text-sm transition-all bg-[#059669] hover:bg-[#047857] text-white shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:scale-105"
               >
                 Analyze Contract Free <ArrowRight className="w-4 h-4" />
               </Link>
@@ -217,7 +217,7 @@ export default function PricingPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/#upload-section"
-              className="bg-[#059669] hover:bg-[#10B981] text-white font-bold px-8 py-4 rounded-xl text-sm transition-colors flex items-center gap-2"
+              className="bg-[#059669] hover:bg-[#047857] text-white font-bold px-8 py-4 rounded-xl text-sm transition-all flex items-center gap-2 shadow-lg hover:shadow-xl hover:scale-105"
             >
               Analyze Now — Free <ArrowRight className="w-4 h-4" />
             </Link>
