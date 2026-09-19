@@ -17,18 +17,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://contractchecked.com"),
+  metadataBase: new URL("https://www.contractchecked.com"),
   title: {
-    default: "Contract Checked — AI Contract Analysis, Free & Instant",
+    default: "Contract Checked — Free Contract Analysis (No Login)",
     template: "%s | Contract Checked",
   },
   description:
-    "Upload any contract — PDF, Word, or photo — and get instant AI-powered analysis. Risks, plain English summary, missing clauses, and recommendations. Free, no login required.",
+    "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A. No login. Not legal advice.",
   keywords: [
     "contract analysis", "AI contract review", "free contract analysis",
     "contract checker", "NDA analysis", "rental agreement review",
     "employment contract analysis", "legal document AI", "OCR contract photo",
-    "contract comparison", "contract risk assessment",
+    "contract comparison", "contract risk assessment", "Canadian contract analysis",
+    "Ontario lease review", "freelance contract checker",
   ],
   authors: [{ name: "Contract Checked" }],
   creator: "Contract Checked",
@@ -36,30 +37,30 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: "https://contractchecked.com",
+    locale: "en_CA",
+    url: "https://www.contractchecked.com",
     siteName: "Contract Checked",
-    title: "Contract Checked — Know What You Sign",
+    title: "Contract Checked — Free Contract Analysis (No Login)",
     description:
-      "Free AI contract analysis. Upload PDF, Word, or a photo of any contract and get instant risk assessment, plain English summary, and recommendations.",
+      "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A. No login. Not legal advice.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Contract Checked — AI Contract Analysis",
+        alt: "Contract Checked — Free contract analysis",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contract Checked — Know What You Sign",
+    title: "Contract Checked — Free Contract Analysis (No Login)",
     description:
-      "Free AI contract analysis. Upload any contract and get instant risk assessment and plain English summary.",
+      "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A.",
     images: ["/og-image.png"],
   },
   alternates: {
-    canonical: "https://contractchecked.com",
+    canonical: "https://www.contractchecked.com",
   },
 };
 
