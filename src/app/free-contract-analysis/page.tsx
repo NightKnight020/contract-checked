@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FileText, Shield, Zap, Camera, GitCompare, CheckCircle, ArrowRight, ChevronDown } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { AdSlot } from '@/components/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Free Contract Analysis — No Login | Contract Checked',
@@ -143,6 +144,11 @@ export default function FreeContractAnalysisPage() {
             ✅ No login required · ✅ No monthly limits · ✅ No upgrade walls · ✅ Full quality
           </p>
         </div>
+      </section>
+
+      {/* Ad Slot */}
+      <section className="max-w-4xl mx-auto px-4 mb-16">
+        <AdSlot />
       </section>
 
       {/* Why free isn't a trial trap */}

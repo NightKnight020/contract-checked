@@ -96,7 +96,22 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">5. Cookies &amp; Tracking</h2>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">5. Advertising</h2>
+          <div className="text-slate-600 space-y-3 text-sm leading-relaxed">
+            <p>We use advertising (e.g. Google AdSense) to support free contract analysis.</p>
+            <ul className="list-disc pl-6 space-y-2">
+              <li><strong>Ad partners may use cookies or similar technologies</strong> to serve and measure ads (including interest-based ads where allowed).</li>
+              <li><strong>What they may collect:</strong> IP address, device/browser information, page URLs, cookie IDs — per their policies.</li>
+              <li><strong>We do not sell your uploaded contracts to advertisers.</strong> Contract files are for analysis, not ad targeting.</li>
+              <li><strong>How to control:</strong> You can manage ad preferences through <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Google Ad Settings</a>, browser controls, or any consent banner controls we provide.</li>
+              <li><strong>Analytics:</strong> We use Google Analytics (GA4) separately from ads to measure site usage — see Section 6 below.</li>
+            </ul>
+            <p>For privacy questions, contact us at <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a>.</p>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">6. Cookies &amp; Tracking</h2>
           <div className="text-slate-600 space-y-3 text-sm leading-relaxed">
             <p>We use the following cookies:</p>
             <ul className="list-disc pl-6 space-y-2">
@@ -109,7 +124,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">6. Your Rights</h2>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">7. Your Rights</h2>
           <div className="text-slate-600 space-y-3 text-sm leading-relaxed">
             <p>Depending on your jurisdiction, you may have the following rights regarding your data:</p>
             <ul className="list-disc pl-6 space-y-2">
@@ -124,14 +139,14 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">7. Children&apos;s Privacy</h2>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">8. Children&apos;s Privacy</h2>
           <div className="text-slate-600 text-sm leading-relaxed">
             <p>Contract Checked is not intended for use by anyone under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us at <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a> and we will delete it promptly.</p>
           </div>
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">8. Contact</h2>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">9. Contact</h2>
           <div className="text-slate-600 text-sm leading-relaxed">
             <p>For privacy-related questions, requests, or concerns, contact us at:</p>
             <div className="bg-white border border-slate-200 rounded-xl p-4 mt-3">
@@ -142,7 +157,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-slate-800 mb-4">9. Changes to This Policy</h2>
+          <h2 className="text-2xl font-bold text-slate-800 mb-4">10. Changes to This Policy</h2>
           <div className="text-slate-600 text-sm leading-relaxed space-y-3">
             <p>We may update this Privacy Policy from time to time. When we do, we will update the &quot;Last updated&quot; date at the top of this page. For significant changes, we will make reasonable efforts to notify users (such as via a notice on the site).</p>
             <p>Continued use of Contract Checked after changes are posted constitutes acceptance of the updated policy.</p>
