@@ -1,8 +1,12 @@
 import type { MetadataRoute } from 'next';
+import { blogPosts } from '@/lib/blog-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://www.contractchecked.com';
-  const now = new Date();
+  
+  // More realistic lastmod dates
+  const recentUpdate = new Date('2026-01-15');
+  const olderUpdate = new Date('2025-10-01');
 
   const analyzeSlugs = [
     'rental-agreement',
@@ -17,39 +21,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'real-estate-aps',
   ];
 
-  const blogSlugs = [
-    'how-to-review-any-contract',
-    'partnership-agreement-must-haves',
-    'service-agreement-problems',
-    'real-estate-purchase-agreement-guide',
-    'freelancer-contract-checklist',
-    'nda-mistakes-that-backfire',
-    'employment-contract-negotiation-guide',
-    'rental-agreement-red-flags',
-  ];
+  const blogUrls = blogPosts.map((post) => ({
+    url: `${base}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
 
   return [
-    { url: base, lastModified: now, changeFrequency: 'weekly', priority: 1 },
-    { url: `${base}/contract-checker`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${base}/free-contract-analysis`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${base}/resources`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${base}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    ...blogSlugs.map((slug) => ({
-      url: `${base}/blog/${slug}`,
-      lastModified: now,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })),
-    { url: `${base}/contract-types`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    { url: base, lastModified: recentUpdate, changeFrequency: 'weekly', priority: 1 },
+    { url: `${base}/contract-checker`, lastModified: recentUpdate, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/free-contract-analysis`, lastModified: recentUpdate, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/resources`, lastModified: olderUpdate, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${base}/blog`, lastModified: recentUpdate, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${base}/contract-types`, lastModified: olderUpdate, changeFrequency: 'monthly', priority: 0.9 },
     ...analyzeSlugs.map((slug) => ({
       url: `${base}/analyze/${slug}`,
-      lastModified: now,
+      lastModified: olderUpdate,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    { url: `${base}/pricing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${base}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
-    { url: `${base}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.4 },
+    ...blogUrls,
+    { url: `${base}/pricing`, lastModified: recentUpdate, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${base}/about`, lastModified: olderUpdate, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/privacy`, lastModified: olderUpdate, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${base}/terms`, lastModified: olderUpdate, changeFrequency: 'yearly', priority: 0.3 },
   ];
 }

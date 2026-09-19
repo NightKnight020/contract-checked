@@ -45,10 +45,10 @@ export const metadata: Metadata = {
       "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A. No login. Not legal advice.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://www.contractchecked.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Contract Checked — Free contract analysis",
+        alt: "Contract Checked — Free Contract Analysis",
       },
     ],
   },
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     title: "Contract Checked — Free Contract Analysis (No Login)",
     description:
       "Upload a lease, freelance contract, Ontario APS, or any agreement. Free Smart Analysis in plain English — risks, gaps, and Q&A.",
-    images: ["/og-image.png"],
+    images: ["https://www.contractchecked.com/og-image.png"],
   },
   alternates: {
     canonical: "https://www.contractchecked.com",
