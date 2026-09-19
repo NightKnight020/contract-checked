@@ -338,8 +338,14 @@ export function ContractUpload({ onAnalyze, isAnalyzing }: ContractUploadProps) 
         </Button>
       </div>
 
-      <p className="text-center text-xs text-slate-400">
-        No login required · Secure & private · Not legal advice
+      <p className="text-center text-xs text-slate-500">
+        Uploaded contracts may be stored to operate and improve our service.{' '}
+        <a href="/privacy" className="text-blue-600 hover:text-blue-700 underline">
+          Privacy Policy
+        </a>
+      </p>
+      <p className="text-center text-xs text-slate-400 -mt-2">
+        No login required · Not legal advice
       </p>
     </div>
   );

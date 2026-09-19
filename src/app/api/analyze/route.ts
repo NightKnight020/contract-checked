@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
 import { analyzeContractText, ocrImageToText, compareContracts } from '@/lib/contract-ai';
-import { trackAnalysisEvent, trackGA4Event } from '@/lib/telemetry';
+import { trackAnalysisEvent, trackGA4Event, storeContractFile, updateContractAnalysisStatus } from '@/lib/telemetry';
 
 const MAX_SIZE = 10 * 1024 * 1024;
 
@@ -44,6 +44,7 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
   let primaryFile: File | null = null;
   let anonSessionId: string | null = null;
+  let storageId: string | null = null;
   
   try {
     const formData = await request.formData();
@@ -85,6 +86,16 @@ export async function POST(request: NextRequest) {
         if (errA) return NextResponse.json({ error: errA }, { status: 400 });
         const errB = validateFile(imgB, VALID_IMAGE_TYPES);
         if (errB) return NextResponse.json({ error: errB }, { status: 400 });
+        
+        // Store the file
+        const bufferA = Buffer.from(await imgA.arrayBuffer());
+        const stored = await storeContractFile(bufferA, {
+          mime: imgA.type,
+          ext: '.jpg',
+          anonSessionId: anonSessionId || undefined,
+        });
+        if (stored) storageId = stored.storageId;
+        
         [textA, textB] = await Promise.all([ocrImageToText(imgA), ocrImageToText(imgB)]);
       } else {
         const fileA = formData.get('fileA') as File | null;
@@ -106,6 +117,17 @@ export async function POST(request: NextRequest) {
         if (errA) return NextResponse.json({ error: errA }, { status: 400 });
         const errB = validateFile(fileB, VALID_DOC_TYPES);
         if (errB) return NextResponse.json({ error: errB }, { status: 400 });
+        
+        // Store the file
+        const bufferA = Buffer.from(await fileA.arrayBuffer());
+        const fileExt = fileA.name.match(/\.[^.]+$/)?.[0] || '.bin';
+        const stored = await storeContractFile(bufferA, {
+          mime: fileA.type,
+          ext: fileExt,
+          anonSessionId: anonSessionId || undefined,
+        });
+        if (stored) storageId = stored.storageId;
+        
         [textA, textB] = await Promise.all([extractText(fileA), extractText(fileB)]);
       }
 
@@ -124,6 +146,11 @@ export async function POST(request: NextRequest) {
       });
 
       const result = await compareContracts(textA, textB);
+      
+      // Update storage status
+      if (storageId) {
+        await updateContractAnalysisStatus(storageId, 'completed', result.contractA.contractType);
+      }
       
       // Track success
       const duration = Date.now() - startTime;
@@ -170,6 +197,16 @@ export async function POST(request: NextRequest) {
       
       const err = validateFile(img, VALID_IMAGE_TYPES);
       if (err) return NextResponse.json({ error: err }, { status: 400 });
+      
+      // Store the file
+      const buffer = Buffer.from(await img.arrayBuffer());
+      const stored = await storeContractFile(buffer, {
+        mime: img.type,
+        ext: '.jpg',
+        anonSessionId: anonSessionId || undefined,
+      });
+      if (stored) storageId = stored.storageId;
+      
       contractText = await ocrImageToText(img);
     } else {
       const file = formData.get('fileA') as File | null;
@@ -188,6 +225,17 @@ export async function POST(request: NextRequest) {
       
       const err = validateFile(file, VALID_DOC_TYPES);
       if (err) return NextResponse.json({ error: err }, { status: 400 });
+      
+      // Store the file
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const fileExt = file.name.match(/\.[^.]+$/)?.[0] || '.bin';
+      const stored = await storeContractFile(buffer, {
+        mime: file.type,
+        ext: fileExt,
+        anonSessionId: anonSessionId || undefined,
+      });
+      if (stored) storageId = stored.storageId;
+      
       contractText = await extractText(file);
     }
 
@@ -206,6 +254,11 @@ export async function POST(request: NextRequest) {
     });
 
     const result = await analyzeContractText(contractText);
+    
+    // Update storage status
+    if (storageId) {
+      await updateContractAnalysisStatus(storageId, 'completed', result.contractType);
+    }
     
     // Track success
     const duration = Date.now() - startTime;
@@ -231,6 +284,11 @@ export async function POST(request: NextRequest) {
     console.error('Analysis error:', error);
     const raw = error instanceof Error ? error.message : '';
     
+    // Update storage status on failure
+    if (storageId) {
+      await updateContractAnalysisStatus(storageId, 'failed');
+    }
+    
     // Track failure
     const duration = Date.now() - startTime;
     let errorCode = 'unknown_error';
@@ -255,7 +313,7 @@ export async function POST(request: NextRequest) {
       path: '/api/analyze',
     });
 
-    // OpenAI quota / billing error
+    // AI quota / billing error
     if (errorCode === 'ai_quota_exceeded') {
       return NextResponse.json(
         { error: 'Our AI service is temporarily unavailable due to high demand. Please try again in a few minutes.' },

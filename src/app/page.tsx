@@ -33,7 +33,7 @@ const FAQS = [
   },
   {
     q: 'Is my contract data kept private?',
-    a: 'We process uploads to produce your analysis. We don\'t sell your contracts. We don\'t use your documents to train public models. See Privacy Policy for retention details.',
+    a: 'Uploaded contracts are stored to operate and improve our service. We don\'t sell your contracts or share them with advertisers. See our Privacy Policy for full retention and deletion details.',
   },
   {
     q: 'What types of contracts can you analyze?',

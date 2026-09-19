@@ -18,7 +18,7 @@ AI-powered contract analysis made simple. Upload any contract and get instant in
 - **Database Storage**: Secure storage of analyses and learning data using Supabase
 - **Real-time Processing**: Instant analysis results with personalized recommendations
 - **Navigation**: Easy switching between analysis and resources
-- **Analytics & Telemetry**: Privacy-first usage tracking to understand user needs (see [TELEMETRY.md](./TELEMETRY.md))
+- **Contract Storage & Analytics**: Full contract retention for service operation and improvement, with privacy protections (see [TELEMETRY.md](./TELEMETRY.md) and [Privacy Policy](/privacy))
 
 ## 🛠️ Tech Stack
 

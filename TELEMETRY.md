@@ -1,24 +1,31 @@
-# Contract Analysis Telemetry
+# Contract Analysis Telemetry & Storage
 
-This document describes the telemetry system for tracking contract uploads and analysis events.
+This document describes the telemetry system and contract storage for Contract Checked.
 
 ## Overview
 
-The telemetry system tracks:
+The system includes:
+
+### 1. **Full Contract Storage**
+- Complete uploaded files stored in private Supabase Storage
+- Retention period: ~12 months (configurable)
+- Used for: service operation, improvement, quality assurance
+- SHA-256 deduplication to save storage
+
+### 2. **Telemetry & Analytics**
 - Document uploads (started events)
 - Analysis lifecycle (started, succeeded, failed)
-- File metadata (type, size, extension only)
+- File metadata (type, size, extension)
 - Contract type classification
 - Performance metrics (duration)
 - Error tracking
 
-**Privacy First:**
-- ❌ No contract content or full text stored
-- ❌ No PII (email, name, etc.)
-- ❌ No full filenames (extension only)
-- ✅ Anonymous session IDs only
-- ✅ Aggregate metrics
-- ✅ Privacy-friendly size bands
+**Privacy Approach:**
+- ✅ Contracts stored for operation and improvement
+- ✅ Anonymous session IDs (not linked to user identity)
+- ✅ No selling to advertisers or third parties
+- ✅ Privacy-friendly size bands for analytics
+- ✅ User deletion requests honored (see Privacy Policy)
 
 ## Database Schema
 
