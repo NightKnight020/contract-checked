@@ -56,8 +56,13 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-6 text-center text-xs">
-          &copy; {new Date().getFullYear()} Contract Checked. AI-powered contract analysis. Not legal advice.
+        <div className="border-t border-white/10 pt-6 text-center text-xs space-y-2">
+          <div className="text-slate-500">
+            Supported by ads · Not legal advice
+          </div>
+          <div>
+            &copy; {new Date().getFullYear()} Contract Checked. AI-powered contract analysis.
+          </div>
         </div>
       </div>
     </footer>

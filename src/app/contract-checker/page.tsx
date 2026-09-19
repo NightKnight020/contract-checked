@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { FileText, Shield, Zap, AlertTriangle, CheckCircle, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { AdSlot } from '@/components/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Contract Checker — Free AI Contract Analysis | Contract Checked',
@@ -229,6 +230,11 @@ export default function ContractCheckerPage() {
             </p>
           </div>
         </div>
+      </section>
+
+      {/* Ad Slot */}
+      <section className="max-w-4xl mx-auto px-4 mb-16">
+        <AdSlot />
       </section>
 
       {/* What we flag */}

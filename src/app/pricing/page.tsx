@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { CheckCircle, Zap, Shield, ArrowRight, Star } from 'lucide-react';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { AdSlot } from '@/components/AdSlot';
 
 export const metadata: Metadata = {
   title: 'Pricing — Contract Checked',
@@ -11,6 +12,10 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
+  {
+    q: 'How is Contract Checked free?',
+    a: 'Full Smart Analysis is free. We run ads on some pages to support the product. Ads are kept away from your upload and the main report reading experience. An optional $29 deep PDF may be offered later — it\'s not required.',
+  },
   {
     q: 'Is Contract Checked really free?',
     a: 'Yes. Core contract analysis is completely free with no limits. Upload and analyze as many contracts as you need.',
@@ -184,6 +189,11 @@ export default function PricingPage() {
             Contact Us <ArrowRight className="w-4 h-4" />
           </a>
         </div>
+      </section>
+
+      {/* Ad Slot */}
+      <section className="max-w-6xl mx-auto px-4 mb-20">
+        <AdSlot className="max-w-4xl mx-auto" />
       </section>
 
       {/* FAQ */}

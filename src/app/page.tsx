@@ -11,6 +11,7 @@ import { AnalysisResults, type AnalysisResultPayload } from '@/components/Analys
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
 import { ContractQA } from '@/components/ContractQA';
+import { AdSlot } from '@/components/AdSlot';
 import { useAuth } from '@/lib/auth-context';
 import { saveAnalysisToHistory } from '@/lib/supabase';
 import type { ContractAnalysis, ComparisonResult } from '@/lib/contract-ai';
@@ -18,6 +19,10 @@ import type { ContractAnalysis, ComparisonResult } from '@/lib/contract-ai';
 // ─── FAQ data ────────────────────────────────────────────────────────────────
 
 const FAQS = [
+  {
+    q: 'How is Contract Checked free?',
+    a: 'Full Smart Analysis is free. We run ads on some pages to support the product. Ads are kept away from your upload and the main report reading experience. An optional $29 deep PDF may be offered later — it\'s not required.',
+  },
   {
     q: 'Is Contract Checked free to use?',
     a: 'Yes. Standard Smart Analysis is free — upload, risks, plain English summary, missing-clause notes, and Q&A. No login required. We\'re supported by ads. An optional paid deep PDF report may be offered later; it isn\'t required for a full free analysis.',
@@ -349,35 +354,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── Results ── */}
-        {result && (
-          <section className="max-w-6xl mx-auto px-4 mb-8">
-            <AnalysisResults result={result} />
-            {!user && (
-              <div className="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm text-emerald-800">
-                  <strong>Save your analysis</strong> — Sign in to access your contract history anytime.
-                </p>
-                <Link
-                  href="/auth/signup"
-                  className="text-sm font-semibold text-[#2D6A4F] hover:underline whitespace-nowrap"
-                >
-                  Create free account →
-                </Link>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* ── Contract Q&A ── */}
-        <section className="max-w-3xl mx-auto px-4 mb-24">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-slate-800 mb-2">Ask Questions About Your Contract</h2>
-            <p className="text-slate-500 text-sm">Get plain-English answers instantly</p>
-          </div>
-          <ContractQA analysisContext={analysisContext} />
-        </section>
-
         {/* ── Sample Annotated Report ── */}
         <section id="sample-report" className="max-w-6xl mx-auto px-4 mb-24">
           <div className="text-center mb-12">
@@ -477,6 +453,40 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </section>
+
+        {/* ── Ad Slot ── */}
+        <section className="max-w-6xl mx-auto px-4 mb-20">
+          <AdSlot className="max-w-4xl mx-auto" />
+        </section>
+
+        {/* ── Results ── */}
+        {result && (
+          <section className="max-w-6xl mx-auto px-4 mb-8">
+            <AnalysisResults result={result} />
+            {!user && (
+              <div className="mt-6 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex flex-wrap items-center justify-between gap-3">
+                <p className="text-sm text-emerald-800">
+                  <strong>Save your analysis</strong> — Sign in to access your contract history anytime.
+                </p>
+                <Link
+                  href="/auth/signup"
+                  className="text-sm font-semibold text-[#2D6A4F] hover:underline whitespace-nowrap"
+                >
+                  Create free account →
+                </Link>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* ── Contract Q&A ── */}
+        <section className="max-w-3xl mx-auto px-4 mb-24">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-slate-800 mb-2">Ask Questions About Your Contract</h2>
+            <p className="text-slate-500 text-sm">Get plain-English answers instantly</p>
+          </div>
+          <ContractQA analysisContext={analysisContext} />
         </section>
 
         {/* ── Who It&apos;s For ── */}
