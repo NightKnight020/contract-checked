@@ -17,7 +17,7 @@ export default function TermsPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-12">
+      <section className="bg-[#0F172A] text-white pt-16 pb-12">
         <div className="max-w-3xl mx-auto px-4">
           <h1 className="text-4xl font-extrabold tracking-tight mb-3">Terms of Service</h1>
           <p className="text-slate-400 text-sm">Last updated: April 18, 2026</p>
@@ -146,7 +146,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-2xl font-bold text-slate-800 mb-4">10. Dispute Resolution</h2>
           <div className="text-slate-600 text-sm leading-relaxed space-y-3">
-            <p>Before filing any formal legal claim, you agree to first contact us at <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a> and attempt to resolve the dispute informally. We will make reasonable efforts to resolve disputes within 30 days of receiving written notice.</p>
+            <p>Before filing any formal legal claim, you agree to first contact us at <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a> and attempt to resolve the dispute informally. We will make reasonable efforts to resolve disputes within 30 days of receiving written notice.</p>
             <p>If informal resolution fails, disputes shall be resolved through binding arbitration in Ontario, Canada, in accordance with applicable arbitration rules, except that either party may seek injunctive or other equitable relief in court for claims involving intellectual property rights or violations of acceptable use policies.</p>
           </div>
         </section>
@@ -155,7 +155,7 @@ export default function TermsPage() {
           <h2 className="text-2xl font-bold text-slate-800 mb-4">11. Termination</h2>
           <div className="text-slate-600 text-sm leading-relaxed space-y-3">
             <p>We reserve the right to terminate or suspend your access to the Service at any time, with or without notice, for any reason, including if we believe you have violated these Terms.</p>
-            <p>You may stop using the Service at any time. If you have created an account, you may request account deletion by emailing <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a>.</p>
+            <p>You may stop using the Service at any time. If you have created an account, you may request account deletion by emailing <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a>.</p>
             <p>Upon termination, all provisions of these Terms that by their nature should survive will survive, including intellectual property provisions, warranty disclaimers, indemnity, and limitations of liability.</p>
           </div>
         </section>
@@ -166,15 +166,15 @@ export default function TermsPage() {
             <p>For questions about these Terms, contact us at:</p>
             <div className="bg-white border border-slate-200 rounded-xl p-4 mt-3">
               <p className="font-semibold text-slate-800">Contract Checked</p>
-              <p>Email: <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a></p>
+              <p>Email: <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a></p>
             </div>
           </div>
         </section>
 
         <div className="border-t border-slate-200 pt-8 flex flex-wrap gap-4 text-sm">
-          <Link href="/privacy" className="text-[#2D6A4F] hover:underline">Privacy Policy</Link>
-          <Link href="/about" className="text-[#2D6A4F] hover:underline">About Contract Checked</Link>
-          <Link href="/" className="text-[#2D6A4F] hover:underline">Back to Home</Link>
+          <Link href="/privacy" className="text-[#059669] hover:underline">Privacy Policy</Link>
+          <Link href="/about" className="text-[#059669] hover:underline">About Contract Checked</Link>
+          <Link href="/" className="text-[#059669] hover:underline">Back to Home</Link>
         </div>
 
       </div>

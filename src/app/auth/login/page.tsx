@@ -69,7 +69,7 @@ export default function LoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                   placeholder="you@example.com"
                 />
               </div>
@@ -81,7 +81,7 @@ export default function LoginPage() {
                     type="button"
                     onClick={handleForgotPassword}
                     disabled={resetLoading}
-                    className="text-xs text-[#2D6A4F] hover:underline disabled:opacity-60"
+                    className="text-xs text-[#059669] hover:underline disabled:opacity-60"
                   >
                     {resetLoading ? 'Sending...' : 'Forgot password?'}
                   </button>
@@ -92,7 +92,7 @@ export default function LoginPage() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2.5 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                    className="w-full px-3 py-2.5 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                     placeholder="Your password"
                   />
                   <button
@@ -114,7 +114,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#2D6A4F] hover:bg-[#40916C] disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                className="w-full bg-[#059669] hover:bg-[#10B981] disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
@@ -122,7 +122,7 @@ export default function LoginPage() {
 
             <p className="text-center text-sm text-slate-500 mt-6">
               Don&apos;t have an account?{' '}
-              <Link href="/auth/signup" className="text-[#2D6A4F] font-semibold hover:underline">
+              <Link href="/auth/signup" className="text-[#059669] font-semibold hover:underline">
                 Create one free
               </Link>
             </p>

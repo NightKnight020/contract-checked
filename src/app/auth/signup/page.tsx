@@ -50,13 +50,13 @@ export default function SignUpPage() {
             {success ? (
               <div className="text-center">
                 <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle className="w-7 h-7 text-[#2D6A4F]" />
+                  <CheckCircle className="w-7 h-7 text-[#059669]" />
                 </div>
                 <h1 className="text-xl font-bold text-slate-800 mb-2">Check your email</h1>
                 <p className="text-slate-500 text-sm mb-6">
                   We sent a confirmation link to <strong>{email}</strong>. Click it to activate your account.
                 </p>
-                <Link href="/auth/login" className="text-[#2D6A4F] font-semibold hover:underline text-sm">
+                <Link href="/auth/login" className="text-[#059669] font-semibold hover:underline text-sm">
                   Back to Sign In
                 </Link>
               </div>
@@ -75,7 +75,7 @@ export default function SignUpPage() {
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                       placeholder="you@example.com"
                     />
                   </div>
@@ -88,7 +88,7 @@ export default function SignUpPage() {
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full px-3 py-2.5 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                        className="w-full px-3 py-2.5 pr-10 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                         placeholder="Min. 8 characters"
                       />
                       <button
@@ -108,7 +108,7 @@ export default function SignUpPage() {
                       required
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                      className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                       placeholder="Repeat password"
                     />
                   </div>
@@ -122,7 +122,7 @@ export default function SignUpPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#2D6A4F] hover:bg-[#40916C] disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                    className="w-full bg-[#059669] hover:bg-[#10B981] disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
                   >
                     {loading ? 'Creating account...' : 'Create free account'}
                   </button>
@@ -130,7 +130,7 @@ export default function SignUpPage() {
 
                 <p className="text-center text-sm text-slate-500 mt-6">
                   Already have an account?{' '}
-                  <Link href="/auth/login" className="text-[#2D6A4F] font-semibold hover:underline">
+                  <Link href="/auth/login" className="text-[#059669] font-semibold hover:underline">
                     Sign in
                   </Link>
                 </p>

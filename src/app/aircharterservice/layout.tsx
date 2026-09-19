@@ -36,10 +36,10 @@ export default function ACSLayout({ children }: { children: React.ReactNode }) {
   if (authenticated) return <>{children}</>;
 
   return (
-    <div className="min-h-screen bg-[#1C2333] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#0F172A] flex items-center justify-center px-4">
       <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-sm">
         <div className="flex flex-col items-center mb-6">
-          <div className="w-14 h-14 bg-[#1B4332] rounded-2xl flex items-center justify-center mb-4">
+          <div className="w-14 h-14 bg-[#047857] rounded-2xl flex items-center justify-center mb-4">
             <Lock className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-xl font-bold text-slate-800">Restricted Access</h1>
@@ -53,7 +53,7 @@ export default function ACSLayout({ children }: { children: React.ReactNode }) {
               value={input}
               onChange={(e) => { setInput(e.target.value); setError(false); }}
               placeholder="Enter password"
-              className={`w-full px-4 py-3 rounded-xl border text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F] pr-10 ${
+              className={`w-full px-4 py-3 rounded-xl border text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-[#059669] pr-10 ${
                 error ? 'border-red-400 bg-red-50' : 'border-slate-200 bg-slate-50'
               }`}
               autoFocus
@@ -73,7 +73,7 @@ export default function ACSLayout({ children }: { children: React.ReactNode }) {
 
           <button
             type="submit"
-            className="w-full bg-[#2D6A4F] hover:bg-[#40916C] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
+            className="w-full bg-[#059669] hover:bg-[#10B981] text-white font-semibold py-3 rounded-xl transition-colors text-sm"
           >
             Access Page
           </button>

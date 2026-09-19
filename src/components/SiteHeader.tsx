@@ -40,7 +40,7 @@ export function SiteHeader() {
   const initial = user?.email?.[0]?.toUpperCase() ?? '?';
 
   return (
-    <header className="sticky top-0 z-50 bg-[#1C2333] text-white shadow-md">
+    <header className="sticky top-0 z-50 bg-[#0F172A] text-white shadow-md">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Logo variant="dark" size="md" />
@@ -81,7 +81,7 @@ export function SiteHeader() {
                 className="flex items-center gap-1.5 hover:opacity-80 transition-opacity"
                 aria-label="Account menu"
               >
-                <div className="w-8 h-8 rounded-full bg-[#2D6A4F] flex items-center justify-center text-sm font-bold text-white">
+                <div className="w-8 h-8 rounded-full bg-[#059669] flex items-center justify-center text-sm font-bold text-white">
                   {initial}
                 </div>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
@@ -121,7 +121,7 @@ export function SiteHeader() {
 
           <Link
             href="/#upload-section"
-            className="bg-[#2D6A4F] hover:bg-[#40916C] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+            className="bg-[#059669] hover:bg-[#047857] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all shadow-lg hover:shadow-xl hover:scale-105"
           >
             Analyze Free
           </Link>
@@ -139,7 +139,7 @@ export function SiteHeader() {
 
       {/* Mobile nav */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-white/10 bg-[#1C2333]">
+        <div className="md:hidden border-t border-white/10 bg-[#0F172A]">
           <nav className="flex flex-col px-4 py-3 gap-1">
             {NAV_LINKS.map((link) => (
               <Link

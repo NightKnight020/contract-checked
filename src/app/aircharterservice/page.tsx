@@ -59,7 +59,7 @@ export default function ACSPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-24 relative overflow-hidden">
+      <section className="bg-[#0F172A] text-white pt-16 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-transparent pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-blue-900/30 border border-blue-700/30 rounded-full px-4 py-1.5 mb-6 text-sm text-blue-300 font-medium">
@@ -128,7 +128,7 @@ export default function ACSPage() {
             {[
               {
                 icon: <CheckCircle className="h-8 w-8 text-white" />,
-                bg: 'bg-[#2D6A4F]',
+                bg: 'bg-[#059669]',
                 title: 'Dual Contract Analysis',
                 desc: 'Compare operator contracts with your booking forms to identify discrepancies and potential conflicts.',
               },
@@ -167,7 +167,7 @@ export default function ACSPage() {
 
       {/* Back to main tool */}
       <div className="max-w-6xl mx-auto px-4 pb-8 text-center">
-        <Link href="/" className="text-sm text-slate-500 hover:text-[#2D6A4F] transition-colors">
+        <Link href="/" className="text-sm text-slate-500 hover:text-[#059669] transition-colors">
           ← Back to Contract Checked main tool
         </Link>
       </div>

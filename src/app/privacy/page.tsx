@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-12">
+      <section className="bg-[#0F172A] text-white pt-16 pb-12">
         <div className="max-w-3xl mx-auto px-4">
           <h1 className="text-4xl font-extrabold tracking-tight mb-3">Privacy Policy</h1>
           <p className="text-slate-400 text-sm">Last updated: April 18, 2026</p>
@@ -66,7 +66,7 @@ export default function PrivacyPage() {
             <p><strong>Contract content:</strong> Deleted after your analysis session. We do not maintain a database of uploaded contracts. Once you close or navigate away, the content is not retained.</p>
             <p><strong>Server logs:</strong> Standard server access logs (IP address, timestamp, request path) are retained for up to 30 days for security and debugging purposes, then automatically deleted.</p>
             <p><strong>Analytics data:</strong> Aggregated, anonymized usage data retained by Google Analytics per their standard retention policy (26 months by default). This data cannot be linked back to specific contract content.</p>
-            <p><strong>Account data:</strong> If you create an account, your email is retained until you request deletion. You can request account deletion at any time by emailing <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a>.</p>
+            <p><strong>Account data:</strong> If you create an account, your email is retained until you request deletion. You can request account deletion at any time by emailing <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a>.</p>
           </div>
         </section>
 
@@ -77,19 +77,19 @@ export default function PrivacyPage() {
             <div className="space-y-4">
               <div className="bg-white border border-slate-200 rounded-xl p-4">
                 <p className="font-semibold text-slate-800 mb-1">Anthropic API</p>
-                <p>Powers the AI contract analysis. Your contract text is transmitted to Anthropic&apos;s API for processing. Anthropic does not use API inputs to train their models. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Anthropic&apos;s Privacy Policy</a> for details.</p>
+                <p>Powers the AI contract analysis. Your contract text is transmitted to Anthropic&apos;s API for processing. Anthropic does not use API inputs to train their models. See <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#059669] underline">Anthropic&apos;s Privacy Policy</a> for details.</p>
               </div>
               <div className="bg-white border border-slate-200 rounded-xl p-4">
                 <p className="font-semibold text-slate-800 mb-1">Vercel</p>
-                <p>Hosts and serves the Contract Checked platform. Standard server infrastructure; processes requests but does not store contract content. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Vercel&apos;s Privacy Policy</a>.</p>
+                <p>Hosts and serves the Contract Checked platform. Standard server infrastructure; processes requests but does not store contract content. See <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-[#059669] underline">Vercel&apos;s Privacy Policy</a>.</p>
               </div>
               <div className="bg-white border border-slate-200 rounded-xl p-4">
                 <p className="font-semibold text-slate-800 mb-1">Supabase</p>
-                <p>Used for optional user authentication only. If you create an account, your email is stored in Supabase. No contract content is stored in Supabase. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Supabase&apos;s Privacy Policy</a>.</p>
+                <p>Used for optional user authentication only. If you create an account, your email is stored in Supabase. No contract content is stored in Supabase. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#059669] underline">Supabase&apos;s Privacy Policy</a>.</p>
               </div>
               <div className="bg-white border border-slate-200 rounded-xl p-4">
                 <p className="font-semibold text-slate-800 mb-1">Google Analytics (GA4)</p>
-                <p>Collects anonymized usage data to help us understand site traffic and improve the platform. Uses cookies. No contract content is sent to Google Analytics. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Google&apos;s Privacy Policy</a>.</p>
+                <p>Collects anonymized usage data to help us understand site traffic and improve the platform. Uses cookies. No contract content is sent to Google Analytics. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-[#059669] underline">Google&apos;s Privacy Policy</a>.</p>
               </div>
             </div>
           </div>
@@ -103,10 +103,10 @@ export default function PrivacyPage() {
               <li><strong>Ad partners may use cookies or similar technologies</strong> to serve and measure ads (including interest-based ads where allowed).</li>
               <li><strong>What they may collect:</strong> IP address, device/browser information, page URLs, cookie IDs — per their policies.</li>
               <li><strong>We do not sell your uploaded contracts to advertisers.</strong> Contract files are for analysis, not ad targeting.</li>
-              <li><strong>How to control:</strong> You can manage ad preferences through <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Google Ad Settings</a>, browser controls, or any consent banner controls we provide.</li>
+              <li><strong>How to control:</strong> You can manage ad preferences through <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-[#059669] underline">Google Ad Settings</a>, browser controls, or any consent banner controls we provide.</li>
               <li><strong>Analytics:</strong> We use Google Analytics (GA4) separately from ads to measure site usage — see Section 6 below.</li>
             </ul>
-            <p>For privacy questions, contact us at <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a>.</p>
+            <p>For privacy questions, contact us at <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a>.</p>
           </div>
         </section>
 
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
             <p>We use the following cookies:</p>
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Session cookies:</strong> Required for basic site functionality. Expire when you close your browser.</li>
-              <li><strong>Google Analytics cookies (GA4):</strong> Used to measure site traffic and usage patterns anonymously. You can opt out using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-[#2D6A4F] underline">Google Analytics Opt-out Browser Add-on</a>.</li>
+              <li><strong>Google Analytics cookies (GA4):</strong> Used to measure site traffic and usage patterns anonymously. You can opt out using the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" className="text-[#059669] underline">Google Analytics Opt-out Browser Add-on</a>.</li>
               <li><strong>Authentication cookies:</strong> Only set if you create an account and log in. Used to keep you logged in.</li>
             </ul>
             <p>We do not use advertising cookies, retargeting cookies, or any cross-site tracking.</p>
@@ -134,14 +134,14 @@ export default function PrivacyPage() {
               <li><strong>Opt-out of analytics:</strong> Use the Google Analytics Opt-out Add-on or enable &quot;Do Not Track&quot; in your browser.</li>
               <li><strong>Data portability:</strong> Request a machine-readable copy of your account data.</li>
             </ul>
-            <p>To exercise any of these rights, email us at <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a>. We will respond within 30 days.</p>
+            <p>To exercise any of these rights, email us at <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a>. We will respond within 30 days.</p>
           </div>
         </section>
 
         <section>
           <h2 className="text-2xl font-bold text-slate-800 mb-4">8. Children&apos;s Privacy</h2>
           <div className="text-slate-600 text-sm leading-relaxed">
-            <p>Contract Checked is not intended for use by anyone under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us at <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a> and we will delete it promptly.</p>
+            <p>Contract Checked is not intended for use by anyone under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has provided us with personal information, please contact us at <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a> and we will delete it promptly.</p>
           </div>
         </section>
 
@@ -151,7 +151,7 @@ export default function PrivacyPage() {
             <p>For privacy-related questions, requests, or concerns, contact us at:</p>
             <div className="bg-white border border-slate-200 rounded-xl p-4 mt-3">
               <p className="font-semibold text-slate-800">Contract Checked</p>
-              <p>Email: <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] underline">support@contractchecked.com</a></p>
+              <p>Email: <a href="mailto:support@contractchecked.com" className="text-[#059669] underline">support@contractchecked.com</a></p>
             </div>
           </div>
         </section>
@@ -165,9 +165,9 @@ export default function PrivacyPage() {
         </section>
 
         <div className="border-t border-slate-200 pt-8 flex flex-wrap gap-4 text-sm">
-          <Link href="/terms" className="text-[#2D6A4F] hover:underline">Terms of Service</Link>
-          <Link href="/about" className="text-[#2D6A4F] hover:underline">About Contract Checked</Link>
-          <Link href="/" className="text-[#2D6A4F] hover:underline">Back to Home</Link>
+          <Link href="/terms" className="text-[#059669] hover:underline">Terms of Service</Link>
+          <Link href="/about" className="text-[#059669] hover:underline">About Contract Checked</Link>
+          <Link href="/" className="text-[#059669] hover:underline">Back to Home</Link>
         </div>
 
       </div>

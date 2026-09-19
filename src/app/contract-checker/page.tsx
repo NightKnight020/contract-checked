@@ -58,7 +58,7 @@ export default function ContractCheckerPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-20 pb-24 relative overflow-hidden">
+      <section className="bg-[#0F172A] text-white pt-20 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 text-center relative">
           <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium">
@@ -73,7 +73,7 @@ export default function ContractCheckerPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/#upload-section"
-              className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
+              className="bg-[#059669] hover:bg-[#10B981] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
             >
               Check my contract — free <ArrowRight className="w-5 h-5" />
             </Link>
@@ -99,7 +99,7 @@ export default function ContractCheckerPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <AlertTriangle className="w-6 h-6 text-[#2D6A4F]" />
+              <AlertTriangle className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Flags risks</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -109,7 +109,7 @@ export default function ContractCheckerPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <FileText className="w-6 h-6 text-[#2D6A4F]" />
+              <FileText className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Plain English summary</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -119,7 +119,7 @@ export default function ContractCheckerPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <CheckCircle className="w-6 h-6 text-[#2D6A4F]" />
+              <CheckCircle className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Missing-clause notes</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -129,7 +129,7 @@ export default function ContractCheckerPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <Zap className="w-6 h-6 text-[#2D6A4F]" />
+              <Zap className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Follow-up Q&A</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -154,7 +154,7 @@ export default function ContractCheckerPage() {
           
           <div className="space-y-6">
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                 1
               </div>
               <div>
@@ -166,7 +166,7 @@ export default function ContractCheckerPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                 2
               </div>
               <div>
@@ -178,7 +178,7 @@ export default function ContractCheckerPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                 3
               </div>
               <div>
@@ -205,21 +205,21 @@ export default function ContractCheckerPage() {
           <div className="bg-white rounded-xl p-5 border border-slate-200">
             <h3 className="font-bold text-slate-800 mb-1">Freelancers</h3>
             <p className="text-sm text-slate-600">
-              Check payment terms, scope, IP assignments, non-competes, and kill fees before you bill. <Link href="/blog/freelancer-contract-checklist" className="text-[#2D6A4F] hover:underline font-medium">Freelancer checklist →</Link>
+              Check payment terms, scope, IP assignments, non-competes, and kill fees before you bill. <Link href="/blog/freelancer-contract-checklist" className="text-[#059669] hover:underline font-medium">Freelancer checklist →</Link>
             </p>
           </div>
 
           <div className="bg-white rounded-xl p-5 border border-slate-200">
             <h3 className="font-bold text-slate-800 mb-1">Renters</h3>
             <p className="text-sm text-slate-600">
-              Residential leases: deposits, entry rules, renewal terms, surprise fees. <Link href="/blog/rental-agreement-red-flags" className="text-[#2D6A4F] hover:underline font-medium">Rental red flags →</Link>
+              Residential leases: deposits, entry rules, renewal terms, surprise fees. <Link href="/blog/rental-agreement-red-flags" className="text-[#059669] hover:underline font-medium">Rental red flags →</Link>
             </p>
           </div>
 
           <div className="bg-white rounded-xl p-5 border border-slate-200">
             <h3 className="font-bold text-slate-800 mb-1">Ontario home buyers / sellers (APS)</h3>
             <p className="text-sm text-slate-600">
-              Agreement of Purchase and Sale clause flags before you&apos;re locked in. <Link href="/analyze/real-estate-aps" className="text-[#2D6A4F] hover:underline font-medium">Analyze APS →</Link> · <Link href="/blog/real-estate-purchase-agreement-guide" className="text-[#2D6A4F] hover:underline font-medium">APS guide →</Link>
+              Agreement of Purchase and Sale clause flags before you&apos;re locked in. <Link href="/analyze/real-estate-aps" className="text-[#059669] hover:underline font-medium">Analyze APS →</Link> · <Link href="/blog/real-estate-purchase-agreement-guide" className="text-[#059669] hover:underline font-medium">APS guide →</Link>
             </p>
           </div>
 
@@ -238,7 +238,7 @@ export default function ContractCheckerPage() {
       </section>
 
       {/* What we flag */}
-      <section className="bg-[#1C2333] text-white py-16">
+      <section className="bg-[#0F172A] text-white py-16">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-6 text-center">
             What we flag
@@ -278,7 +278,7 @@ export default function ContractCheckerPage() {
           </p>
           <Link
             href="/#sample-report"
-            className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-6 py-3 rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white font-bold px-6 py-3 rounded-xl transition-colors"
           >
             View sample report <ArrowRight className="w-4 h-4" />
           </Link>
@@ -309,12 +309,12 @@ export default function ContractCheckerPage() {
         </p>
         <Link
           href="/#upload-section"
-          className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg"
+          className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors shadow-lg"
         >
           Check my contract free <ArrowRight className="w-5 h-5" />
         </Link>
         <p className="text-sm text-slate-500 mt-4">
-          Or learn about <Link href="/free-contract-analysis" className="text-[#2D6A4F] hover:underline font-medium">free contract analysis</Link> · <Link href="/pricing" className="text-[#2D6A4F] hover:underline font-medium">Pricing</Link>
+          Or learn about <Link href="/free-contract-analysis" className="text-[#059669] hover:underline font-medium">free contract analysis</Link> · <Link href="/pricing" className="text-[#059669] hover:underline font-medium">Pricing</Link>
         </p>
       </section>
 

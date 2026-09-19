@@ -87,7 +87,7 @@ export function ContractQA({ analysisContext }: ContractQAProps) {
             <div
               className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
-                  ? 'bg-[#2D6A4F] text-white rounded-br-sm'
+                  ? 'bg-[#059669] text-white rounded-br-sm'
                   : 'bg-slate-100 text-slate-800 rounded-bl-sm'
               }`}
             >
@@ -119,12 +119,12 @@ export function ContractQA({ analysisContext }: ContractQAProps) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Ask anything about your contract..."
-          className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/40 focus:border-[#2D6A4F]"
+          className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#059669]/40 focus:border-[#059669]"
         />
         <button
           onClick={handleSend}
           disabled={!input.trim() || loading}
-          className="bg-[#2D6A4F] hover:bg-[#40916C] disabled:opacity-40 text-white p-2.5 rounded-xl transition-colors flex-shrink-0"
+          className="bg-[#059669] hover:bg-[#10B981] disabled:opacity-40 text-white p-2.5 rounded-xl transition-colors flex-shrink-0"
           aria-label="Send"
         >
           <Send className="w-4 h-4" />

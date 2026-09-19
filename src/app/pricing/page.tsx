@@ -44,7 +44,7 @@ export default function PricingPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-16 pb-24">
+      <section className="bg-[#0F172A] text-white pt-16 pb-24">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-6 text-sm text-emerald-300 font-medium">
             <Star className="w-4 h-4" /> No credit card required to start
@@ -65,7 +65,7 @@ export default function PricingPage() {
           <div className="relative bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col">
             <div className="p-7 flex-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#2D6A4F] text-white">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#059669] text-white">
                   <Zap className="w-5 h-5" />
                 </div>
                 <span className="font-bold text-slate-800 text-lg">Free</span>
@@ -79,27 +79,27 @@ export default function PricingPage() {
 
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Unlimited contract analyses</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Risk assessment & plain English summary</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Pros, cons & recommendations</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">PDF, Word & photo / OCR upload</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Contract comparison (side-by-side)</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Q&A chat per analysis</span>
                 </li>
               </ul>
@@ -108,7 +108,7 @@ export default function PricingPage() {
             <div className="px-7 pb-7">
               <Link
                 href="/#upload-section"
-                className="w-full flex items-center justify-center gap-2 font-semibold py-3 rounded-xl text-sm transition-colors bg-[#2D6A4F] hover:bg-[#40916C] text-white shadow-lg shadow-emerald-900/20"
+                className="w-full flex items-center justify-center gap-2 font-semibold py-3 rounded-xl text-sm transition-colors bg-[#059669] hover:bg-[#10B981] text-white shadow-lg shadow-emerald-900/20"
               >
                 Analyze Contract Free <ArrowRight className="w-4 h-4" />
               </Link>
@@ -116,16 +116,16 @@ export default function PricingPage() {
           </div>
 
           {/* Deep PDF Report - Coming Soon */}
-          <div className="relative bg-white rounded-2xl border border-[#2D6A4F] ring-2 ring-[#2D6A4F] shadow-lg flex flex-col">
+          <div className="relative bg-white rounded-2xl border border-[#059669] ring-2 ring-[#059669] shadow-lg flex flex-col">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-              <span className="bg-[#2D6A4F] text-white text-xs font-bold px-4 py-1 rounded-full">
+              <span className="bg-[#059669] text-white text-xs font-bold px-4 py-1 rounded-full">
                 Coming Soon
               </span>
             </div>
 
             <div className="p-7 flex-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#2D6A4F] text-white">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-[#059669] text-white">
                   <Shield className="w-5 h-5" />
                 </div>
                 <span className="font-bold text-slate-800 text-lg">Deep PDF Report</span>
@@ -135,24 +135,24 @@ export default function PricingPage() {
                 <span className="text-4xl font-extrabold text-slate-900">$29</span>
                 <span className="text-slate-500 text-sm ml-2">one-time</span>
               </div>
-              <p className="text-xs text-[#2D6A4F] font-medium mb-3">Per contract analysis</p>
+              <p className="text-xs text-[#059669] font-medium mb-3">Per contract analysis</p>
               <p className="text-slate-500 text-sm mb-6">Professional PDF report you can share with advisors.</p>
 
               <ul className="space-y-3 mb-8">
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Everything in Free</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Downloadable professional PDF report</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Formatted for sharing with lawyers & advisors</span>
                 </li>
                 <li className="flex items-start gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#2D6A4F] flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-4 h-4 text-[#059669] flex-shrink-0 mt-0.5" />
                   <span className="text-slate-700">Print-ready layout</span>
                 </li>
               </ul>
@@ -166,7 +166,7 @@ export default function PricingPage() {
                 Coming Soon
               </button>
               <p className="text-xs text-slate-500 text-center mt-2">
-                Want to be notified? Email <a href="mailto:support@contractchecked.com" className="text-[#2D6A4F] hover:underline">support@contractchecked.com</a>
+                Want to be notified? Email <a href="mailto:support@contractchecked.com" className="text-[#059669] hover:underline">support@contractchecked.com</a>
               </p>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function PricingPage() {
         {/* No longer showing Pro/Business plans */}
 
         {/* Enterprise callout */}
-        <div className="mt-8 bg-[#1C2333] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-8 bg-[#0F172A] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <p className="text-white font-bold text-lg mb-1">Need Enterprise?</p>
             <p className="text-slate-400 text-sm">
@@ -184,7 +184,7 @@ export default function PricingPage() {
           </div>
           <a
             href="mailto:support@contractchecked.com?subject=Enterprise Inquiry"
-            className="flex-shrink-0 bg-white text-[#1C2333] hover:bg-slate-100 font-semibold px-6 py-3 rounded-xl text-sm transition-colors flex items-center gap-2"
+            className="flex-shrink-0 bg-white text-[#0F172A] hover:bg-slate-100 font-semibold px-6 py-3 rounded-xl text-sm transition-colors flex items-center gap-2"
           >
             Contact Us <ArrowRight className="w-4 h-4" />
           </a>
@@ -210,14 +210,14 @@ export default function PricingPage() {
       </section>
 
       {/* Bottom CTA */}
-      <section className="bg-[#1C2333] py-16 mb-0">
+      <section className="bg-[#0F172A] py-16 mb-0">
         <div className="max-w-xl mx-auto px-4 text-center text-white">
           <h2 className="text-3xl font-bold mb-3">Analyze Your Contract Free</h2>
           <p className="text-slate-400 mb-8">No signup. No credit card. Just instant contract analysis.</p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/#upload-section"
-              className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-sm transition-colors flex items-center gap-2"
+              className="bg-[#059669] hover:bg-[#10B981] text-white font-bold px-8 py-4 rounded-xl text-sm transition-colors flex items-center gap-2"
             >
               Analyze Now — Free <ArrowRight className="w-4 h-4" />
             </Link>

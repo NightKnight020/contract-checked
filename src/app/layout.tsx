@@ -72,6 +72,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/brand/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/brand/logo-mark.svg" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-NLDX2FS7ZH"
           strategy="afterInteractive"

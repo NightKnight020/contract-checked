@@ -52,7 +52,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mb-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-[#2D6A4F] hover:text-[#40916C] font-medium transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-[#059669] hover:text-[#10B981] font-medium transition-colors text-sm"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Blog
@@ -65,7 +65,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Article header */}
             <header className="mb-8">
               <div className="flex items-center gap-2 mb-4">
-                <span className="px-3 py-1 bg-emerald-50 text-[#2D6A4F] rounded-full text-sm font-medium">
+                <span className="px-3 py-1 bg-emerald-50 text-[#059669] rounded-full text-sm font-medium">
                   {post.category}
                 </span>
                 <div className="flex items-center gap-1.5 text-slate-500 text-sm">
@@ -123,7 +123,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </p>
                 <Link
                   href="/#upload-section"
-                  className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white px-5 py-2.5 rounded-xl font-semibold transition-colors text-sm"
+                  className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white px-5 py-2.5 rounded-xl font-semibold transition-colors text-sm"
                 >
                   <FileText className="h-4 w-4" />
                   Analyze Contract Free
@@ -141,7 +141,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {recentPosts.map((recentPost) => (
                   <div key={recentPost.id} className="border-b border-slate-100 last:border-0 pb-4 last:pb-0">
                     <h4 className="font-medium text-slate-800 mb-1 line-clamp-2 text-sm">
-                      <Link href={`/blog/${recentPost.slug}`} className="hover:text-[#2D6A4F] transition-colors">
+                      <Link href={`/blog/${recentPost.slug}`} className="hover:text-[#059669] transition-colors">
                         {recentPost.title}
                       </Link>
                     </h4>
@@ -162,7 +162,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     <Link
                       key={topic}
                       href={`/blog?search=${encodeURIComponent(topic)}`}
-                      className="block px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#2D6A4F] rounded-lg transition-colors"
+                      className="block px-3 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-[#059669] rounded-lg transition-colors"
                     >
                       {topic}
                     </Link>
@@ -172,7 +172,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
 
             {/* Newsletter */}
-            <div className="bg-[#1C2333] rounded-2xl p-6 text-white">
+            <div className="bg-[#0F172A] rounded-2xl p-6 text-white">
               <h3 className="font-bold mb-2">Stay Informed</h3>
               <p className="text-slate-400 text-sm mb-4">
                 Get the latest contract tips and legal insights delivered to your inbox.
@@ -183,7 +183,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   placeholder="Enter your email"
                   className="w-full px-3 py-2 rounded-lg bg-white/10 text-white placeholder-slate-400 border border-white/20 focus:ring-2 focus:ring-emerald-400/50 focus:outline-none text-sm"
                 />
-                <button className="w-full bg-[#2D6A4F] hover:bg-[#40916C] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                <button className="w-full bg-[#059669] hover:bg-[#10B981] text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
                   Subscribe
                 </button>
               </div>

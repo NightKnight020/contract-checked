@@ -2,62 +2,63 @@
 
 @layer base {
   :root {
-    /* Professional law-firm palette */
+    /* Premium design system - Linear/Stripe inspired */
     --background: 0 0% 99%;
-    --foreground: 220 20% 12%;
+    --foreground: 222 47% 11%;       /* Navy #0F172A */
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 12%;
+    --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 12%;
-    --primary: 158 45% 28%;          /* Deep forest green — trust, law */
+    --popover-foreground: 222 47% 11%;
+    --primary: 160 84% 39%;          /* Emerald #059669 */
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 20% 25%;
-    --muted: 220 14% 95%;
-    --muted-foreground: 220 10% 50%;
-    --accent: 42 60% 48%;            /* Muted gold — prestige */
+    --secondary: 215 25% 97%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 215 25% 97%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 160 84% 39%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 90%;
-    --input: 220 13% 90%;
-    --ring: 158 45% 28%;
-    --radius: 0.5rem;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 160 84% 39%;
+    --radius: 0.75rem;
 
-    /* Brand palette */
-    --charcoal: #1C2333;             /* Hero bg */
-    --forest: #2D6A4F;               /* Primary CTA */
-    --forest-light: #40916C;
-    --forest-dark: #1B4332;
-    --gold: #B7922A;                 /* Accent highlights */
-    --gold-light: #D4A843;
-    --slate: #374151;
-    --light-bg: #F9FAFB;
-    --success: #166534;
-    --warning: #92400E;
-    --danger: #991B1B;
+    /* Brand palette - Premium */
+    --navy: #0F172A;                 /* Primary dark - hero, header */
+    --emerald: #059669;              /* Primary action color */
+    --emerald-light: #10B981;
+    --emerald-dark: #047857;
+    --warm-white: #FAFAF9;           /* Off-white background */
+    --slate-50: #F8FAFC;
+    --slate-100: #F1F5F9;
+    --slate-200: #E2E8F0;
+    --slate-300: #CBD5E1;
+    --slate-600: #475569;
+    --slate-700: #334155;
+    --slate-800: #1E293B;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 222 47% 11%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
+    --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 160 84% 39%;
   }
 }
 
@@ -68,6 +69,8 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

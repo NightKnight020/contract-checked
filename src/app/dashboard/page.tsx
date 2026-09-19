@@ -115,7 +115,7 @@ function HistoryCard({
       <div className="p-5 sm:p-6">
         <div className="flex items-start gap-4">
           <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
-            <FileText className="w-5 h-5 text-[#2D6A4F]" />
+            <FileText className="w-5 h-5 text-[#059669]" />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -169,7 +169,7 @@ function HistoryCard({
             {/* Expand button */}
             <button
               onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-1 text-xs font-semibold text-[#2D6A4F] hover:text-[#40916C] px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 transition-colors"
+              className="flex items-center gap-1 text-xs font-semibold text-[#059669] hover:text-[#10B981] px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 transition-colors"
             >
               {expanded ? (
                 <>Hide <ChevronUp className="w-3.5 h-3.5" /></>
@@ -188,7 +188,7 @@ function HistoryCard({
 
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <MessageCircle className="w-4 h-4 text-[#2D6A4F]" />
+              <MessageCircle className="w-4 h-4 text-[#059669]" />
               <h4 className="font-semibold text-slate-700 text-sm">Ask Questions About This Contract</h4>
             </div>
             <ContractQA analysisContext={context} />
@@ -230,7 +230,7 @@ function SignInGate() {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
             <div className="mb-8 text-center">
               <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-7 h-7 text-[#2D6A4F]" />
+                <FileText className="w-7 h-7 text-[#059669]" />
               </div>
               <h1 className="text-2xl font-bold text-slate-800 mb-2">Sign in to view your history</h1>
               <p className="text-slate-500 text-sm">All your past contract analyses in one place.</p>
@@ -244,7 +244,7 @@ function SignInGate() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                   placeholder="you@example.com"
                 />
               </div>
@@ -255,7 +255,7 @@ function SignInGate() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 focus:border-[#2D6A4F]"
+                  className="w-full px-3 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#059669]/30 focus:border-[#059669]"
                   placeholder="Your password"
                 />
               </div>
@@ -265,7 +265,7 @@ function SignInGate() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-[#2D6A4F] hover:bg-[#40916C] disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
+                className="w-full bg-[#059669] hover:bg-[#10B981] disabled:opacity-60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
@@ -273,7 +273,7 @@ function SignInGate() {
 
             <p className="text-center text-sm text-slate-500 mt-6">
               No account?{' '}
-              <Link href="/auth/signup" className="text-[#2D6A4F] font-semibold hover:underline">
+              <Link href="/auth/signup" className="text-[#059669] font-semibold hover:underline">
                 Create one free
               </Link>
             </p>
@@ -315,7 +315,7 @@ export default function DashboardPage() {
         <main className="flex-1 flex items-center justify-center">
           <div className="flex gap-1.5">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="w-2 h-2 rounded-full bg-[#2D6A4F] animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
+              <div key={i} className="w-2 h-2 rounded-full bg-[#059669] animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
             ))}
           </div>
         </main>
@@ -363,7 +363,7 @@ export default function DashboardPage() {
             <p className="text-slate-400 text-sm mb-6">Analyze your first contract to see it here.</p>
             <Link
               href="/#upload-section"
-              className="inline-flex items-center gap-2 bg-[#2D6A4F] hover:bg-[#40916C] text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors"
+              className="inline-flex items-center gap-2 bg-[#059669] hover:bg-[#10B981] text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors"
             >
               Analyze a Contract <ArrowRight className="w-4 h-4" />
             </Link>

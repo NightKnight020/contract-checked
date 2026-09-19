@@ -58,7 +58,7 @@ export default function FreeContractAnalysisPage() {
       <SiteHeader />
 
       {/* Hero */}
-      <section className="bg-[#1C2333] text-white pt-20 pb-24 relative overflow-hidden">
+      <section className="bg-[#0F172A] text-white pt-20 pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-transparent pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 text-center relative">
           <div className="inline-flex items-center gap-2 bg-emerald-900/30 border border-emerald-700/30 rounded-full px-4 py-1.5 mb-8 text-sm text-emerald-300 font-medium">
@@ -74,7 +74,7 @@ export default function FreeContractAnalysisPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/#upload-section"
-              className="bg-[#2D6A4F] hover:bg-[#40916C] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
+              className="bg-[#059669] hover:bg-[#10B981] text-white font-bold px-8 py-4 rounded-xl text-lg transition-colors flex items-center gap-2 shadow-xl shadow-emerald-900/50"
             >
               Start free analysis <ArrowRight className="w-5 h-5" />
             </Link>
@@ -100,7 +100,7 @@ export default function FreeContractAnalysisPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <Zap className="w-6 h-6 text-[#2D6A4F]" />
+              <Zap className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Instant Smart Analysis</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -110,7 +110,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <FileText className="w-6 h-6 text-[#2D6A4F]" />
+              <FileText className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Follow-up Q&A</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -120,7 +120,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <Camera className="w-6 h-6 text-[#2D6A4F]" />
+              <Camera className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Photo OCR</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -130,7 +130,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="bg-white rounded-2xl p-6 border border-slate-200">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4">
-              <GitCompare className="w-6 h-6 text-[#2D6A4F]" />
+              <GitCompare className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Side-by-side compare</h3>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -139,10 +139,25 @@ export default function FreeContractAnalysisPage() {
           </div>
         </div>
 
-        <div className="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-xl text-center">
-          <p className="text-sm text-emerald-900 font-medium">
-            ✅ No login required · ✅ No monthly limits · ✅ No upgrade walls · ✅ Full quality
-          </p>
+        <div className="mt-8 p-6 bg-emerald-50 border border-emerald-200 rounded-xl">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-emerald-900 font-medium">
+            <span className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-600" />
+              No login required
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-600" />
+              No monthly limits
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-600" />
+              No upgrade walls
+            </span>
+            <span className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald-600" />
+              Full quality
+            </span>
+          </div>
         </div>
       </section>
 
@@ -163,7 +178,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="bg-white rounded-2xl p-8 border border-slate-200 space-y-6">
             <div className="flex items-start gap-4">
-              <CheckCircle className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-1" />
+              <CheckCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-slate-800 mb-1">No monthly cap theater</h3>
                 <p className="text-sm text-slate-600">
@@ -173,7 +188,7 @@ export default function FreeContractAnalysisPage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <CheckCircle className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-1" />
+              <CheckCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-slate-800 mb-1">No quality downgrade</h3>
                 <p className="text-sm text-slate-600">
@@ -183,7 +198,7 @@ export default function FreeContractAnalysisPage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <CheckCircle className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-1" />
+              <CheckCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-slate-800 mb-1">Ads support it</h3>
                 <p className="text-sm text-slate-600">
@@ -193,7 +208,7 @@ export default function FreeContractAnalysisPage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <CheckCircle className="w-6 h-6 text-[#2D6A4F] flex-shrink-0 mt-1" />
+              <CheckCircle className="w-6 h-6 text-[#059669] flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-slate-800 mb-1">Optional paid deep PDF coming later</h3>
                 <p className="text-sm text-slate-600">
@@ -204,7 +219,7 @@ export default function FreeContractAnalysisPage() {
           </div>
 
           <p className="text-center mt-6 text-sm text-slate-500">
-            See the full story on our <Link href="/pricing" className="text-[#2D6A4F] hover:underline font-medium">Pricing page</Link>
+            See the full story on our <Link href="/pricing" className="text-[#059669] hover:underline font-medium">Pricing page</Link>
           </p>
         </div>
       </section>
@@ -221,7 +236,7 @@ export default function FreeContractAnalysisPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white rounded-xl p-6 border border-slate-200 text-center">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 mx-auto">
-              <FileText className="w-6 h-6 text-[#2D6A4F]" />
+              <FileText className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Freelance agreements</h3>
             <p className="text-sm text-slate-600">
@@ -231,7 +246,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="bg-white rounded-xl p-6 border border-slate-200 text-center">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 mx-auto">
-              <Shield className="w-6 h-6 text-[#2D6A4F]" />
+              <Shield className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Residential leases</h3>
             <p className="text-sm text-slate-600">
@@ -241,7 +256,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="bg-white rounded-xl p-6 border border-slate-200 text-center">
             <div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center mb-4 mx-auto">
-              <CheckCircle className="w-6 h-6 text-[#2D6A4F]" />
+              <CheckCircle className="w-6 h-6 text-[#059669]" />
             </div>
             <h3 className="font-bold text-slate-800 mb-2">Ontario APS</h3>
             <p className="text-sm text-slate-600">
@@ -252,7 +267,7 @@ export default function FreeContractAnalysisPage() {
       </section>
 
       {/* How analysis works + OCR */}
-      <section className="bg-[#1C2333] text-white py-16">
+      <section className="bg-[#0F172A] text-white py-16">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-6 text-center">
             How free contract analysis works
@@ -263,7 +278,7 @@ export default function FreeContractAnalysisPage() {
 
           <div className="space-y-6">
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                 1
               </div>
               <div>
@@ -275,7 +290,7 @@ export default function FreeContractAnalysisPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                 2
               </div>
               <div>
@@ -287,7 +302,7 @@ export default function FreeContractAnalysisPage() {
             </div>
 
             <div className="flex gap-4">
-              <div className="w-10 h-10 bg-[#2D6A4F] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
+              <div className="w-10 h-10 bg-[#059669] text-white rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0">
                 3
               </div>
               <div>
@@ -312,7 +327,7 @@ export default function FreeContractAnalysisPage() {
             <div>
               <h3 className="font-bold text-slate-800 mb-1">Your contract stays private</h3>
               <p className="text-sm text-slate-600">
-                We process uploads to produce your analysis. We don&apos;t sell your contracts. We don&apos;t use your documents to train public models. See <Link href="/privacy" className="text-[#2D6A4F] hover:underline font-medium">Privacy Policy</Link> for retention details.
+                We process uploads to produce your analysis. We don&apos;t sell your contracts. We don&apos;t use your documents to train public models. See <Link href="/privacy" className="text-[#059669] hover:underline font-medium">Privacy Policy</Link> for retention details.
               </p>
             </div>
 
@@ -338,10 +353,10 @@ export default function FreeContractAnalysisPage() {
               href="/blog/how-to-review-any-contract"
               className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md transition-shadow group"
             >
-              <span className="inline-block text-xs font-semibold text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-xs font-semibold text-[#059669] bg-emerald-50 px-3 py-1 rounded-full mb-3">
                 Guide
               </span>
-              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#2D6A4F] transition-colors">
+              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#059669] transition-colors">
                 How to Review Any Contract in 30 Minutes
               </h3>
               <p className="text-sm text-slate-600">
@@ -353,10 +368,10 @@ export default function FreeContractAnalysisPage() {
               href="/blog/freelancer-contract-checklist"
               className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md transition-shadow group"
             >
-              <span className="inline-block text-xs font-semibold text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-xs font-semibold text-[#059669] bg-emerald-50 px-3 py-1 rounded-full mb-3">
                 Freelancing
               </span>
-              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#2D6A4F] transition-colors">
+              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#059669] transition-colors">
                 Freelancer Contract Checklist: 10 Clauses Before You Start
               </h3>
               <p className="text-sm text-slate-600">
@@ -368,10 +383,10 @@ export default function FreeContractAnalysisPage() {
               href="/blog/rental-agreement-red-flags"
               className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md transition-shadow group"
             >
-              <span className="inline-block text-xs font-semibold text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-xs font-semibold text-[#059669] bg-emerald-50 px-3 py-1 rounded-full mb-3">
                 Rental
               </span>
-              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#2D6A4F] transition-colors">
+              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#059669] transition-colors">
                 12 Rental Agreement Red Flags Landlords Hope You Miss
               </h3>
               <p className="text-sm text-slate-600">
@@ -383,10 +398,10 @@ export default function FreeContractAnalysisPage() {
               href="/blog/real-estate-purchase-agreement-guide"
               className="bg-white rounded-xl border border-slate-200 p-6 hover:shadow-md transition-shadow group"
             >
-              <span className="inline-block text-xs font-semibold text-[#2D6A4F] bg-emerald-50 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-xs font-semibold text-[#059669] bg-emerald-50 px-3 py-1 rounded-full mb-3">
                 Real Estate
               </span>
-              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#2D6A4F] transition-colors">
+              <h3 className="font-bold text-slate-800 mb-2 group-hover:text-[#059669] transition-colors">
                 Agreement of Purchase and Sale: 10 Clauses That Matter
               </h3>
               <p className="text-sm text-slate-600">
@@ -410,7 +425,7 @@ export default function FreeContractAnalysisPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#2D6A4F] py-16">
+      <section className="bg-[#059669] py-16">
         <div className="max-w-2xl mx-auto px-4 text-center text-white">
           <h2 className="text-3xl font-bold mb-4">
             Ready to analyze your contract?
@@ -420,7 +435,7 @@ export default function FreeContractAnalysisPage() {
           </p>
           <Link
             href="/#upload-section"
-            className="inline-flex items-center gap-2 bg-white text-[#2D6A4F] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
+            className="inline-flex items-center gap-2 bg-white text-[#059669] font-bold px-8 py-4 rounded-xl hover:bg-emerald-50 transition-colors shadow-lg"
           >
             Start free analysis <ArrowRight className="w-5 h-5" />
           </Link>
