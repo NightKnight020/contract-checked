@@ -7,7 +7,7 @@ AI-powered contract analysis made simple. Upload any contract and get instant in
 ## 🌟 Features
 
 - **Drag & Drop Upload**: Support for PDF, Word (.docx), and text files
-- **AI-Powered Analysis**: Advanced contract analysis using OpenAI GPT-4
+- **AI-Powered Analysis**: Advanced contract analysis using Claude Sonnet 4.5
 - **Risk Assessment**: Identify high-impact clauses and potential advantages/disadvantages
 - **Smart Resource Funneling**: AI-driven recommendations based on contract type and risk level
 - **Expert Network**: Connect with verified legal professionals based on geolocation and specialization
@@ -18,12 +18,14 @@ AI-powered contract analysis made simple. Upload any contract and get instant in
 - **Database Storage**: Secure storage of analyses and learning data using Supabase
 - **Real-time Processing**: Instant analysis results with personalized recommendations
 - **Navigation**: Easy switching between analysis and resources
+- **Analytics & Telemetry**: Privacy-first usage tracking to understand user needs (see [TELEMETRY.md](./TELEMETRY.md))
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
-- **AI**: OpenAI GPT-4 (with Claude option available)
+- **AI**: Anthropic Claude Sonnet 4.5
 - **Database**: Supabase (PostgreSQL)
+- **Analytics**: Privacy-first telemetry system
 - **Icons**: Heroicons, Lucide React
 - **Deployment**: Vercel
 - **Bundler**: Webpack (default Next.js bundler)
@@ -54,15 +56,19 @@ npm install
 
 ### 3. Configure Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env.local` file in the root directory (see `.env.example` for template):
 
 ```bash
 # Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 
-# OpenAI Configuration
-OPENAI_API_KEY=your-openai-api-key-here
+# Anthropic Configuration
+ANTHROPIC_API_KEY=your-anthropic-api-key-here
+
+# Optional: Admin Stats API Key (for telemetry)
+ADMIN_STATS_KEY=your-secure-random-key-here
 ```
 
 ### 4. Run Development Server
@@ -135,7 +141,9 @@ The `apply-schema.sql` includes:
 In your Vercel project settings, add these environment variables:
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `OPENAI_API_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `ANTHROPIC_API_KEY`
+- `ADMIN_STATS_KEY` (optional, for telemetry dashboard)
 
 ## 📁 Project Structure
 
@@ -260,6 +268,7 @@ If you encounter any issues:
 - ✅ **Modern UI Redesign**: Clean, gradient-based design with improved UX
 - ✅ **Navigation System**: Easy switching between analysis and resources
 - ✅ **Enhanced Upload Component**: More visually appealing file upload interface
+- ✅ **Privacy-First Telemetry**: Usage analytics without storing PII or contract content (see [TELEMETRY.md](./TELEMETRY.md))
 
 ## 🎯 Future Enhancements
 
